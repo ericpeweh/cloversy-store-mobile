@@ -1,20 +1,48 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+// Dependencies
+import { StatusBar } from "expo-status-bar";
+import { NativeBaseProvider } from "native-base";
+import { useAuth0, Auth0Provider } from "react-native-auth0";
+import { AUTH0_DOMAIN, AUTH0_CLIENTID } from "@env";
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
-}
+// Hooks
+import useCustomFonts from "./hooks/useCustomFonts";
+
+// Themes
+import mainTheme from "./themes/mainTheme";
+
+// Navigations
+import Router from "./routers";
+
+// Components
+import { StyleSheet, Text, View } from "react-native";
+
+const App = () => {
+	const { fontsLoaded, onLayoutRootView } = useCustomFonts();
+
+	if (!fontsLoaded) {
+		return (
+			<View>
+				<Text>Loading...</Text>
+			</View>
+		);
+	}
+
+	return (
+		<Auth0Provider domain={AUTH0_DOMAIN} clientId={AUTH0_CLIENTID}>
+			<NativeBaseProvider theme={mainTheme}>
+				<StatusBar style="dark" backgroundColor="#fff" />
+				<View onLayout={onLayoutRootView} style={styles.mainContainer}>
+					<Router />
+				</View>
+			</NativeBaseProvider>
+		</Auth0Provider>
+	);
+};
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
+	mainContainer: {
+		flex: 1
+	}
 });
+
+export default App;
