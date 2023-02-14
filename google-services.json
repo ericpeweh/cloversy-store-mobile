@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "54423763051",
+    "project_id": "cloversy-store-app",
+    "storage_bucket": "cloversy-store-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:54423763051:android:0c8a66adabab0ba770992e",
+        "android_client_info": {
+          "package_name": "id.cloversyid.cloversystoremobile"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "54423763051-saa9daetu8q5vdif9pnukurnvtfg06nb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAZ0CbJwQnmBg3RCX7rG-IfnD0fsIKiObY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "54423763051-saa9daetu8q5vdif9pnukurnvtfg06nb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

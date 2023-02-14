@@ -9,7 +9,7 @@ import { AntDesign, Feather } from "@expo/vector-icons";
 import { Icon, useTheme } from "native-base";
 
 // Types
-import { RootTabsParamList } from "../interfaces/navigation.interface";
+import { RootTabsParamList } from "../interfaces";
 
 // Screens
 import HomeScreen from "../screens/HomeScreen";
