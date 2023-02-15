@@ -7,7 +7,7 @@ import { Spinner, View } from "native-base";
 const LoadingScreen = () => {
 	return (
 		<View justifyContent="center" alignItems="center" height="100%" width="100%">
-			<Spinner />
+			<Spinner size="lg" color="primary.400" />
 		</View>
 	);
 };

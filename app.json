@@ -21,6 +21,19 @@
 			"bundleIdentifier": "id.cloversyid.cloversystoremobile"
 		},
 		"android": {
+			"intentFilters": [
+				{
+					"action": "VIEW",
+					"autoVerify": true,
+					"data": [
+						{
+							"scheme": "id.cloversyid.cloversystoremobile",
+							"pathPrefix": "/android/id.cloversyid.cloversystoremobile/callback"
+						}
+					],
+					"category": ["BROWSEABLE", "DEFAULT"]
+				}
+			],
 			"adaptiveIcon": {
 				"foregroundImage": "./assets/adaptive-icon.png",
 				"backgroundColor": "#FFFFFF"

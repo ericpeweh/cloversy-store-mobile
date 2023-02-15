@@ -27,7 +27,13 @@ const BrandCardList = () => {
 			<ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
 				<HStack space={2} height={110} my={1} mx={1}>
 					{brandCardData.map(data => (
-						<TouchableWithoutFeedback key={data.label} onPress={() => alert("Pressed")}>
+						<TouchableWithoutFeedback
+							key={data.label}
+							onPress={() => {
+								console.log("Pressed brand");
+								alert("Pressed");
+							}}
+						>
 							<Box style={BrandCardListStyles.brandCard}>
 								<Image
 									resizeMode="center"

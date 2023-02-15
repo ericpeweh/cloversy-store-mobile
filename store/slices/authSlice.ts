@@ -73,11 +73,22 @@ const authSlice = createSlice({
 			{ payload: { profile_picture } }: PayloadAction<{ profile_picture: string }>
 		) => {
 			state.profile_picture = profile_picture;
+		},
+		logoutUser: state => {
+			state.isAuth = false;
+			state.token = "";
+			state.full_name = "";
+			state.email = "";
+			state.profile_picture = "";
+			state.email_verified = false;
+			state.contact = "";
+			state.birth_date = "";
+			state.status = "idle";
 		}
 	}
 });
 
-export const { setCredentials, setUserDetails, setUserProfilePicture, setAuthStatus } =
+export const { setCredentials, setUserDetails, setUserProfilePicture, setAuthStatus, logoutUser } =
 	authSlice.actions;
 
 export default authSlice.reducer;

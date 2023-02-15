@@ -1,5 +1,6 @@
 // Dependencies
 import axios from "axios";
+import { shallowEqual } from "react-redux";
 
 // Api
 import { BASE_URL } from "../api";
@@ -18,13 +19,17 @@ import { setCredentials, setAuthStatus } from "../store/slices/authSlice";
 import { setUserWishlist } from "../store/slices/globalSlice";
 
 const useDataInit = () => {
-	const authToken = useSelector(state => state.auth.token);
+	const { token: authToken, status: authStatus } = useSelector(state => state.auth, shallowEqual);
 	const dispatch = useDispatch();
-	const { getCredentials, user, isLoading, authorize } = useAuth0();
+	const { getCredentials, user, isLoading, error } = useAuth0();
 
 	// Set user data to auth store slice
+	console.log(user, isLoading, authStatus, error);
+
 	useEffect(() => {
-		if (!isLoading && user) {
+		// console.log(user, isLoading, authStatus);
+
+		if (!isLoading && user && authStatus === "idle") {
 			const getToken = async () => {
 				let token = "";
 
@@ -64,18 +69,12 @@ const useDataInit = () => {
 						})
 					);
 				} catch (error) {
-					console.dir(error);
+					console.log(error);
 				}
 			};
 			getToken();
 		}
-	}, [dispatch, user]);
-
-	// useEffect(() => {
-	// 	if (!user && !isLoading) {
-	// 		dispatch(setAuthStatus("fulfilled"));
-	// 	}
-	// }, [dispatch,  isLoading]);
+	}, [dispatch, user, authStatus]);
 
 	// Set user wishlist to global store slice
 	useEffect(() => {
@@ -98,15 +97,6 @@ const useDataInit = () => {
 			getUserWishlist();
 		}
 	}, [authToken, dispatch, user]);
-
-	// Redirect user to login if not logged in
-	useEffect(() => {
-		const loginHandler = async () => await authorize({});
-
-		if (!isLoading && !user) {
-			loginHandler();
-		}
-	}, [isLoading, user]);
 
 	return { isLoading, isAuthenticated: Boolean(user) };
 };

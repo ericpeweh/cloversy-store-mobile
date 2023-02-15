@@ -33,7 +33,7 @@ const App = () => {
 	}
 
 	return (
-		<Auth0Provider domain={AUTH0_DOMAIN} clientId={AUTH0_CLIENTID}>
+		<Auth0Provider domain={AUTH0_DOMAIN} clientId={AUTH0_CLIENTID} >
 			<NativeBaseProvider theme={mainTheme}>
 				<ReduxProvider store={reduxStore}>
 					<StatusBar style="dark" backgroundColor="#fff" />
