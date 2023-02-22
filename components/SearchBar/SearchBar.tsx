@@ -1,9 +1,8 @@
 // Dependencies
 import React from "react";
-import { StyleSheet } from "react-native";
 
 // Icons
-import { AntDesign, FontAwesome } from "@expo/vector-icons";
+import { AntDesign, MaterialIcons } from "@expo/vector-icons";
 
 // Styles
 import SearchBarStyles from "./SearchBar.styles";
@@ -12,10 +11,11 @@ import SearchBarStyles from "./SearchBar.styles";
 import { Icon, Input, IInputProps, Box } from "native-base";
 
 interface SearchBarProps extends IInputProps {
-	showSlider?: boolean;
+	showResetButton?: boolean;
+	onFocusEffect?: boolean;
 }
 
-const SearcBar = ({ showSlider = false, ...props }: SearchBarProps) => {
+const SearchBar = ({ showResetButton = false, onFocusEffect = true, ...props }: SearchBarProps) => {
 	return (
 		<Box style={SearchBarStyles.searchBarContainer}>
 			<Input
@@ -24,12 +24,14 @@ const SearcBar = ({ showSlider = false, ...props }: SearchBarProps) => {
 				borderRadius="10"
 				borderColor="#fff"
 				fontSize="14"
+				focusOutlineColor="gray.300"
+				_focus={{ bgColor: "white" }}
 				InputLeftElement={
 					<Icon m="2" ml="3" size="6" color="gray.400" as={<AntDesign name="search1" />} />
 				}
-				{...(showSlider && {
+				{...(showResetButton && {
 					InputRightElement: (
-						<Icon m="2" mr="3" size="6" color="gray.400" as={<FontAwesome name="sliders" />} />
+						<Icon m="2" mr="3" size="6" color="gray.400" as={<MaterialIcons name="clear" />} />
 					)
 				})}
 				{...props}
@@ -38,6 +40,4 @@ const SearcBar = ({ showSlider = false, ...props }: SearchBarProps) => {
 	);
 };
 
-export default SearcBar;
-
-const styles = StyleSheet.create({});
+export default SearchBar;

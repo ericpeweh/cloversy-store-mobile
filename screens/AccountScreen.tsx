@@ -1,11 +1,18 @@
+// Dependencies
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet } from "react-native";
+
+// Components
+import { View, Text, ScrollView, HStack, Avatar } from "native-base";
+import AccountHeader from "../components/AccountHeader/AccountHeader";
+import AccountMenuList from "../components/AccountMenuList/AccountMenuList";
 
 const AccountScreen = () => {
 	return (
-		<View style={styles.accountScreenContainer}>
-			<Text>AccountScreen</Text>
-		</View>
+		<ScrollView style={styles.accountScreenContainer}>
+			<AccountHeader />
+			<AccountMenuList />
+		</ScrollView>
 	);
 };
 

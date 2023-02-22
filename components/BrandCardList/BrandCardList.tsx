@@ -21,7 +21,7 @@ const brandCardData = [
 const BrandCardList = () => {
 	return (
 		<View mt={4}>
-			<Text fontWeight="500" fontSize={15} mb={3}>
+			<Text fontWeight="500" fontSize={16} mb={3}>
 				Popular Brands
 			</Text>
 			<ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>

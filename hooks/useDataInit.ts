@@ -24,11 +24,7 @@ const useDataInit = () => {
 	const { getCredentials, user, isLoading, error } = useAuth0();
 
 	// Set user data to auth store slice
-	console.log(user, isLoading, authStatus, error);
-
 	useEffect(() => {
-		// console.log(user, isLoading, authStatus);
-
 		if (!isLoading && user && authStatus === "idle") {
 			const getToken = async () => {
 				let token = "";

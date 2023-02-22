@@ -9,6 +9,7 @@ const mainThemeConfig = {
 			500: "#477841"
 		},
 		secondary: {
+			300: "#3b3b3b",
 			400: "#282828"
 		}
 	},

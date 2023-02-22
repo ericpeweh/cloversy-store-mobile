@@ -3,7 +3,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import { setupListeners } from "@reduxjs/toolkit/query";
 
 // Slices
-// import globalReducer from "./slices/globalSlice";
+import globalReducer from "./slices/globalSlice";
 // import productsReducer from "./slices/productsSlice";
 import authReducer from "./slices/authSlice";
 // import chatReducer from "./slices/chatSlice";
@@ -13,7 +13,7 @@ import API from "../api";
 
 const store = configureStore({
 	reducer: {
-		// global: globalReducer,
+		global: globalReducer,
 		// products: productsReducer,
 		auth: authReducer,
 		// chat: chatReducer,

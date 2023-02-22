@@ -1,80 +1,90 @@
 // Dependencies
-import React, { useState } from "react";
+import React, { useCallback, useRef, useState } from "react";
 
 // Hooks
 import useDimensions from "../../hooks/useDimensions";
 
 // Components
-import { Box, Image, Pressable, View } from "native-base";
-import Carousel from "react-native-reanimated-carousel";
+import { AspectRatio, Box, Button, Center, HStack, Image, ScrollView, View } from "native-base";
+import Carousel, { ICarouselInstance } from "react-native-reanimated-carousel";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 
-const carouselItems = [
-	{
-		image: require("../../assets/images/1.jpg"),
-		title: "Nike AF1 Homesick"
-	},
-	{
-		image: require("../../assets/images/2.jpg"),
-		title: "Challenges Ventela V1"
-	},
-	{
-		image: require("../../assets/images/3.jpg"),
-		title: "Nike AF1 Homesick"
-	}
-];
+interface MainCarouselProps {
+	images: string[];
+}
 
-const MainCarousel = () => {
+const MainCarousel = ({ images }: MainCarouselProps) => {
+	const carouselRef = useRef<ICarouselInstance | null>(null);
 	const [carouselItemIndex, setCarouselItemIndex] = useState(0);
+
 	const { window } = useDimensions();
 
+	const handleSnapToItem = useCallback((index: number) => {
+		setCarouselItemIndex(index);
+	}, []);
+
+	const nextImageHandler = () => {
+		carouselRef.current?.next({ animated: true });
+	};
+
+	const prevImageHandler = () => {
+		carouselRef.current?.prev({ animated: true });
+	};
+
 	return (
-		<View>
-			<GestureHandlerRootView>
+		<GestureHandlerRootView>
+			<View>
 				<Carousel
+					enabled={images && images.length > 1}
 					loop
+					ref={carouselRef}
 					width={window.width}
-					height={282}
-					autoPlay={true}
+					height={362}
+					panGestureHandlerProps={{
+						onCancelled: e => {
+							if ((e.nativeEvent.translationX as number) > 0) {
+								prevImageHandler();
+							} else {
+								nextImageHandler();
+							}
+						}
+					}}
+					autoPlay={images && images.length > 1}
 					autoPlayInterval={10000}
-					data={carouselItems}
+					data={images}
 					scrollAnimationDuration={500}
-					onSnapToItem={index => setCarouselItemIndex(index)}
-					renderItem={({ item }) => (
-						<Pressable style={{ position: "relative" }}>
-							{({ isHovered, isPressed }) => (
-								<>
-									<Image source={item.image} alt={item.title} height={280} />
-									<View
-										position="absolute"
-										top={0}
-										left={0}
-										right={0}
-										bottom={0}
-										bgColor={isHovered || isPressed ? "white:alpha.20" : "transparent"}
-									></View>
-								</>
-							)}
-						</Pressable>
+					onSnapToItem={handleSnapToItem}
+					renderItem={({ item, index }) => (
+						<AspectRatio ratio={1 / 1}>
+							<Image
+								source={{ uri: item }}
+								alt={`Product image ${index}`}
+								resizeMode="cover"
+								width={window.width}
+								maxWidth={450}
+							/>
+						</AspectRatio>
 					)}
 				/>
-			</GestureHandlerRootView>
-			<View
-				flexDir="row"
-				position="absolute"
-				left={carouselItemIndex === 0 ? 0 : `${carouselItemIndex}/${carouselItems.length}`}
-				bottom={0}
-			>
-				<Box
-					backgroundColor="primary.400"
-					borderRadius={2}
-					style={{
-						height: 3,
-						width: window.width / carouselItems.length
-					}}
-				></Box>
+				{images.length > 1 && (
+					<Center position="absolute" bottom={2} width="100%">
+						<HStack space={2} mt={2} justifyContent="center">
+							{images.map((image, i) => (
+								<View
+									borderRadius="full"
+									height={2}
+									width={2}
+									borderColor="gray.500"
+									borderWidth={0.5}
+									bg={carouselItemIndex === i ? "primary.400" : "gray.200"}
+									key={`${image}-${i}`}
+								></View>
+							))}
+						</HStack>
+					</Center>
+				)}
 			</View>
-		</View>
+		</GestureHandlerRootView>
 	);
 };
 

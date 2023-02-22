@@ -43,6 +43,10 @@ export interface GetProductsQuery {
 	priceFilter: [number, number];
 }
 
+export interface GetSingleProductQuery {
+	productSlug: string;
+}
+
 export type ProductsSortValues = "id" | "popularity" | "rating" | "low-to-high" | "high-to-low";
 
 export interface ProductLastSeen {
