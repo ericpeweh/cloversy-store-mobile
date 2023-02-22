@@ -7,13 +7,14 @@ import useDimensions from "../../hooks/useDimensions";
 // Components
 import { AspectRatio, Box, Button, Center, HStack, Image, ScrollView, View } from "native-base";
 import Carousel, { ICarouselInstance } from "react-native-reanimated-carousel";
-import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { GestureHandlerRootView, TouchableWithoutFeedback } from "react-native-gesture-handler";
 
 interface MainCarouselProps {
 	images: string[];
+	onImagePress: (imageIndex: number) => void;
 }
 
-const MainCarousel = ({ images }: MainCarouselProps) => {
+const MainCarousel = ({ images, onImagePress }: MainCarouselProps) => {
 	const carouselRef = useRef<ICarouselInstance | null>(null);
 	const [carouselItemIndex, setCarouselItemIndex] = useState(0);
 
@@ -55,15 +56,17 @@ const MainCarousel = ({ images }: MainCarouselProps) => {
 					scrollAnimationDuration={500}
 					onSnapToItem={handleSnapToItem}
 					renderItem={({ item, index }) => (
-						<AspectRatio ratio={1 / 1}>
-							<Image
-								source={{ uri: item }}
-								alt={`Product image ${index}`}
-								resizeMode="cover"
-								width={window.width}
-								maxWidth={450}
-							/>
-						</AspectRatio>
+						<TouchableWithoutFeedback onPress={() => onImagePress(index)}>
+							<AspectRatio ratio={1 / 1}>
+								<Image
+									source={{ uri: item }}
+									alt={`Product image ${index}`}
+									resizeMode="cover"
+									width={window.width}
+									maxWidth={450}
+								/>
+							</AspectRatio>
+						</TouchableWithoutFeedback>
 					)}
 				/>
 				{images.length > 1 && (

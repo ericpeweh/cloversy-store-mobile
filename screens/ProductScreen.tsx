@@ -22,17 +22,7 @@ import { Entypo, Ionicons } from "@expo/vector-icons";
 import formatToRupiah from "../utils/formatToRupiah";
 
 // Components
-import {
-	Divider,
-	HStack,
-	Icon,
-	Pressable,
-	ScrollView,
-	Text,
-	useTheme,
-	View,
-	VStack
-} from "native-base";
+import { Divider, HStack, Icon, Pressable, ScrollView, Text, View, VStack } from "native-base";
 import MainCarousel from "../components/MainCaousel/MainCarousel";
 import ProductBottomBar from "../components/ProductBottomBar/ProductBottomBar";
 import SizeRadio from "../components/SizeRadio/SizeRadio";
@@ -45,12 +35,15 @@ import ErrorText from "../components/ErrorText/ErrorText";
 import TryAgainButton from "../components/TryAgainButton/TryAgainButton";
 import LoadingSpinner from "../components/LoadingSpinner/LoadingSpinner";
 import ProductCard from "../components/ProductCard/ProductCard";
+import ImageViewer from "../components/ImageViewer/ImageViewer";
 
-const ProductScreen = ({ route, navigation }: RootStackProps<"HomeProduct">) => {
+const ProductScreen = ({ route, navigation }: RootStackProps<"HomeProduct" | "ExploreProduct">) => {
 	const productScrollRef = useRef<ScrollViewType>(null);
 	const [showFullDescription, setShowFullDescription] = useState(false);
+	const [showImageViewer, setShowImageViewer] = useState(false);
+	const [imageViewerIndex, setImageViewerIndex] = useState(0);
 	const isAuth = useSelector(state => state.auth.isAuth);
-	const { productSlug } = route.params;
+	const { productSlug, runHeaderFn = true } = route.params;
 
 	const {
 		data: productData,
@@ -88,14 +81,17 @@ const ProductScreen = ({ route, navigation }: RootStackProps<"HomeProduct">) => 
 	// Hide parent header on mount
 	useLayoutEffect(
 		useCallback(() => {
-			navigation?.getParent()?.setOptions({ headerShown: false, tabBarStyle: { display: "none" } });
+			navigation?.getParent()?.setOptions({
+				...(runHeaderFn && { headerShown: false }),
+				tabBarStyle: { display: "none" }
+			});
+
+			// Cleanup function (revert header & tabbar style changes)
 			return () => {
-				navigation
-					?.getParent()
-					?.setOptions({
-						headerShown: true,
-						tabBarStyle: { display: "flex", height: 56, paddingTop: 5, paddingBottom: 7 }
-					});
+				navigation?.getParent()?.setOptions({
+					...(runHeaderFn && { headerShown: true }),
+					tabBarStyle: { display: "flex", height: 56, paddingTop: 5, paddingBottom: 7 }
+				});
 			};
 		}, [])
 	);
@@ -133,8 +129,21 @@ const ProductScreen = ({ route, navigation }: RootStackProps<"HomeProduct">) => 
 		}
 	};
 
+	const imagePressHandler = (imageIndex: number) => {
+		setImageViewerIndex(imageIndex);
+		setShowImageViewer(true);
+	};
+
 	return (
 		<View style={styles.productScreenContainer} position="relative">
+			{!isGetProductLoading && !isGetProductFetching && isGetProductSuccess && product && (
+				<ImageViewer
+					images={product.images.map(image => ({ uri: image }))}
+					imageIndex={imageViewerIndex}
+					onRequestClose={() => setShowImageViewer(false)}
+					visible={showImageViewer}
+				/>
+			)}
 			<ScrollView ref={productScrollRef}>
 				{!isGetProductLoading && !isGetProductFetching && productError && (
 					<FallbackContainer my={10} size="lg">
@@ -151,7 +160,7 @@ const ProductScreen = ({ route, navigation }: RootStackProps<"HomeProduct">) => 
 				)}
 				{!isGetProductLoading && !isGetProductFetching && isGetProductSuccess && product && (
 					<>
-						<MainCarousel images={product.images} />
+						<MainCarousel images={product.images} onImagePress={imagePressHandler} />
 						<VStack p={4} mt={1} space={1}>
 							<Text fontSize="20px" fontWeight="700" textTransform="uppercase">
 								{product.title}
@@ -174,7 +183,7 @@ const ProductScreen = ({ route, navigation }: RootStackProps<"HomeProduct">) => 
 								{formatToRupiah(product.price)}
 							</Text>
 							<VStack space={3} mb={4} mt={3}>
-								<Text fontSize="14px" fontWeight="500">
+								<Text fontSize="15px" fontWeight="500">
 									Shoes Size ( EU )
 								</Text>
 								<SizeRadio
@@ -184,7 +193,7 @@ const ProductScreen = ({ route, navigation }: RootStackProps<"HomeProduct">) => 
 								/>
 							</VStack>
 							<HStack alignItems="center" space={3}>
-								<Text fontSize="14px" fontWeight="500">
+								<Text fontSize="15px" fontWeight="500">
 									Product Qty :
 								</Text>
 								<QuantityInput value={quantity} onChangeQuantity={setQuantity} />
@@ -201,7 +210,7 @@ const ProductScreen = ({ route, navigation }: RootStackProps<"HomeProduct">) => 
 							</HStack>
 							<Divider mb={2} mt={4} bg="gray.200" />
 							<VStack space={3} mb={6} mt={2}>
-								<Text fontSize="14px" fontWeight="500">
+								<Text fontSize="15px" fontWeight="500">
 									Product Description
 								</Text>
 								<Text fontSize="14px" fontWeight="400">
