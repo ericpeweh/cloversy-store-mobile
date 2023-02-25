@@ -34,7 +34,8 @@ const ConfirmModal = ({
 				<AlertDialog.Footer>
 					<Button.Group space={2}>
 						<Button
-							variant="unstyled"
+							variant="ghost"
+							_pressed={{ bg: "gray.100" }}
 							colorScheme="coolGray"
 							onPress={onClose}
 							ref={cancelRef}
@@ -46,6 +47,7 @@ const ConfirmModal = ({
 						</Button>
 						<Button
 							colorScheme="danger"
+							_pressed={{ bg: "red.700" }}
 							onPress={() => {
 								onConfirm();
 								onClose();

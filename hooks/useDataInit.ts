@@ -7,7 +7,7 @@ import { BASE_URL } from "../api";
 
 // Hooks
 import { useAuth0 } from "react-native-auth0";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import useDispatch from "./useDispatch";
 import useSelector from "./useSelector";
 
@@ -16,12 +16,14 @@ import { Product, User } from "../interfaces";
 
 // Actions
 import { setCredentials, setAuthStatus } from "../store/slices/authSlice";
-import { setUserWishlist } from "../store/slices/globalSlice";
+import { setUserCart, setUserWishlist } from "../store/slices/globalSlice";
+import { useGetCartItemsQuery } from "../api/cart.api";
 
 const useDataInit = () => {
 	const { token: authToken, status: authStatus } = useSelector(state => state.auth, shallowEqual);
 	const dispatch = useDispatch();
 	const { getCredentials, user, isLoading, error } = useAuth0();
+	const [isInitialized, setIsInitialized] = useState(false);
 
 	// Set user data to auth store slice
 	useEffect(() => {
@@ -93,6 +95,19 @@ const useDataInit = () => {
 			getUserWishlist();
 		}
 	}, [authToken, dispatch, user]);
+
+	// Set user cart data
+	const { data: cartItemsData, isSuccess: isGetCartItemsSuccess } = useGetCartItemsQuery(
+		authStatus,
+		{ skip: authStatus !== "fulfilled" }
+	);
+
+	useEffect(() => {
+		if (cartItemsData && isGetCartItemsSuccess && !isInitialized) {
+			dispatch(setUserCart(cartItemsData.data));
+			setIsInitialized(true);
+		}
+	}, [cartItemsData, dispatch, isGetCartItemsSuccess, isInitialized]);
 
 	return { isLoading, isAuthenticated: Boolean(user) };
 };

@@ -1,6 +1,6 @@
 // Dependencies
 import React, { useCallback } from "react";
-import { StyleSheet } from "react-native";
+import { NativeSyntheticEvent, StyleSheet, TextInputSubmitEditingEventData } from "react-native";
 
 // Types
 import { RootStackProps, MainScreenProps } from "../interfaces/navigation.interface";
@@ -29,6 +29,7 @@ import FallbackContainer from "../components/FallbackContainer/FallbackContainer
 import ErrorText from "../components/ErrorText/ErrorText";
 import TryAgainButton from "../components/TryAgainButton/TryAgainButton";
 import LoadingSpinner from "../components/LoadingSpinner/LoadingSpinner";
+import { setSearchQuery } from "../store/slices/productsSlice";
 
 const HomeScreen = ({ navigation }: RootStackProps<"Home">) => {
 	const isAuth = useSelector(state => state.auth.isAuth);
@@ -57,6 +58,19 @@ const HomeScreen = ({ navigation }: RootStackProps<"Home">) => {
 	// 	}
 	// };
 
+	const searchBarEndEditingHandler = (
+		event: NativeSyntheticEvent<TextInputSubmitEditingEventData>
+	) => {
+		// Change store search query value to input value
+		dispatch(setSearchQuery(event.nativeEvent.text));
+
+		// Clear input value
+		event.currentTarget.setNativeProps({ text: "" });
+
+		// Navigate user to explore screen
+		navigation.navigate("Explore");
+	};
+
 	return (
 		<FlatList
 			style={styles.homeScreenContainer}
@@ -74,7 +88,7 @@ const HomeScreen = ({ navigation }: RootStackProps<"Home">) => {
 					/>
 					<View position="relative" key="searchBar">
 						<View paddingX={4} paddingY={2} position="relative" zIndex={100} marginTop="-32px">
-							<SearchBar />
+							<SearchBar onSubmitEditing={searchBarEndEditingHandler} />
 						</View>
 					</View>
 					<View style={styles.contentContainer} key="brandCardList">

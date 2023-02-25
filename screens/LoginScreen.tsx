@@ -19,7 +19,7 @@ import useSelector from "../hooks/useSelector";
 
 const LoginScreen = () => {
 	const autStatus = useSelector(state => state.auth.status);
-	const { authorize, error } = useAuth0();
+	const { authorize, error, isLoading } = useAuth0();
 
 	const loginHandler = async () => {
 		await authorize({ audience: AUTH0_AUDIENCE }, { customScheme: "cloversy-store-auth0" });

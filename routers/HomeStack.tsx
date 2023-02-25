@@ -15,6 +15,14 @@ import { Icon } from "native-base";
 import HomeScreen from "../screens/HomeScreen";
 import ProductScreen from "../screens/ProductScreen";
 import ProductReviewScreen from "../screens/ProductReviewScreen";
+import CartScreen from "../screens/CartScreen";
+import CheckoutScreen from "../screens/CheckoutScreen";
+import AddressPickerScreen from "../screens/AddressPickerScreen";
+import AddAddressScreen from "../screens/AddAddressScreen";
+import ShippingPickerScreen from "../screens/ShippingPickerScreen";
+import PaymentPickerScreen from "../screens/PaymentPickerScreen";
+import EditOrderInfoScreen from "../screens/EditOrderInfoScreen";
+import VoucherPickerScreen from "../screens/VoucherPickerScreen";
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -45,6 +53,70 @@ const HomeStack = () => {
 				name="HomeProductReview"
 				component={ProductReviewScreen}
 				options={{ headerTitle: "Product Reviews", headerTitleAlign: "center" }}
+			/>
+			<Stack.Screen
+				name="HomeCart"
+				component={CartScreen}
+				options={{
+					headerTitle: "Shopping Cart",
+					headerTitleAlign: "center"
+				}}
+			/>
+			<Stack.Screen
+				name="HomeCheckout"
+				component={CheckoutScreen}
+				options={{
+					headerTitle: "Checkout",
+					headerTitleAlign: "center"
+				}}
+			/>
+			<Stack.Screen
+				name="HomeCheckoutAddressPicker"
+				component={AddressPickerScreen}
+				options={{
+					headerTitle: "Choose Address",
+					headerTitleAlign: "center"
+				}}
+			/>
+			<Stack.Screen
+				name="HomeCheckoutAddAddress"
+				component={AddAddressScreen}
+				options={{
+					headerTitle: "Create Address",
+					headerTitleAlign: "center"
+				}}
+			/>
+			<Stack.Screen
+				name="HomeCheckoutShippingPicker"
+				component={ShippingPickerScreen}
+				options={{
+					headerTitle: "Choose Shipping",
+					headerTitleAlign: "center"
+				}}
+			/>
+			<Stack.Screen
+				name="HomeCheckoutPaymentPicker"
+				component={PaymentPickerScreen}
+				options={{
+					headerTitle: "Choose Payment",
+					headerTitleAlign: "center"
+				}}
+			/>
+			<Stack.Screen
+				name="HomeCheckoutEditOrderInfo"
+				component={EditOrderInfoScreen}
+				options={{
+					headerTitle: "Edit Notes",
+					headerTitleAlign: "center"
+				}}
+			/>
+			<Stack.Screen
+				name="HomeCheckoutVoucherPicker"
+				component={VoucherPickerScreen}
+				options={{
+					headerTitle: "Use Voucher",
+					headerTitleAlign: "center"
+				}}
 			/>
 		</Stack.Navigator>
 	);

@@ -1,6 +1,9 @@
 // Dependencies
 import React from "react";
 
+// Types
+import { RootStackProps } from "../interfaces";
+
 // Components
 import { FlatList, View } from "native-base";
 import WishlistItem from "../components/WishlistItem/WishlistItem";
@@ -13,7 +16,7 @@ import LoadingSpinner from "../components/LoadingSpinner/LoadingSpinner";
 import ErrorText from "../components/ErrorText/ErrorText";
 import TryAgainButton from "../components/TryAgainButton/TryAgainButton";
 
-const WishlistScreen = () => {
+const WishlistScreen = ({}: RootStackProps<"Wishlist">) => {
 	const isAuth = useSelector(state => state.auth.isAuth);
 
 	const { emptyWishlistHandler, isEmptyWishlistLoading } = useWishlist();
@@ -32,7 +35,6 @@ const WishlistScreen = () => {
 
 	return (
 		<FlatList
-			overScrollMode="never"
 			bg="white"
 			ListHeaderComponent={
 				<>

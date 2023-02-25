@@ -4,6 +4,8 @@ import { NativeStackScreenProps, NativeStackNavigationProp } from "@react-naviga
 
 // Types
 import { ProductReviewItem } from "./product.interface";
+import { CheckoutFormValues } from "./cart.interface";
+import { Voucher } from "./account.interface";
 
 export type RootTabsParamList = {
 	HomeTab: undefined;
@@ -17,10 +19,35 @@ export type MainScreenProps<T extends keyof RootTabsParamList> = BottomTabScreen
 	T
 >;
 
+interface ProductScreenProps {
+	productSlug: string;
+	runHeaderFn?: boolean;
+	runTabbarFn?: boolean;
+}
+
+interface ProductReviewProps {
+	productReviews: ProductReviewItem[];
+}
+
 export type RootStackParamList = {
 	Home: undefined;
-	HomeProduct: { productSlug: string };
-	HomeProductReview: { productReviews: ProductReviewItem[] };
+	HomeProduct: ProductScreenProps;
+	HomeProductReview: ProductReviewProps;
+	HomeCart: undefined;
+	HomeCheckout: { state?: CheckoutFormValues; appliedVoucher?: Voucher };
+	HomeCheckoutAddressPicker: { state: CheckoutFormValues };
+	HomeCheckoutShippingPicker: { state: CheckoutFormValues };
+	HomeCheckoutAddAddress: { state: CheckoutFormValues };
+	HomeCheckoutPaymentPicker: { state: CheckoutFormValues };
+	HomeCheckoutEditOrderInfo: { state: CheckoutFormValues };
+	HomeCheckoutVoucherPicker: { state: CheckoutFormValues };
+	Explore: undefined;
+	ExploreProduct: ProductScreenProps;
+	ExploreProductReview: ProductReviewProps;
+	ExploreProductFilter: undefined;
+	Wishlist: undefined;
+	WishlistProduct: ProductScreenProps;
+	WishlistProductReview: ProductReviewProps;
 };
 
 export type RootStackProps<T extends keyof RootStackParamList> = NativeStackScreenProps<

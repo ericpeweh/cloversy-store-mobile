@@ -13,9 +13,16 @@ import { Icon, Input, IInputProps, Box } from "native-base";
 interface SearchBarProps extends IInputProps {
 	showResetButton?: boolean;
 	onFocusEffect?: boolean;
+	onResetSearch?: Function;
 }
 
-const SearchBar = ({ showResetButton = false, onFocusEffect = true, ...props }: SearchBarProps) => {
+const SearchBar = ({
+	showResetButton = false,
+	onFocusEffect = true,
+	value,
+	onResetSearch,
+	...props
+}: SearchBarProps) => {
 	return (
 		<Box style={SearchBarStyles.searchBarContainer}>
 			<Input
@@ -26,12 +33,20 @@ const SearchBar = ({ showResetButton = false, onFocusEffect = true, ...props }: 
 				fontSize="14"
 				focusOutlineColor="gray.300"
 				_focus={{ bgColor: "white" }}
+				value={value}
 				InputLeftElement={
 					<Icon m="2" ml="3" size="6" color="gray.400" as={<AntDesign name="search1" />} />
 				}
 				{...(showResetButton && {
 					InputRightElement: (
-						<Icon m="2" mr="3" size="6" color="gray.400" as={<MaterialIcons name="clear" />} />
+						<Icon
+							m="2"
+							mr="3"
+							size="6"
+							color="gray.400"
+							as={<MaterialIcons name="clear" />}
+							onPress={() => onResetSearch && onResetSearch()}
+						/>
 					)
 				})}
 				{...props}

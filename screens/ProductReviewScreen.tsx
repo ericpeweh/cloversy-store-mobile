@@ -9,7 +9,9 @@ import { RootStackProps } from "../interfaces";
 import { ScrollView, VStack } from "native-base";
 import ReviewItem from "../components/ReviewItem/ReviewItem";
 
-const ProductReviewScreen = ({ route }: RootStackProps<"HomeProductReview">) => {
+const ProductReviewScreen = ({
+	route
+}: RootStackProps<"HomeProductReview" | "ExploreProductReview" | "WishlistProductReview">) => {
 	const { productReviews } = route.params;
 
 	return (

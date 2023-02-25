@@ -23,7 +23,7 @@ import formatToRupiah from "../utils/formatToRupiah";
 
 // Components
 import { Divider, HStack, Icon, Pressable, ScrollView, Text, View, VStack } from "native-base";
-import MainCarousel from "../components/MainCaousel/MainCarousel";
+import MainCarousel from "../components/MainCarousel/MainCarousel";
 import ProductBottomBar from "../components/ProductBottomBar/ProductBottomBar";
 import SizeRadio from "../components/SizeRadio/SizeRadio";
 import RatingInput from "../components/RatingInput/RatingInput";
@@ -37,13 +37,18 @@ import LoadingSpinner from "../components/LoadingSpinner/LoadingSpinner";
 import ProductCard from "../components/ProductCard/ProductCard";
 import ImageViewer from "../components/ImageViewer/ImageViewer";
 
-const ProductScreen = ({ route, navigation }: RootStackProps<"HomeProduct" | "ExploreProduct">) => {
+const ProductScreen = ({
+	route,
+	navigation
+}: RootStackProps<"HomeProduct" | "ExploreProduct" | "WishlistProduct">) => {
+	const { name } = route;
+
 	const productScrollRef = useRef<ScrollViewType>(null);
 	const [showFullDescription, setShowFullDescription] = useState(false);
 	const [showImageViewer, setShowImageViewer] = useState(false);
 	const [imageViewerIndex, setImageViewerIndex] = useState(0);
 	const isAuth = useSelector(state => state.auth.isAuth);
-	const { productSlug, runHeaderFn = true } = route.params;
+	const { productSlug, runHeaderFn = true, runTabbarFn = true } = route.params;
 
 	const {
 		data: productData,
@@ -83,14 +88,16 @@ const ProductScreen = ({ route, navigation }: RootStackProps<"HomeProduct" | "Ex
 		useCallback(() => {
 			navigation?.getParent()?.setOptions({
 				...(runHeaderFn && { headerShown: false }),
-				tabBarStyle: { display: "none" }
+				...(runTabbarFn && { tabBarStyle: { display: "none" } })
 			});
 
 			// Cleanup function (revert header & tabbar style changes)
 			return () => {
 				navigation?.getParent()?.setOptions({
 					...(runHeaderFn && { headerShown: true }),
-					tabBarStyle: { display: "flex", height: 56, paddingTop: 5, paddingBottom: 7 }
+					...(runTabbarFn && {
+						tabBarStyle: { display: "flex", height: 56, paddingTop: 5, paddingBottom: 7 }
+					})
 				});
 			};
 		}, [])
@@ -125,7 +132,7 @@ const ProductScreen = ({ route, navigation }: RootStackProps<"HomeProduct" | "Ex
 
 	const openAllReviewsHandler = () => {
 		if (product) {
-			navigation.navigate("HomeProductReview", { productReviews: product.reviews });
+			navigation.navigate(`${name}Review`, { productReviews: product.reviews });
 		}
 	};
 
@@ -257,7 +264,7 @@ const ProductScreen = ({ route, navigation }: RootStackProps<"HomeProduct" | "Ex
 								<VStack space={3} mb={6} mt={2}>
 									<HStack justifyContent="space-between" mb={3}>
 										<Text fontSize="15px" fontWeight="500">
-											Product Reviews
+											Product Reviews ({product.review_count})
 										</Text>
 										{+product.review_count > 3 && (
 											<TouchableWithoutFeedback

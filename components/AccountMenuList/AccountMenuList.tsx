@@ -51,9 +51,11 @@ const AccountMenuList = () => {
 											<Badge
 												rounded="full"
 												mb={-4}
-												mr={-3.5}
+												mr={-1}
 												bg="primary.400"
 												zIndex={1}
+												py={0}
+												px={1.5}
 												alignSelf="flex-end"
 												_text={{ fontSize: 10, color: "white" }}
 											>

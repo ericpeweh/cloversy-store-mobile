@@ -5,10 +5,11 @@ import React from "react";
 import formatToRupiah from "../../utils/formatToRupiah";
 
 // Types
-import { Product } from "../../interfaces";
+import { Product, RootStackNavigationProp } from "../../interfaces";
 
 // Hooks
 import useWishlist from "../../hooks/useWishlist";
+import { useNavigation } from "@react-navigation/native";
 
 // Icons
 import { AntDesign, Octicons, Feather } from "@expo/vector-icons";
@@ -25,6 +26,8 @@ interface WishlistItemProps {
 }
 
 const WishlistItem = ({ productData }: WishlistItemProps) => {
+	const navigation = useNavigation<RootStackNavigationProp>();
+
 	const {
 		isWishlisted,
 		addToWishlistHandler,
@@ -33,8 +36,14 @@ const WishlistItem = ({ productData }: WishlistItemProps) => {
 		isDeleteFromWishlistLoading
 	} = useWishlist(productData);
 
+	const wishlistItemPressHandler = () => {
+		if (productData) {
+			navigation.navigate("WishlistProduct", { productSlug: productData.slug });
+		}
+	};
+
 	return (
-		<Pressable>
+		<Pressable onPress={wishlistItemPressHandler}>
 			{({ isHovered, isPressed }) => (
 				<HStack
 					bg={isHovered || isPressed ? "gray.100:alpha.50" : "gray.100:alpha.20"}

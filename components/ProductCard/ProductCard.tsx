@@ -32,6 +32,7 @@ interface ProductCardProps extends InterfacePressableProps {
 	targetScreenName: keyof RootStackParamList;
 	size?: "small" | "large";
 	onPressCallback?: Function;
+	shouldRunScreenHeaderFn?: boolean;
 }
 
 const ProductCard = ({
@@ -40,6 +41,7 @@ const ProductCard = ({
 	size = "large",
 	targetScreenName,
 	onPressCallback,
+	shouldRunScreenHeaderFn = true,
 	...props
 }: ProductCardProps) => {
 	const navigation = useNavigation<RootStackNavigationProp>();
@@ -56,7 +58,10 @@ const ProductCard = ({
 
 	const productPressHandler = () => {
 		if (productData) {
-			navigation.navigate(targetScreenName as any, { productSlug: productData.slug });
+			navigation.navigate(targetScreenName as any, {
+				productSlug: productData.slug,
+				runHeaderFn: shouldRunScreenHeaderFn
+			});
 			onPressCallback && onPressCallback();
 		}
 	};
