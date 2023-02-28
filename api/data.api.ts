@@ -18,7 +18,10 @@ const dataApi = API.injectEndpoints({
 			query: cityId => `data/subdistrict?city=${cityId}`,
 			providesTags: ["Subdistricts"]
 		}),
-		getShippingCostByAddressId: build.query<ResponseBody<{ costs: ShippingCost[] }>, number>({
+		getShippingCostByAddressId: build.query<
+			ResponseBody<{ costs: ShippingCost[]; query: { addressId: number } }>,
+			number
+		>({
 			query: addressId => ({
 				url: `data/cost`,
 				method: "POST",

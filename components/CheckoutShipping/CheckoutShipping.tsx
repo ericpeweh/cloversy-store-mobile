@@ -1,5 +1,5 @@
 // Dependencies
-import React, { useEffect, useMemo } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 
 // Types
 import { CheckoutFormValues, ShippingCost } from "../../interfaces";
@@ -18,6 +18,7 @@ import FallbackContainer from "../FallbackContainer/FallbackContainer";
 import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
 import AlertBox from "../AlertBox/AlertBox";
 import TryAgainButton from "../TryAgainButton/TryAgainButton";
+import CheckoutSectionTitle from "../CheckoutSectionTitle/CheckoutSectionTitle";
 
 interface CheckoutShippingProps {
 	setFormInitialValues: React.Dispatch<React.SetStateAction<CheckoutFormValues>>;
@@ -51,7 +52,8 @@ const CheckoutShipping = ({ setFormInitialValues }: CheckoutShippingProps) => {
 			shippingCostsData &&
 			isGetShippingCostsSuccess &&
 			!noShippingCostsDataFound &&
-			values.shipping_courier === "default"
+			values.shipping_courier === "default" &&
+			values.address_id === shippingCostsData.data.query.addressId
 		) {
 			const shippingItem = shippingCostsData.data.costs[0];
 
@@ -70,6 +72,12 @@ const CheckoutShipping = ({ setFormInitialValues }: CheckoutShippingProps) => {
 
 	return (
 		<View>
+			<CheckoutSectionTitle
+				title="Shipping Method"
+				navigateScreenName="HomeCheckoutShippingPicker"
+				buttonText="Change method"
+				isDisabled={isGetShippingCostsFetching || isGetShippingCostsLoading}
+			/>
 			{(isGetShippingCostsLoading ||
 				isGetShippingCostsFetching ||
 				(shippingCostsData && isGetShippingCostsSuccess && !selectedShipping)) && (

@@ -2,7 +2,7 @@
 import React from "react";
 
 // Types
-import { CartItemDetails } from "../../interfaces";
+import { CartItemDetails, TransactionItem } from "../../interfaces";
 
 // Images
 const ProductPlaceholderImage = require("../../assets/images/no-image.png");
@@ -14,8 +14,15 @@ import formatToRupiah from "../../utils/formatToRupiah";
 import { AspectRatio, HStack, Image, Text, View, VStack } from "native-base";
 
 interface OrderDetailsItemProps {
-	itemData: CartItemDetails;
+	itemData: CartItemDetails | TransactionItem;
 }
+
+const _isTransactionItem = (
+	itemData: CartItemDetails | TransactionItem
+): itemData is TransactionItem => {
+	if ((itemData as TransactionItem).product_size) return true;
+	return false;
+};
 
 const OrderDetailsItem = ({ itemData }: OrderDetailsItemProps) => {
 	return (
@@ -43,14 +50,14 @@ const OrderDetailsItem = ({ itemData }: OrderDetailsItemProps) => {
 						{itemData.title}
 					</Text>
 					<Text fontSize="12px" fontWeight="400" pt={1} color="gray.500">
-						Size: EU {itemData.size}
+						Size: EU {_isTransactionItem(itemData) ? itemData.product_size : itemData.size}
 					</Text>
 					<Text fontSize="12px" fontWeight="400" pt={1} pb={2} color="gray.500">
 						Quantity: {itemData.quantity}
 					</Text>
 				</VStack>
 				<Text fontSize="13px" fontWeight="500" pt={1} pb={2} alignSelf="center" ml="auto">
-					{formatToRupiah(itemData.quantity * itemData.price)}
+					{formatToRupiah(itemData.quantity * +itemData.price)}
 				</Text>
 			</HStack>
 		</View>

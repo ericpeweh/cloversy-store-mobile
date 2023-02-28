@@ -23,6 +23,8 @@ import ShippingPickerScreen from "../screens/ShippingPickerScreen";
 import PaymentPickerScreen from "../screens/PaymentPickerScreen";
 import EditOrderInfoScreen from "../screens/EditOrderInfoScreen";
 import VoucherPickerScreen from "../screens/VoucherPickerScreen";
+import CheckoutSuccessScreen from "../screens/CheckoutSuccessScreen";
+import PaymentScreen from "../screens/PaymentScreen";
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -115,6 +117,22 @@ const HomeStack = () => {
 				component={VoucherPickerScreen}
 				options={{
 					headerTitle: "Use Voucher",
+					headerTitleAlign: "center"
+				}}
+			/>
+			<Stack.Screen
+				name="HomeCheckoutSuccess"
+				component={CheckoutSuccessScreen}
+				options={{
+					headerTitle: "Checkout Success",
+					headerTitleAlign: "center"
+				}}
+			/>
+			<Stack.Screen
+				name="HomePayment"
+				component={PaymentScreen}
+				options={{
+					headerTitle: "Order Payment",
 					headerTitleAlign: "center"
 				}}
 			/>

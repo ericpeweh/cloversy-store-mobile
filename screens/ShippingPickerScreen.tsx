@@ -63,7 +63,7 @@ const ShippingPickerScreen = ({
 		<ScrollView style={styles.addressPickerScreenContainer}>
 			{!isGetShippingCostsLoading && isGetShippingCostsSuccess && noShippingCostsDataFound && (
 				<FallbackContainer size="md">
-					<AlertBox status="info">You have no address. Please create one!</AlertBox>
+					<AlertBox status="info">Shipping method not available.</AlertBox>
 				</FallbackContainer>
 			)}
 			{isGetShippingCostsLoading && (

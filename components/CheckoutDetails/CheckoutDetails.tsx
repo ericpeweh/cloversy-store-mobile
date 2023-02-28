@@ -47,7 +47,9 @@ const CheckoutDetails = () => {
 			)}
 			{!isGetCartItemsLoading && isGetCartItemsSuccess && noCartItemsDataFound && (
 				<FallbackContainer>
-					<AlertBox status="info">You have no item in your cart!</AlertBox>
+					<AlertBox status="info" width="100%">
+						You have no item in your cart!
+					</AlertBox>
 				</FallbackContainer>
 			)}
 			{cartItemsData &&

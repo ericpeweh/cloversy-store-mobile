@@ -56,6 +56,14 @@ export const courierImages: { [key: string]: any } = {
 	sicepat: SiCepatLogo
 };
 
+export const paymentImages: { [key: string]: any } = {
+	gopay: GoPayLogo,
+	mandiri: MandiriLogo,
+	bni: BNILogo,
+	bri: BRILogo,
+	permata: PermataLogo
+};
+
 export const paymentMethods: { name: PaymentMethod; label: string; image: ImageSourcePropType }[] =
 	[
 		{

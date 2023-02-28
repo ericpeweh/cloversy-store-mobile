@@ -57,6 +57,7 @@ const CartBottomTab = () => {
 					alignSelf="stretch"
 					alignItems="center"
 					justifyContent="center"
+					disabled={cartItems.length === 0}
 					onPress={() => navigation.navigate("HomeCheckout", {})}
 				>
 					{({ isHovered, isPressed }) => (
@@ -66,7 +67,13 @@ const CartBottomTab = () => {
 							width="100%"
 							justifyContent="center"
 							alignItems="center"
-							bg={isHovered || isPressed ? "white:alpha.10" : "primary.400"}
+							bg={
+								cartItems.length === 0
+									? "gray.400"
+									: isHovered || isPressed
+									? "white:alpha.10"
+									: "primary.400"
+							}
 						>
 							<Text
 								color="white"

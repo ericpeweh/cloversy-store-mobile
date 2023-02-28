@@ -15,12 +15,14 @@ import { HStack, Text } from "native-base";
 
 interface CheckoutSectionTitleProps extends IHStackProps {
 	title: string;
+	isDisabled?: boolean;
 	navigateScreenName?: keyof RootStackParamList;
 	buttonText?: string;
 }
 
 const CheckoutSectionTitle = ({
 	title,
+	isDisabled = false,
 	navigateScreenName,
 	buttonText = "Change",
 	...props
@@ -38,7 +40,11 @@ const CheckoutSectionTitle = ({
 					py={1}
 					_text={{ fontWeight: "500", fontSize: "12px" }}
 					_pressed={{ bg: "primary.500" }}
-					onPress={() => navigation.navigate(navigateScreenName as any, { state: values })}
+					onPress={() =>
+						!isDisabled && navigation.navigate(navigateScreenName as any, { state: values })
+					}
+					isLoading={isDisabled}
+					disabled={isDisabled}
 				>
 					{buttonText}
 				</Button>

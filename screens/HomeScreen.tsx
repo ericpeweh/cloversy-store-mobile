@@ -30,6 +30,7 @@ import ErrorText from "../components/ErrorText/ErrorText";
 import TryAgainButton from "../components/TryAgainButton/TryAgainButton";
 import LoadingSpinner from "../components/LoadingSpinner/LoadingSpinner";
 import { setSearchQuery } from "../store/slices/productsSlice";
+import Button from "../components/Button/Button";
 
 const HomeScreen = ({ navigation }: RootStackProps<"Home">) => {
 	const isAuth = useSelector(state => state.auth.isAuth);
@@ -91,6 +92,9 @@ const HomeScreen = ({ navigation }: RootStackProps<"Home">) => {
 							<SearchBar onSubmitEditing={searchBarEndEditingHandler} />
 						</View>
 					</View>
+					<Button onPress={() => navigation.navigate("HomeCheckoutSuccess")}>
+						Checkout success
+					</Button>
 					<View style={styles.contentContainer} key="brandCardList">
 						<BrandCardList />
 					</View>

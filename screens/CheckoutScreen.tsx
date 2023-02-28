@@ -34,6 +34,8 @@ import CheckoutPayment from "../components/CheckoutPayment/CheckoutPayment";
 import CheckoutDetails from "../components/CheckoutDetails/CheckoutDetails";
 import CheckoutNotes from "../components/CheckoutNotes/CheckoutNotes";
 import CheckoutVoucher from "../components/CheckoutVoucher/CheckoutVoucher";
+import Button from "../components/Button/Button";
+import AlertBox from "../components/AlertBox/AlertBox";
 
 const CheckoutScreen = ({ navigation, route }: RootStackProps<"HomeCheckout">) => {
 	const dispatch = useDispatch();
@@ -68,11 +70,9 @@ const CheckoutScreen = ({ navigation, route }: RootStackProps<"HomeCheckout">) =
 			data: checkoutResultData,
 			isLoading: isCheckoutLoading,
 			error: checkoutErrorData,
-			isSuccess: isCheckoutSuccess,
-			reset: resetCheckout
+			isSuccess: isCheckoutSuccess
 		}
 	] = useCheckoutMutation();
-	const checkoutResult = checkoutResultData?.data.transaction;
 	const checkoutError: any = checkoutErrorData;
 
 	const submitHandler = async (
@@ -91,25 +91,24 @@ const CheckoutScreen = ({ navigation, route }: RootStackProps<"HomeCheckout">) =
 
 			const result = await checkoutHandler(checkoutData).unwrap();
 			if (result.data.transaction) {
-				// nextHandler();
-				// scrollToTop();
+				// Redirect to success checkout page
+				navigation.replace("HomeCheckoutSuccess", { transaction: result.data.transaction });
 				dispatch(setUserCart({ cart: [] }));
 			}
 			actions.setTouched({});
 			actions.setSubmitting(false);
 			return;
 		}
-
-		// nextHandler();
-		// scrollToTop();
-		actions.setTouched({});
-		actions.setSubmitting(false);
 	};
 
 	// Handle incoming form values changes (redirected from navigate)
 	useEffect(() => {
 		if (route.params.state) {
 			setFormInitialValues(route.params.state);
+		}
+
+		if (route.params.appliedVoucher || route.params.appliedVoucher === null) {
+			setAppliedVoucher(route.params.appliedVoucher);
 		}
 	}, [route.params.state]);
 
@@ -147,7 +146,7 @@ const CheckoutScreen = ({ navigation, route }: RootStackProps<"HomeCheckout">) =
 				onSubmit={submitHandler}
 				enableReinitialize={true}
 			>
-				{({ handleSubmit, values }) => (
+				{({ handleSubmit, errors, touched }) => (
 					<>
 						<View bg="white" p={4} mb={2}>
 							<CheckoutSectionTitle
@@ -156,14 +155,19 @@ const CheckoutScreen = ({ navigation, route }: RootStackProps<"HomeCheckout">) =
 								buttonText="Choose address"
 							/>
 							<CheckoutInfo setFormInitialValues={setFormInitialValues} />
+							{errors.address_id && touched.address_id && (
+								<AlertBox width="100%" mt={3}>
+									{errors.address_id}
+								</AlertBox>
+							)}
 						</View>
 						<View bg="white" p={4} mb={2}>
-							<CheckoutSectionTitle
-								title="Shipping Method"
-								navigateScreenName="HomeCheckoutShippingPicker"
-								buttonText="Change method"
-							/>
 							<CheckoutShipping setFormInitialValues={setFormInitialValues} />
+							{errors.shipping_courier && touched.shipping_courier && (
+								<AlertBox width="100%" mt={3}>
+									{errors.shipping_courier}
+								</AlertBox>
+							)}
 							<CheckoutSectionTitle
 								mt={8}
 								title="Payment Method"
@@ -171,6 +175,11 @@ const CheckoutScreen = ({ navigation, route }: RootStackProps<"HomeCheckout">) =
 								buttonText="Change method"
 							/>
 							<CheckoutPayment />
+							{errors.payment_method && touched.payment_method && (
+								<AlertBox width="100%" mt={3}>
+									{errors.payment_method}
+								</AlertBox>
+							)}
 						</View>
 						<View bg="white" p={4} mb={2}>
 							<CheckoutSectionTitle
@@ -179,6 +188,16 @@ const CheckoutScreen = ({ navigation, route }: RootStackProps<"HomeCheckout">) =
 								buttonText="Edit notes"
 							/>
 							<CheckoutNotes />
+							{errors.customer_note && touched.customer_note && (
+								<AlertBox width="100%" mt={3}>
+									{errors.customer_note}
+								</AlertBox>
+							)}
+							{errors.gift_note && touched.gift_note && (
+								<AlertBox width="100%" mt={3}>
+									{errors.gift_note}
+								</AlertBox>
+							)}
 						</View>
 						<View bg="white" p={4} mb={2}>
 							<CheckoutSectionTitle
@@ -187,10 +206,30 @@ const CheckoutScreen = ({ navigation, route }: RootStackProps<"HomeCheckout">) =
 								buttonText="Use / choose voucher"
 							/>
 							<CheckoutVoucher appliedVoucher={appliedVoucher} />
+							{errors.voucher_code && touched.voucher_code && (
+								<AlertBox width="100%" mt={3}>
+									{errors.voucher_code}
+								</AlertBox>
+							)}
 						</View>
-						<View bg="white" p={4} mb={2}>
+						<View bg="white" p={4}>
 							<CheckoutSectionTitle title="Order Details" />
 							<CheckoutDetails />
+							{checkoutError && (
+								<AlertBox width="100%" mb={3}>
+									{checkoutError?.data?.message || "Failed to checkout."}
+								</AlertBox>
+							)}
+							<Button
+								_pressed={{ bg: "primary.500" }}
+								_text={{ fontSize: "15px", fontWeight: "700", letterSpacing: 0.5 }}
+								py={2}
+								isLoading={isCheckoutLoading}
+								isDisabled={!isGetCartItemsSuccess || cartItemsData?.data.cart.length === 0}
+								onPress={() => handleSubmit()}
+							>
+								Create order
+							</Button>
 						</View>
 					</>
 				)}

@@ -6,6 +6,7 @@ import { NativeStackScreenProps, NativeStackNavigationProp } from "@react-naviga
 import { ProductReviewItem } from "./product.interface";
 import { CheckoutFormValues } from "./cart.interface";
 import { Voucher } from "./account.interface";
+import { ClientTransactionDetails } from "./transaction.interface";
 
 export type RootTabsParamList = {
 	HomeTab: undefined;
@@ -34,13 +35,15 @@ export type RootStackParamList = {
 	HomeProduct: ProductScreenProps;
 	HomeProductReview: ProductReviewProps;
 	HomeCart: undefined;
-	HomeCheckout: { state?: CheckoutFormValues; appliedVoucher?: Voucher };
+	HomeCheckout: { state?: CheckoutFormValues; appliedVoucher?: Voucher | null };
 	HomeCheckoutAddressPicker: { state: CheckoutFormValues };
 	HomeCheckoutShippingPicker: { state: CheckoutFormValues };
 	HomeCheckoutAddAddress: { state: CheckoutFormValues };
 	HomeCheckoutPaymentPicker: { state: CheckoutFormValues };
 	HomeCheckoutEditOrderInfo: { state: CheckoutFormValues };
 	HomeCheckoutVoucherPicker: { state: CheckoutFormValues };
+	HomeCheckoutSuccess: { transaction: ClientTransactionDetails };
+	HomePayment: { transactionId: string };
 	Explore: undefined;
 	ExploreProduct: ProductScreenProps;
 	ExploreProductReview: ProductReviewProps;
