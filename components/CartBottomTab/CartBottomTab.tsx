@@ -58,7 +58,7 @@ const CartBottomTab = () => {
 					alignItems="center"
 					justifyContent="center"
 					disabled={cartItems.length === 0}
-					onPress={() => navigation.navigate("HomeCheckout", {})}
+					onPress={() => navigation.replace("HomeCheckout", {})}
 				>
 					{({ isHovered, isPressed }) => (
 						<HStack

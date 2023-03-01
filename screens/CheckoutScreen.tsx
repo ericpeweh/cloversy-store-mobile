@@ -9,6 +9,7 @@ import useDispatch from "../hooks/useDispatch";
 import useSelector from "../hooks/useSelector";
 import { useGetCheckoutCartItemsQuery } from "../api/cart.api";
 import { useCheckoutMutation } from "../api/transaction.api";
+import useHideHeaderTabbar from "../hooks/useHideHeaderTabbar";
 
 // Types
 import {
@@ -26,7 +27,7 @@ import { setUserCart } from "../store/slices/globalSlice";
 import { CheckoutSchema } from "../utils/validation";
 
 // Components
-import { Divider, HStack, ScrollView, Text, View } from "native-base";
+import { ScrollView, View } from "native-base";
 import CheckoutInfo from "../components/CheckoutInfo/CheckoutInfo";
 import CheckoutShipping from "../components/CheckoutShipping/CheckoutShipping";
 import CheckoutSectionTitle from "../components/CheckoutSectionTitle/CheckoutSectionTitle";
@@ -42,15 +43,10 @@ const CheckoutScreen = ({ navigation, route }: RootStackProps<"HomeCheckout">) =
 	const isAuth = useSelector(state => state.auth.isAuth);
 	const [appliedVoucher, setAppliedVoucher] = useState<Voucher | null>(null);
 
-	const {
-		data: cartItemsData,
-		error: getCartItemsErrorData,
-		isLoading: isGetCartItemsLoading,
-		isSuccess: isGetCartItemsSuccess,
-		isUninitialized: isGetCartItemsUninitialized
-	} = useGetCheckoutCartItemsQuery(isAuth, { skip: !isAuth });
-	const getCartItemsError: any = getCartItemsErrorData;
-	const noCartItemsDataFound = cartItemsData?.data.cart.length === 0;
+	const { data: cartItemsData, isSuccess: isGetCartItemsSuccess } = useGetCheckoutCartItemsQuery(
+		isAuth,
+		{ skip: !isAuth }
+	);
 
 	const [formInitialValues, setFormInitialValues] = useState<CheckoutFormValues>({
 		voucher_code: "",
@@ -66,12 +62,7 @@ const CheckoutScreen = ({ navigation, route }: RootStackProps<"HomeCheckout">) =
 
 	const [
 		checkoutHandler,
-		{
-			data: checkoutResultData,
-			isLoading: isCheckoutLoading,
-			error: checkoutErrorData,
-			isSuccess: isCheckoutSuccess
-		}
+		{ isLoading: isCheckoutLoading, error: checkoutErrorData, isSuccess: isCheckoutSuccess }
 	] = useCheckoutMutation();
 	const checkoutError: any = checkoutErrorData;
 
@@ -115,20 +106,22 @@ const CheckoutScreen = ({ navigation, route }: RootStackProps<"HomeCheckout">) =
 	// Add confirm modal if user cancel checkout
 	useEffect(() => {
 		const beforeRemoveEventHandler = (event: ScreenBeforeRemoveEvent) => {
-			event.preventDefault();
+			if (!isCheckoutSuccess) {
+				event.preventDefault();
 
-			Alert.alert(
-				"Cancel checkout",
-				"Are you sure you want to cancel checkout? All entered data will be lost.",
-				[
-					{ text: "No", style: "cancel", onPress: () => {} },
-					{
-						text: "Yes",
-						style: "destructive",
-						onPress: () => navigation.dispatch(event.data.action)
-					}
-				]
-			);
+				Alert.alert(
+					"Cancel checkout",
+					"Are you sure you want to cancel checkout? All entered data will be lost.",
+					[
+						{ text: "No", style: "cancel", onPress: () => {} },
+						{
+							text: "Yes",
+							style: "destructive",
+							onPress: () => navigation.dispatch(event.data.action)
+						}
+					]
+				);
+			}
 		};
 
 		navigation.addListener("beforeRemove", beforeRemoveEventHandler);
@@ -136,7 +129,10 @@ const CheckoutScreen = ({ navigation, route }: RootStackProps<"HomeCheckout">) =
 		return () => {
 			navigation.removeListener("beforeRemove", beforeRemoveEventHandler);
 		};
-	}, []);
+	}, [isCheckoutSuccess]);
+
+	// Hide parent header and tabbar on mount
+	useHideHeaderTabbar(navigation);
 
 	return (
 		<ScrollView style={styles.checkoutScreenContainer}>

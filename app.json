@@ -1,5 +1,6 @@
 {
 	"expo": {
+		"scheme": "id.cloversyid.cloversystoremobile",
 		"name": "cloversy-store-mobile",
 		"slug": "cloversy-store-mobile",
 		"version": "1.0.0",
@@ -26,7 +27,21 @@
 				"backgroundColor": "#FFFFFF"
 			},
 			"package": "id.cloversyid.cloversystoremobile",
-			"googleServicesFile": "./google-services.json"
+			"googleServicesFile": "./google-services.json",
+			"intentFilters": [
+				{
+					"action": "VIEW",
+					"autoVerify": true,
+					"data": [
+						{
+							"scheme": "https",
+							"host": "*.cloversy.id",
+							"pathPrefix": "/products"
+						}
+					],
+					"category": ["BROWSABLE", "DEFAULT"]
+				}
+			]
 		},
 		"web": {
 			"favicon": "./assets/favicon.png"

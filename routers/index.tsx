@@ -1,7 +1,8 @@
 // Dependencies
 import { useState } from "react";
-import { NavigationContainer } from "@react-navigation/native";
+import { LinkingOptions, NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import * as Linking from "expo-linking";
 
 // Icons
 import { AntDesign, Feather } from "@expo/vector-icons";
@@ -11,7 +12,7 @@ import useWishlist from "../hooks/useWishlist";
 import useSelector from "../hooks/useSelector";
 
 // Types
-import { RootTabsParamList } from "../interfaces";
+import { RootStackParamList, RootTabsParamList } from "../interfaces";
 
 // Components
 import { Badge, Icon, Text, useTheme, VStack } from "native-base";
@@ -29,7 +30,23 @@ import ConfirmModal from "../components/ConfirmModal/ConfirmModal";
 
 const Tabs = createBottomTabNavigator<RootTabsParamList>();
 
+const prefix = Linking.createURL("/");
+
 const Router = () => {
+	const linking: LinkingOptions<RootStackParamList & RootTabsParamList> = {
+		prefixes: [prefix, "https://cloversy.id", "https://www.cloversy.id"],
+		config: {
+			screens: {
+				HomeTab: {
+					screens: {
+						HomeProduct: "products/:productSlug",
+						HomePayment: "orders/payment"
+					}
+				}
+			}
+		}
+	};
+
 	const cartItems = useSelector(state => state.global.userCart);
 	const cartQuantityCount = cartItems.reduce((totalQty, item) => (totalQty += item.quantity), 0);
 
@@ -45,7 +62,7 @@ const Router = () => {
 	};
 
 	return (
-		<NavigationContainer>
+		<NavigationContainer linking={linking}>
 			<ConfirmModal
 				title="Clear wishlist"
 				description="All your products in wishlist will be deleted, this action can't be undone, are you sure?"

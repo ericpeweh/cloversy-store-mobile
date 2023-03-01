@@ -4,7 +4,7 @@ import React from "react";
 // Hooks
 import useWishlist from "../../hooks/useWishlist";
 import useCart from "../../hooks/useCart";
-import useDimensions from "../../hooks/useDimensions";
+import usePopToast from "../../hooks/usePopToast";
 
 // Types
 import { Product } from "../../interfaces";
@@ -13,10 +13,10 @@ import { Product } from "../../interfaces";
 import { shadowProps } from "../../themes/helpers";
 
 // Icons
-import { AntDesign, Feather, MaterialIcons } from "@expo/vector-icons";
+import { AntDesign, Feather } from "@expo/vector-icons";
 
 // Components
-import { HStack, Icon, Pressable, Text, useToast, View } from "native-base";
+import { HStack, Icon, Pressable, Text } from "native-base";
 import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
 
 interface ProductBottomBarProps {
@@ -26,8 +26,6 @@ interface ProductBottomBarProps {
 }
 
 const ProductBottomBar = ({ productData, shoesSize, quantity }: ProductBottomBarProps) => {
-	const { window } = useDimensions();
-	const addToCartToast = useToast();
 	const {
 		isWishlisted,
 		addToWishlistHandler,
@@ -37,32 +35,11 @@ const ProductBottomBar = ({ productData, shoesSize, quantity }: ProductBottomBar
 	} = useWishlist(productData);
 
 	const { addToCartHandler, isAddToCartLoading } = useCart();
-
-	const showAddToCartToastHandler = () => {
-		if (addToCartToast.isActive("addToCart")) return;
-
-		addToCartToast.show({
-			render: () => (
-				<View pb={1} width={window.width}>
-					<HStack
-						bg="secondary.400"
-						py={3}
-						px={2}
-						alignItems="center"
-						justifyContent="center"
-						space={2}
-					>
-						<Text textAlign="center" color="white">
-							Product successfully added to your shopping cart
-						</Text>
-						<Icon as={MaterialIcons} name="done" color="white" />
-					</HStack>
-				</View>
-			),
-			duration: 4000,
-			id: "addToCart"
-		});
-	};
+	const { showToastHandler: showAddToCartToastHandler } = usePopToast({
+		id: "addToCart",
+		text: "	Product successfully added to your shopping cart",
+		showIcon: true
+	});
 
 	const addProductToCartHandler = () => {
 		if (!productData?.sizes || !shoesSize || !quantity) return;

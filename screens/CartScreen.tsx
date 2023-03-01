@@ -9,6 +9,7 @@ import { CartItemDetails, RootStackProps } from "../interfaces";
 import useSelector from "../hooks/useSelector";
 import { useGetCartItemsQuery } from "../api/cart.api";
 import useCart from "../hooks/useCart";
+import useHideHeaderTabbar from "../hooks/useHideHeaderTabbar";
 
 // Components
 import { FlatList, Text, View } from "native-base";
@@ -69,22 +70,7 @@ const CartScreen = ({ navigation }: RootStackProps<"HomeCart">) => {
 	} = useCart();
 
 	// Hide parent header and tabbar on mount
-	useLayoutEffect(
-		useCallback(() => {
-			navigation?.getParent()?.setOptions({
-				headerShown: false,
-				tabBarStyle: { display: "none" }
-			});
-
-			// Cleanup function (revert header & tabbar style changes)
-			return () => {
-				navigation?.getParent()?.setOptions({
-					headerShown: true,
-					tabBarStyle: { display: "flex", height: 56, paddingTop: 5, paddingBottom: 7 }
-				});
-			};
-		}, [])
-	);
+	useHideHeaderTabbar(navigation);
 
 	const setAndOpenDeleteCartItemModalHandler = (cartItem: CartItemDetails) => {
 		setCartItemToDelete(cartItem);

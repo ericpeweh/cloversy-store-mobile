@@ -43,7 +43,7 @@ export type RootStackParamList = {
 	HomeCheckoutEditOrderInfo: { state: CheckoutFormValues };
 	HomeCheckoutVoucherPicker: { state: CheckoutFormValues };
 	HomeCheckoutSuccess: { transaction: ClientTransactionDetails };
-	HomePayment: { transactionId: string };
+	HomePayment: { transactionId: string; order_id?: string; result?: "success" | "failure" };
 	Explore: undefined;
 	ExploreProduct: ProductScreenProps;
 	ExploreProductReview: ProductReviewProps;
@@ -51,10 +51,14 @@ export type RootStackParamList = {
 	Wishlist: undefined;
 	WishlistProduct: ProductScreenProps;
 	WishlistProductReview: ProductReviewProps;
+	AccountDashboard: undefined;
+	AccountTransactions: undefined;
 };
 
-export type RootStackProps<T extends keyof RootStackParamList> = NativeStackScreenProps<
-	RootStackParamList,
+export type CombinedParamList = RootTabsParamList & RootStackParamList;
+
+export type RootStackProps<T extends keyof CombinedParamList> = NativeStackScreenProps<
+	CombinedParamList,
 	T
 >;
 

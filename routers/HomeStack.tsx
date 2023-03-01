@@ -36,7 +36,11 @@ const HomeStack = () => {
 				headerLeft: ({ canGoBack }) => (
 					<IconButton
 						onPress={() => {
-							if (canGoBack) navigation.goBack();
+							if (canGoBack) {
+								navigation.goBack();
+							} else {
+								navigation.navigate("Home");
+							}
 						}}
 						size="sm"
 						borderColor="gray.100"

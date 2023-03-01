@@ -1,85 +1,48 @@
 // Dependencies
-import React, { useCallback, useLayoutEffect } from "react";
+import React from "react";
 import { StyleSheet } from "react-native";
 import { shallowEqual } from "react-redux";
 
 // Types
-import { RootStackProps } from "../interfaces";
+import { RootStackProps, RootTabsParamList } from "../interfaces";
 
 // Icons
 import { Octicons, MaterialIcons } from "@expo/vector-icons";
 
 // Hooks
-import { useGetTransactionDetailsQuery } from "../api/transaction.api";
 import useSelector from "../hooks/useSelector";
+import useHideHeaderTabbar from "../hooks/useHideHeaderTabbar";
 
 // Utils
 import formatToRupiah from "../utils/formatToRupiah";
 import { courierImages, paymentImages } from "../utils/content";
 
 // Components
-import {
-	AspectRatio,
-	Divider,
-	HStack,
-	Icon,
-	Image,
-	ScrollView,
-	Text,
-	View,
-	VStack
-} from "native-base";
+import { AspectRatio, Divider, HStack, Icon, Image, ScrollView, Text, VStack } from "native-base";
 import Button from "../components/Button/Button";
 import OrderDetailsItem from "../components/OrderDetailsItem/OrderDetailsItem";
+import { CommonActions } from "@react-navigation/native";
 
 const CheckoutSuccessScreen = ({ navigation, route }: RootStackProps<"HomeCheckoutSuccess">) => {
-	const { isAuth, full_name } = useSelector(state => state.auth, shallowEqual);
+	const { full_name } = useSelector(state => state.auth, shallowEqual);
 
-	// const { transaction } = route.params;
+	const { transaction } = route.params;
 
 	// TE6BIQNTNE = mandiri
 	// LAUEG3SHOT = bri
-	// MZNIYOYHBX = gopay
-
-	const {
-		data: resultData,
-		isLoading: isGetOrderLoading,
-		isSuccess: isGetOrderSuccess,
-		error: getOrderErrorData,
-		refetch: refetchOrder,
-		isUninitialized: isGetOrderUninitialized
-	} = useGetTransactionDetailsQuery("TE6BIQNTNE", {
-		skip: !isAuth,
-		pollingInterval: 1000 * 30 // 30 seconds
-	});
-	const getOrderError: any = getOrderErrorData;
-	const transaction = resultData?.data.transaction;
+	// 7VDN2OA5T5 = gopay
+	// VKT54VEUPB = permata
 
 	const shipping = transaction?.shipping_details;
 	const payment = transaction?.payment_details;
 	const items = transaction?.item_details;
 
 	// Hide parent header and tabbar on mount
-	useLayoutEffect(
-		useCallback(() => {
-			navigation?.getParent()?.setOptions({
-				headerShown: false,
-				tabBarStyle: { display: "none" }
-			});
-
-			// Cleanup function (revert header & tabbar style changes)
-			return () => {
-				navigation?.getParent()?.setOptions({
-					headerShown: true,
-					tabBarStyle: { display: "flex", height: 56, paddingTop: 5, paddingBottom: 7 }
-				});
-			};
-		}, [])
-	);
+	useHideHeaderTabbar(navigation);
 
 	return (
 		<ScrollView style={styles.checkoutSuccessScreenContainer} p={4}>
-			{isGetOrderSuccess && transaction && shipping && payment && items && (
+			{transaction && shipping && payment && items && (
 				<VStack space={3} mb={8}>
 					<HStack space={3} alignItems="center">
 						<Icon as={Octicons} name="check-circle" color="primary.400" size="50px" />
@@ -260,6 +223,15 @@ const CheckoutSuccessScreen = ({ navigation, route }: RootStackProps<"HomeChecko
 								fontWeight: "500"
 							}}
 							_pressed={{ bg: "gray.100" }}
+							onPress={() => {
+								navigation.dispatch(
+									CommonActions.reset({
+										index: 1,
+										routes: [{ key: "Home", name: "Home", params: undefined }]
+									})
+								);
+								navigation.navigate("AccountTab", { screen: "AccountTransactions" } as any);
+							}}
 						>
 							Transactions List
 						</Button>

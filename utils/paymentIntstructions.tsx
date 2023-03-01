@@ -91,9 +91,8 @@ const paymentInstructions: PaymentInstructionsType = {
 			steps: (
 				<VStack p={4} pt={2}>
 					<NormalText>
-						1. Pilih <BoldText>transaksi lainnya</BoldText>{" "}
+						1. Pilih <BoldText>transaksi lainnya</BoldText> pada menu tama
 					</NormalText>
-					pada menu tama.,
 					<NormalText>
 						2. Pilih <BoldText>pembayaran</BoldText>.
 					</NormalText>
