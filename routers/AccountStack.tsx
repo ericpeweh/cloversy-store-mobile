@@ -17,6 +17,9 @@ import MyOrdersScreen from "../screens/MyOrdersScreen";
 import MyVouchersScreen from "../screens/MyVouchersScreen";
 import PaymentScreen from "../screens/PaymentScreen";
 import OrderDetailsScreen from "../screens/OrderDetailsScreen";
+import AddressScreen from "../screens/AddressScreen";
+import AddAddressScreen from "../screens/AddAddressScreen";
+import EditAddressScreen from "../screens/EditAddressScreen";
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -75,6 +78,30 @@ const AccountStack = () => {
 				component={OrderDetailsScreen}
 				options={{
 					headerTitle: "Order Details",
+					headerTitleAlign: "center"
+				}}
+			/>
+			<Stack.Screen
+				name="AccountAddress"
+				component={AddressScreen}
+				options={{
+					headerTitle: "Shipping Address",
+					headerTitleAlign: "center"
+				}}
+			/>
+			<Stack.Screen
+				name="AccountAddAddress"
+				component={AddAddressScreen}
+				options={{
+					headerTitle: "Create Address",
+					headerTitleAlign: "center"
+				}}
+			/>
+			<Stack.Screen
+				name="AccountEditAddress"
+				component={EditAddressScreen}
+				options={{
+					headerTitle: "Update Address",
 					headerTitleAlign: "center"
 				}}
 			/>

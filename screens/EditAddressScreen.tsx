@@ -7,13 +7,13 @@ import { Formik } from "formik";
 import { Address, RootStackProps } from "../interfaces";
 
 // Hooks
-import { useCreateAddressMutation } from "../api/address.api";
+import { useUpdateAddressMutation } from "../api/address.api";
 import useGetProvinceOptions from "../hooks/useGetProvinceOptions";
 import useGetCityOptions from "../hooks/useGetCityOptions";
 import useGetSubdistrictOptions from "../hooks/useGetSubdistrictOptions";
 
 // Utils
-import { CreateAddressSchema } from "../utils/validation";
+import { UpdateAddressSchema } from "../utils/validation";
 
 // Components
 import { ScrollView, Text, View, VStack } from "native-base";
@@ -27,30 +27,32 @@ import CheckboxInput from "../components/CheckboxInput/CheckboxInput";
 
 type InputAddressFormValues = Omit<Address, "id">;
 
-const AddAddressScreen = ({
-	navigation,
-	route
-}: RootStackProps<"HomeCheckoutAddAddress" | "AccountAddAddress">) => {
-	const params = route.params;
+const EditAddressScreen = ({ navigation, route }: RootStackProps<"AccountEditAddress">) => {
+	const { addressData } = route.params;
 
 	const [selectedProvinceId, setSelectedProvinceId] = useState(-1);
 	const [selectedCityId, setSelectedCityId] = useState(-1);
 
 	const [formInitialValues, setFormInitialValues] = useState<InputAddressFormValues>({
-		recipient_name: "",
-		shipping_note: "",
-		contact: "",
-		address: "",
-		is_default: false,
-		province: "",
-		province_id: -1,
-		city: "",
-		city_id: -1,
-		subdistrict: "",
-		subdistrict_id: -1,
-		postal_code: "",
-		label: ""
+		recipient_name: addressData?.recipient_name ?? "",
+		contact: addressData?.contact ?? "",
+		address: addressData?.address ?? "",
+		is_default: addressData?.is_default ?? false,
+		province: addressData?.province ?? "",
+		province_id: addressData?.province_id ?? -1,
+		city: addressData?.city ?? "",
+		city_id: addressData?.city_id ?? -1,
+		subdistrict: addressData?.subdistrict ?? "",
+		subdistrict_id: addressData?.subdistrict_id ?? -1,
+		postal_code: addressData?.postal_code ?? "",
+		label: addressData?.label ?? "",
+		shipping_note: addressData?.shipping_note ?? ""
 	});
+
+	useEffect(() => {
+		if (addressData?.province_id) setSelectedProvinceId(addressData?.province_id);
+		if (addressData?.city_id) setSelectedCityId(addressData?.city_id);
+	}, [addressData]);
 
 	const {
 		provinceOptions,
@@ -77,36 +79,31 @@ const AddAddressScreen = ({
 	const getSubdistrictsError: any = subdistrictError;
 
 	const [
-		createAddress,
+		updateAddress,
 		{
-			isLoading: isCreateAddressLoading,
-			error: createAddressErrorData,
-			isSuccess: isCreateAddressSuccess
+			isLoading: isUpdateAddressLoading,
+			error: updateAddressErrorData,
+			isSuccess: isUpdateAddressSuccess
 		}
-	] = useCreateAddressMutation();
-	const createAddressError: any = createAddressErrorData;
+	] = useUpdateAddressMutation();
+	const updateAddressError: any = updateAddressErrorData;
 
 	useEffect(() => {
-		if (params?.state && isCreateAddressSuccess) {
-			// Redirect to HomeCheckoutAddressPicker screen
-			navigation.navigate("HomeCheckoutAddressPicker", { state: params?.state });
-		}
-
-		if (params?.state === undefined && isCreateAddressSuccess) {
+		if (isUpdateAddressSuccess) {
 			// Redirect to account addresses screen
 			navigation.navigate("AccountAddress");
 		}
-	}, [isCreateAddressSuccess]);
+	}, [isUpdateAddressSuccess]);
 
 	const submitHandler = (values: InputAddressFormValues) => {
-		createAddress(values);
+		updateAddress({ id: addressData.id, ...values });
 	};
 
 	return (
 		<View style={styles.addressPickerScreenContainer}>
 			<Formik
 				initialValues={formInitialValues}
-				validationSchema={CreateAddressSchema}
+				validationSchema={UpdateAddressSchema}
 				onSubmit={values => {
 					if (!isGetProvincesFetching && !isGetCitiesFetching && !isGetSubdistrictsFetching) {
 						submitHandler(values);
@@ -277,17 +274,17 @@ const AddAddressScreen = ({
 								>
 									Set as default address
 								</CheckboxInput>
-								{createAddressError && (
+								{updateAddressError && (
 									<FallbackContainer size="md">
-										<AlertBox width="100%">{createAddressError?.data?.message}</AlertBox>
+										<AlertBox width="100%">{updateAddressError?.data?.message}</AlertBox>
 									</FallbackContainer>
 								)}
 							</VStack>
 						</ScrollView>
 						<SingleButtonTab
-							text="Save Address"
+							text="Update Address"
 							onPress={() => handleSubmit()}
-							isLoading={isCreateAddressLoading}
+							isLoading={isUpdateAddressLoading}
 						/>
 					</>
 				)}
@@ -296,7 +293,7 @@ const AddAddressScreen = ({
 	);
 };
 
-export default AddAddressScreen;
+export default EditAddressScreen;
 
 const styles = StyleSheet.create({
 	addressPickerScreenContainer: {

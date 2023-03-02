@@ -1,6 +1,6 @@
 // Dependencies
-import React, { useEffect, useMemo, useState } from "react";
-import { StyleSheet, TextInput } from "react-native";
+import React, { useMemo } from "react";
+import { StyleSheet } from "react-native";
 
 // Types
 import { RootStackProps } from "../interfaces";
@@ -13,18 +13,7 @@ import useSelector from "../hooks/useSelector";
 import { Ionicons, Feather } from "@expo/vector-icons";
 
 // Components
-import {
-	Alert,
-	Center,
-	Divider,
-	HStack,
-	Icon,
-	Pressable,
-	ScrollView,
-	Text,
-	View,
-	VStack
-} from "native-base";
+import { Center, Divider, HStack, Icon, Pressable, ScrollView, Text, View } from "native-base";
 import Button from "../components/Button/Button";
 import FallbackContainer from "../components/FallbackContainer/FallbackContainer";
 import LoadingSpinner from "../components/LoadingSpinner/LoadingSpinner";

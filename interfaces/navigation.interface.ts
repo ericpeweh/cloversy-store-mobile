@@ -5,7 +5,7 @@ import { NativeStackScreenProps, NativeStackNavigationProp } from "@react-naviga
 // Types
 import { ProductReviewItem } from "./product.interface";
 import { CheckoutFormValues } from "./cart.interface";
-import { Voucher } from "./account.interface";
+import { Address, Voucher } from "./account.interface";
 import { ClientTransactionDetails } from "./transaction.interface";
 
 export type RootTabsParamList = {
@@ -62,6 +62,9 @@ export type RootStackParamList = {
 	AccountMyVouchers: undefined;
 	AccounPayment: PaymentScreenProps;
 	AccountOrderDetails: { transactionId: string };
+	AccountAddress: undefined;
+	AccountAddAddress: undefined;
+	AccountEditAddress: { addressData: Address };
 };
 
 export type CombinedParamList = RootTabsParamList & RootStackParamList;

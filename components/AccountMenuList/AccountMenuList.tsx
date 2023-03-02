@@ -136,7 +136,12 @@ const AccountMenuList = () => {
 				label="My Vouchers"
 				onPress={() => navigation.navigate("AccountMyVouchers")}
 			/>
-			<AccountMenuListItem icon={Ionicons} iconName="location-outline" label="Shipping Address" />
+			<AccountMenuListItem
+				icon={Ionicons}
+				iconName="location-outline"
+				label="Shipping Address"
+				onPress={() => navigation.navigate("AccountAddress")}
+			/>
 			<AccountMenuListItem
 				icon={MaterialCommunityIcons}
 				iconName="message-text-outline"

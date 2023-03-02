@@ -24,6 +24,7 @@ const ImageViewer = ({ images, imageIndex, visible, onRequestClose }: ImageViewe
 			imageIndex={imageIndex}
 			visible={visible}
 			onRequestClose={onRequestClose}
+			presentationStyle="fullScreen"
 			HeaderComponent={() => (
 				<HStack p={4} alignItems="center" justifyContent="flex-end">
 					<IconButton
@@ -43,6 +44,7 @@ const ImageViewer = ({ images, imageIndex, visible, onRequestClose }: ImageViewe
 					</Center>
 				</View>
 			)}
+			swipeToCloseEnabled={false}
 		/>
 	);
 };

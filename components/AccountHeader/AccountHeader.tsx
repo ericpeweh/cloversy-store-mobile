@@ -8,6 +8,9 @@ import useSelector from "../../hooks/useSelector";
 // Icons
 import { MaterialIcons } from "@expo/vector-icons";
 
+// Images
+const NoImagePlaceholder = require("../../assets/images/no-image.png");
+
 // Components
 import { View, Text, HStack, Avatar, VStack, Icon, Badge } from "native-base";
 import IconButton from "../IconButton/IconButton";
@@ -29,7 +32,11 @@ const AccountHeader = () => {
 			>
 				<Avatar
 					bg="gray.200"
-					source={{ uri: profile_picture, headers: { referrer: "no-ref" } }}
+					source={
+						profile_picture
+							? { uri: profile_picture, headers: { referrer: "no-ref" } }
+							: NoImagePlaceholder
+					}
 					width="55px"
 					height="55px"
 				/>
