@@ -139,13 +139,12 @@ const ExploreScreen = ({ navigation }: RootStackProps<"Explore">) => {
 							rounded="lg"
 							mb={-4}
 							mr={-1}
-							bg="white"
+							bg="primary.400"
 							zIndex={1}
-							py={0}
+							py={0.3}
 							px={1.5}
-							borderColor="gray.400"
 							alignSelf="flex-end"
-							_text={{ fontSize: 10, color: "black" }}
+							_text={{ fontSize: 10, color: "white" }}
 						>
 							{filterCount}
 						</Badge>
@@ -154,14 +153,17 @@ const ExploreScreen = ({ navigation }: RootStackProps<"Explore">) => {
 							size="sm"
 							height="40px"
 							width="40px"
-							borderColor="transparent"
-							bg="secondary.300"
-							_pressed={{ bg: "gray.600" }}
+							borderColor="gray.100"
+							bg="white"
+							_pressed={{ bg: "gray.100" }}
 							borderRadius="10px"
-							icon={<Icon as={FontAwesome} name="sliders" color="white" size="md" mr={-0.5} />}
+							icon={
+								<Icon as={FontAwesome} name="sliders" color="secondary.400" size="md" mr={-0.5} />
+							}
 							ml={2}
 							onPress={() => navigation.navigate("ExploreProductFilter")}
 							disabled={!isGetProductsSuccess}
+							style={{ ...shadowProps.xs }}
 						/>
 					</VStack>
 				</Flex>

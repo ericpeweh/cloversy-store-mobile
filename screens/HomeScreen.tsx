@@ -11,7 +11,6 @@ import useDispatch from "../hooks/useDispatch";
 import useSelector from "../hooks/useSelector";
 
 // Actions
-import { logoutUser } from "../store/slices/authSlice";
 import { setSearchQuery } from "../store/slices/productsSlice";
 
 // Images
@@ -109,7 +108,6 @@ const HomeScreen = ({ navigation }: RootStackProps<"Home">) => {
 					)}
 				</View>
 			}
-			// ListFooterComponent={<View height={6} key="homeFooter"></View>}
 			data={isGetProductsSuccess ? productsData?.data.products : []}
 			keyExtractor={(item, i) => {
 				return `${item.id}-${i}`;
@@ -117,9 +115,7 @@ const HomeScreen = ({ navigation }: RootStackProps<"Home">) => {
 			renderItem={({ item, index }) => (
 				<ProductCard index={index} productData={item} targetScreenName="HomeProduct" />
 			)}
-		>
-			{/* <Button onPress={logoutHandler}>Logout</Button> */}
-		</FlatList>
+		></FlatList>
 	);
 };
 
