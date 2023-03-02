@@ -17,16 +17,16 @@ const OrderTimeline = ({ ...props }: OrderTimelineProps) => {
 			lineColor={colors.gray[100]}
 			lineWidth={3}
 			titleStyle={{
-				fontSize: 12,
+				fontSize: 13,
 				fontWeight: "400",
 				marginTop: -10,
 				marginBottom: 20,
-				color: colors.gray[500]
+				color: colors.gray[700]
 			}}
 			descriptionStyle={{ display: "none" }}
 			detailContainerStyle={{ marginLeft: 5, flex: 1 }}
 			timeContainerStyle={{ minWidth: 115 }}
-			timeStyle={{ fontSize: 12, textAlign: "left" }}
+			timeStyle={{ fontSize: 13, textAlign: "left", color: colors.gray[500] }}
 			innerCircle="dot"
 			{...props}
 		/>

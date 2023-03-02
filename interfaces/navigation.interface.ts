@@ -65,6 +65,7 @@ export type RootStackParamList = {
 	AccountAddress: undefined;
 	AccountAddAddress: undefined;
 	AccountEditAddress: { addressData: Address };
+	AccountProduct: ProductScreenProps;
 };
 
 export type CombinedParamList = RootTabsParamList & RootStackParamList;

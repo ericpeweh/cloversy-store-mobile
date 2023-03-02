@@ -147,9 +147,11 @@ const OrderListItem = ({ orderData }: OrderListItemProps) => {
 						<Button
 							flex={1}
 							_pressed={{ bg: "primary.500" }}
-							onPress={() => {
-								// Navigate to product detail screen
-							}}
+							onPress={() =>
+								navigation.navigate("AccountProduct", {
+									productSlug: orderData.item_details[0].slug
+								})
+							}
 						>
 							Buy Again
 						</Button>

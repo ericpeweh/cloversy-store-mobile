@@ -301,7 +301,7 @@ const OrderDetailsScreen = ({ route, navigation }: RootStackProps<"AccountOrderD
 							</VStack>
 						</VStack>
 					</VStack>
-					<VStack mb={2} space={2} p={4} bg="white">
+					<VStack space={2} p={4} bg="white">
 						<Text fontWeight="500" fontSize="14px" mb={4}>
 							Order Timeline
 						</Text>

@@ -20,6 +20,7 @@ import OrderDetailsScreen from "../screens/OrderDetailsScreen";
 import AddressScreen from "../screens/AddressScreen";
 import AddAddressScreen from "../screens/AddAddressScreen";
 import EditAddressScreen from "../screens/EditAddressScreen";
+import ProductScreen from "../screens/ProductScreen";
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -102,6 +103,14 @@ const AccountStack = () => {
 				component={EditAddressScreen}
 				options={{
 					headerTitle: "Update Address",
+					headerTitleAlign: "center"
+				}}
+			/>
+			<Stack.Screen
+				name="AccountProduct"
+				component={ProductScreen}
+				options={{
+					headerTitle: "Details",
 					headerTitleAlign: "center"
 				}}
 			/>

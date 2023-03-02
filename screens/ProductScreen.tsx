@@ -40,7 +40,7 @@ import ImageViewer from "../components/ImageViewer/ImageViewer";
 const ProductScreen = ({
 	route,
 	navigation
-}: RootStackProps<"HomeProduct" | "ExploreProduct" | "WishlistProduct">) => {
+}: RootStackProps<"HomeProduct" | "ExploreProduct" | "WishlistProduct" | "AccountProduct">) => {
 	const { name } = route;
 
 	const productScrollRef = useRef<ScrollViewType>(null);
