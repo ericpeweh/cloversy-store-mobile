@@ -26,6 +26,12 @@ interface ProductScreenProps {
 	runTabbarFn?: boolean;
 }
 
+interface PaymentScreenProps {
+	transactionId: string;
+	order_id?: string;
+	result?: "success" | "failure";
+}
+
 interface ProductReviewProps {
 	productReviews: ProductReviewItem[];
 }
@@ -43,7 +49,7 @@ export type RootStackParamList = {
 	HomeCheckoutEditOrderInfo: { state: CheckoutFormValues };
 	HomeCheckoutVoucherPicker: { state: CheckoutFormValues };
 	HomeCheckoutSuccess: { transaction: ClientTransactionDetails };
-	HomePayment: { transactionId: string; order_id?: string; result?: "success" | "failure" };
+	HomePayment: PaymentScreenProps;
 	Explore: undefined;
 	ExploreProduct: ProductScreenProps;
 	ExploreProductReview: ProductReviewProps;
@@ -52,7 +58,10 @@ export type RootStackParamList = {
 	WishlistProduct: ProductScreenProps;
 	WishlistProductReview: ProductReviewProps;
 	AccountDashboard: undefined;
-	AccountTransactions: undefined;
+	AccountMyOrders: undefined;
+	AccountMyVouchers: undefined;
+	AccounPayment: PaymentScreenProps;
+	AccountOrderDetails: { transactionId: string };
 };
 
 export type CombinedParamList = RootTabsParamList & RootStackParamList;
@@ -62,4 +71,4 @@ export type RootStackProps<T extends keyof CombinedParamList> = NativeStackScree
 	T
 >;
 
-export type RootStackNavigationProp = NativeStackNavigationProp<RootStackParamList>;
+export type RootStackNavigationProp = NativeStackNavigationProp<CombinedParamList>;

@@ -13,7 +13,10 @@ import IconButton from "../components/IconButton/IconButton";
 
 // Screens
 import AccountScreen from "../screens/AccountScreen";
-import TransactionsScreen from "../screens/TransactionsScreen";
+import MyOrdersScreen from "../screens/MyOrdersScreen";
+import MyVouchersScreen from "../screens/MyVouchersScreen";
+import PaymentScreen from "../screens/PaymentScreen";
+import OrderDetailsScreen from "../screens/OrderDetailsScreen";
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -44,10 +47,34 @@ const AccountStack = () => {
 				options={{ headerShown: false }}
 			/>
 			<Stack.Screen
-				name="AccountTransactions"
-				component={TransactionsScreen}
+				name="AccountMyOrders"
+				component={MyOrdersScreen}
+				options={{
+					headerTitle: "My Orders",
+					headerTitleAlign: "center"
+				}}
+			/>
+			<Stack.Screen
+				name="AccounPayment"
+				component={PaymentScreen}
 				options={{
 					headerTitle: "Order Payment",
+					headerTitleAlign: "center"
+				}}
+			/>
+			<Stack.Screen
+				name="AccountMyVouchers"
+				component={MyVouchersScreen}
+				options={{
+					headerTitle: "My Vouchers",
+					headerTitleAlign: "center"
+				}}
+			/>
+			<Stack.Screen
+				name="AccountOrderDetails"
+				component={OrderDetailsScreen}
+				options={{
+					headerTitle: "Order Details",
 					headerTitleAlign: "center"
 				}}
 			/>

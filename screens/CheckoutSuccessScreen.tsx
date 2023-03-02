@@ -28,11 +28,6 @@ const CheckoutSuccessScreen = ({ navigation, route }: RootStackProps<"HomeChecko
 
 	const { transaction } = route.params;
 
-	// TE6BIQNTNE = mandiri
-	// LAUEG3SHOT = bri
-	// 7VDN2OA5T5 = gopay
-	// VKT54VEUPB = permata
-
 	const shipping = transaction?.shipping_details;
 	const payment = transaction?.payment_details;
 	const items = transaction?.item_details;
@@ -158,7 +153,7 @@ const CheckoutSuccessScreen = ({ navigation, route }: RootStackProps<"HomeChecko
 						<Text fontWeight="500" fontSize="13px" mt={2}>
 							Shipping Address
 						</Text>
-						<VStack>
+						<VStack space={0.5}>
 							<Text fontSize="13px">{shipping.recipient_name}</Text>
 							<Text fontSize="13px">{shipping.address}</Text>
 							<Text fontSize="13px">

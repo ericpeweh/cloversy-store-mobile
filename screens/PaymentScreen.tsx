@@ -3,7 +3,7 @@ import React, { useEffect, useMemo, useRef } from "react";
 import { StyleSheet } from "react-native";
 import CountDownTimer from "react-native-countdown-timer-hooks";
 import AppLink from "react-native-app-link";
-import Clipboard from "@react-native-clipboard/clipboard";
+import * as Clipboard from "expo-clipboard";
 
 // Typess
 import { RootStackProps } from "../interfaces";
@@ -38,13 +38,11 @@ import LoadingSpinner from "../components/LoadingSpinner/LoadingSpinner";
 import AlertBox from "../components/AlertBox/AlertBox";
 import TryAgainButton from "../components/TryAgainButton/TryAgainButton";
 
-const PaymentScreen = ({ route, navigation }: RootStackProps<"HomePayment">) => {
+const PaymentScreen = ({ route, navigation }: RootStackProps<"HomePayment" | "AccounPayment">) => {
 	const timerRef = useRef();
 	const isAuth = useSelector(state => state.auth.isAuth);
 	const { colors } = useTheme();
 	const params = route.params;
-
-	console.log(params);
 
 	const {
 		data: resultData,
@@ -103,14 +101,14 @@ const PaymentScreen = ({ route, navigation }: RootStackProps<"HomePayment">) => 
 
 	const copyBillerCodeHandler = async () => {
 		if (payment?.biller_code) {
-			Clipboard.setString(payment?.biller_code);
+			await Clipboard.setStringAsync(payment?.biller_code);
 			showCopyCompanyCodeToastHandler();
 		}
 	};
 
 	const copyVaNumberHandler = async () => {
 		if (payment) {
-			Clipboard.setString(
+			await Clipboard.setStringAsync(
 				(payment?.payment_method === "mandiri" ? payment.bill_key : payment?.va_number) || ""
 			);
 			showCopyVAToastHandler();
@@ -119,7 +117,7 @@ const PaymentScreen = ({ route, navigation }: RootStackProps<"HomePayment">) => 
 
 	const copyTransactionNumberHandler = async () => {
 		if (transaction) {
-			Clipboard.setString(transaction.id);
+			await Clipboard.setStringAsync(transaction.id);
 			showCopyOrderNumberToastHandler();
 		}
 	};
@@ -279,8 +277,8 @@ const PaymentScreen = ({ route, navigation }: RootStackProps<"HomePayment">) => 
 							</Text>
 							{payment.payment_method === "gopay" ? (
 								<Text fontSize="12px" mt={2}>
-									Lakukan pembayaran melalui aplikasi Gojek / E-Wallet menggunakan QR Code di atas
-									atau mengklik tombol buka aplikasi.
+									Make payments through the Gojek / E-Wallet application using the QR Code above or
+									click open app button.
 								</Text>
 							) : (
 								<Text fontSize="12px" mt={2}>

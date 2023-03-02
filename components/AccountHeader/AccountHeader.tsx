@@ -34,10 +34,8 @@ const AccountHeader = () => {
 					height="55px"
 				/>
 				<VStack>
-					<Text fontWeight="500" fontSize="13px">
-						Hello,
-					</Text>
-					<Text fontWeight="500" fontSize="14px" letterSpacing={0.5} underline>
+					<Text fontSize="14px">Hello,</Text>
+					<Text fontWeight="500" fontSize="16px" letterSpacing={0.5}>
 						{full_name}
 					</Text>
 				</VStack>

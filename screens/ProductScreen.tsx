@@ -50,8 +50,6 @@ const ProductScreen = ({
 	const isAuth = useSelector(state => state.auth.isAuth);
 	const { productSlug, runHeaderFn = true, runTabbarFn = true } = route.params;
 
-	console.log(route.params);
-
 	const {
 		data: productData,
 		isUninitialized: isGetProductUninitialized,

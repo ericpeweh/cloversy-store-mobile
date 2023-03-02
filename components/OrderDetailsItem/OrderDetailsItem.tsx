@@ -15,6 +15,7 @@ import { AspectRatio, HStack, Image, Text, View, VStack } from "native-base";
 
 interface OrderDetailsItemProps {
 	itemData: CartItemDetails | TransactionItem;
+	disableBorder?: boolean;
 }
 
 const _isTransactionItem = (
@@ -24,7 +25,7 @@ const _isTransactionItem = (
 	return false;
 };
 
-const OrderDetailsItem = ({ itemData }: OrderDetailsItemProps) => {
+const OrderDetailsItem = ({ itemData, disableBorder = false }: OrderDetailsItemProps) => {
 	return (
 		<View>
 			<HStack
@@ -32,7 +33,7 @@ const OrderDetailsItem = ({ itemData }: OrderDetailsItemProps) => {
 				position="relative"
 				py="10px"
 				space={3}
-				borderBottomWidth="1px"
+				borderBottomWidth={disableBorder ? "0px" : "1px"}
 				borderBottomColor="gray.100"
 			>
 				<AspectRatio w="20" ratio={1 / 1}>

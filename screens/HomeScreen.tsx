@@ -46,17 +46,6 @@ const HomeScreen = ({ navigation }: RootStackProps<"Home">) => {
 
 	const dispatch = useDispatch();
 
-	// const { clearSession } = useAuth0();
-
-	// const logoutHandler = async () => {
-	// 	try {
-	// 		await clearSession({ customScheme: "cloversy-store-auth0" });
-	// 		dispatch(logoutUser());
-	// 	} catch (error) {
-	// 		console.log("Failed to logout");
-	// 	}
-	// };
-
 	const searchBarEndEditingHandler = (
 		event: NativeSyntheticEvent<TextInputSubmitEditingEventData>
 	) => {

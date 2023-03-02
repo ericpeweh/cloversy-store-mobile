@@ -1,5 +1,5 @@
 // Dependencies
-import React from "react";
+import React, { useState } from "react";
 
 // Icons
 import { MaterialIcons, Ionicons, MaterialCommunityIcons, AntDesign } from "@expo/vector-icons";
@@ -7,17 +7,32 @@ import { MaterialIcons, Ionicons, MaterialCommunityIcons, AntDesign } from "@exp
 // Utils
 import { myOrderMenuList } from "../../utils/content";
 
+// Actions
+import { logoutUser } from "../../store/slices/authSlice";
+
+// Types
+import { RootStackNavigationProp } from "../../interfaces";
+
 // Hooks
+import { useAuth0 } from "react-native-auth0";
 import { useGetAllTransactionsQuery } from "../../api/transaction.api";
+import { useNavigation } from "@react-navigation/native";
 import useSelector from "../../hooks/useSelector";
+import useDispatch from "../../hooks/useDispatch";
 
 // Components
 import { HStack, Icon, Pressable, Text, View, VStack, Badge, Image } from "native-base";
 import AccountMenuListItem from "../AccountMenuListItem/AccountMenuListItem";
 import FallbackContainer from "../FallbackContainer/FallbackContainer";
 import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
+import ConfirmModal from "../ConfirmModal/ConfirmModal";
+import { setOrdersTabIndex } from "../../store/slices/globalSlice";
 
 const AccountMenuList = () => {
+	const navigation = useNavigation<RootStackNavigationProp>();
+	const dispatch = useDispatch();
+	const { clearSession } = useAuth0();
+	const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
 	const isAuth = useSelector(state => state.auth.isAuth);
 
 	// Transactions
@@ -32,9 +47,36 @@ const AccountMenuList = () => {
 	const getTransactionsError: any = getTransactionsErrorData;
 	const transactions = transactionsData?.data.transactions;
 
+	const logoutHandler = async () => {
+		try {
+			await clearSession({ customScheme: "cloversy-store-auth0" });
+			dispatch(logoutUser());
+		} catch (error) {
+			console.log("Failed to logout");
+		}
+	};
+
+	const orderCardClickHandler = (tabIndex: number) => {
+		dispatch(setOrdersTabIndex(tabIndex + 1));
+		navigation.navigate("AccountMyOrders");
+	};
+
 	return (
 		<View mt={2}>
-			<AccountMenuListItem icon={MaterialIcons} iconName="list-alt" label="My Orders" />
+			<ConfirmModal
+				title="Confirm Logout"
+				description="Are you sure you want to log out?"
+				confirmText="Logout"
+				isOpen={isLogoutModalOpen}
+				onConfirm={() => logoutHandler()}
+				onClose={() => setIsLogoutModalOpen(false)}
+			/>
+			<AccountMenuListItem
+				icon={MaterialIcons}
+				iconName="list-alt"
+				label="My Orders"
+				onPress={() => navigation.navigate("AccountMyOrders")}
+			/>
 			{isGetTransactionsLoading && (
 				<FallbackContainer size="lg">
 					<LoadingSpinner size="sm" />
@@ -42,8 +84,8 @@ const AccountMenuList = () => {
 			)}
 			{isGetTransactionsSuccess && transactions && (
 				<HStack borderBottomWidth="1px" borderBottomColor="gray.100">
-					{myOrderMenuList.map(menu => (
-						<Pressable flex="1" key={menu.value}>
+					{myOrderMenuList.map((menu, index) => (
+						<Pressable flex="1" key={menu.value} onPress={() => orderCardClickHandler(index)}>
 							{({ isHovered, isPressed }) => (
 								<View bg={isHovered || isPressed ? "gray.100:alpha.50" : "white"} py={4}>
 									<VStack alignItems="center" space={3}>
@@ -82,11 +124,17 @@ const AccountMenuList = () => {
 					<Badge borderRadius="10px">0</Badge>
 				</HStack>
 			</VStack>
-			<AccountMenuListItem icon={AntDesign} iconName="hearto" label="Wishlist" />
+			<AccountMenuListItem
+				icon={AntDesign}
+				iconName="hearto"
+				label="Wishlist"
+				onPress={() => navigation.navigate("WishlistTab")}
+			/>
 			<AccountMenuListItem
 				icon={MaterialCommunityIcons}
 				iconName="ticket-confirmation-outline"
 				label="My Vouchers"
+				onPress={() => navigation.navigate("AccountMyVouchers")}
 			/>
 			<AccountMenuListItem icon={Ionicons} iconName="location-outline" label="Shipping Address" />
 			<AccountMenuListItem
@@ -100,7 +148,13 @@ const AccountMenuList = () => {
 				label="Account Details"
 			/>
 			<AccountMenuListItem icon={AntDesign} iconName="eyeo" label="Seen Products" />
-			<AccountMenuListItem icon={MaterialIcons} iconName="logout" label="Logout" hideArrow />
+			<AccountMenuListItem
+				icon={MaterialIcons}
+				iconName="logout"
+				label="Logout"
+				hideArrow
+				onPress={() => setIsLogoutModalOpen(true)}
+			/>
 		</View>
 	);
 };
