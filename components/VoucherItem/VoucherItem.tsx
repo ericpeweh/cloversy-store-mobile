@@ -15,6 +15,7 @@ import { formatDateFullMonth } from "../../utils/formatDate";
 import { Center, HStack, Icon, Text, View, VStack } from "native-base";
 import Button from "../Button/Button";
 import IconButton from "../IconButton/IconButton";
+import usePopToast from "../../hooks/usePopToast";
 
 interface VoucherItemProps {
 	voucherData: Voucher;
@@ -31,10 +32,17 @@ const VoucherItem = ({
 	isSelected = false,
 	readOnly = false
 }: VoucherItemProps) => {
+	const { showToastHandler: showCopyVoucherCodeToastHandler } = usePopToast({
+		id: "copyVoucherCode",
+		text: "	Voucher code has been copied!",
+		duration: 1000,
+		pageWithTabbar: false
+	});
+
 	const copyVoucherCodeHandler = async () => {
 		if (voucher.code) {
-			console.log(voucher.code);
 			await Clipboard.setStringAsync(voucher.code);
+			showCopyVoucherCodeToastHandler();
 		}
 	};
 
@@ -60,22 +68,17 @@ const VoucherItem = ({
 				></View>
 			</Center>
 			<VStack flex={1}>
-				<Text fontWeight="500" fontSize="14px" ml={3}>
+				<Text fontWeight="500" fontSize="14px" ml={3} mb={1}>
 					{voucher.title}
 				</Text>
 				<Text fontSize="13px" color="gray.500" ml={3}>
 					Valid till {formatDateFullMonth(voucher.expiry_date)}
 				</Text>
-				<View
-					borderTopWidth={1}
-					borderTopColor="primary.400"
-					borderStyle="dashed"
-					my={2}
-					mr={3}
-				></View>
+				<View borderTopWidth={1} borderTopColor="primary.400" borderStyle="dashed" my={1}></View>
 				<HStack space={1} alignItems="center" justifyContent="center" ml={-2}>
 					{readOnly && (
 						<IconButton
+							size="30px"
 							icon={<Icon as={MaterialIcons} name="content-copy" size="sm" color="gray.400" />}
 							onPress={copyVoucherCodeHandler}
 						/>
