@@ -51,7 +51,7 @@ const VoucherItem = ({
 			p={4}
 			borderBottomWidth={1}
 			borderBottomColor="gray.100"
-			borderRadius="15px"
+			borderRadius="10px"
 			alignItems="center"
 		>
 			<Center height="80px" width="81px" borderRadius="10px" bg="primary.400" position="relative">

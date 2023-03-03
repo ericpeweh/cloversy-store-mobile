@@ -146,6 +146,7 @@ const AccountMenuList = () => {
 				icon={MaterialCommunityIcons}
 				iconName="message-text-outline"
 				label="Live Chat"
+				onPress={() => navigation.navigate("AccountLiveChat")}
 			/>
 			<AccountMenuListItem
 				icon={MaterialCommunityIcons}

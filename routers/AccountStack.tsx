@@ -29,6 +29,7 @@ import AccountDetailsScreen from "../screens/AccountDetailsScreen";
 import LoadingSpinner from "../components/LoadingSpinner/LoadingSpinner";
 import CreateReviewScreen from "../screens/CreateReviewScreen";
 import LastSeenProductsScreen from "../screens/LastSeenProductsScreen";
+import LiveChatScreen from "../screens/LiveChatScreen";
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -164,6 +165,13 @@ const AccountStack = () => {
 				options={{
 					headerTitle: "Last Seen",
 					headerTitleAlign: "center"
+				}}
+			/>
+			<Stack.Screen
+				name="AccountLiveChat"
+				component={LiveChatScreen}
+				options={{
+					headerShown: false
 				}}
 			/>
 		</Stack.Navigator>

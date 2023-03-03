@@ -69,6 +69,7 @@ export type RootStackParamList = {
 	AccountDetails: undefined;
 	AccountCreateReview: { transactionId: string };
 	AccountLastSeenProducts: undefined;
+	AccountLiveChat: undefined;
 };
 
 export type CombinedParamList = RootTabsParamList & RootStackParamList;
