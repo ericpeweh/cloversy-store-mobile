@@ -41,7 +41,9 @@ export const CheckoutSchema = Yup.object().shape({
 
 export const CreateAddressSchema = Yup.object().shape({
 	recipient_name: Yup.string().required("Recipient name required"),
-	contact: Yup.string().required("Phone number required"),
+	contact: Yup.string()
+		.matches(/^08\d{8,11}$/g, "Invalid contact number")
+		.required("Phone number required"),
 	address: Yup.string().required("Please provide a valid address"),
 	is_default: Yup.boolean(),
 	province: Yup.string().required("Required"),
