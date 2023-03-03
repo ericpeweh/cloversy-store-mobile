@@ -5,8 +5,12 @@ import { Icon } from "native-base";
 // Types
 import { RootStackParamList } from "../interfaces";
 
+// Hooks
+import { useGetAllTransactionsQuery } from "../api/transaction.api";
+import useSelector from "../hooks/useSelector";
+
 // Icons
-import { Entypo } from "@expo/vector-icons";
+import { Entypo, Ionicons } from "@expo/vector-icons";
 
 // Components
 import IconButton from "../components/IconButton/IconButton";
@@ -21,10 +25,18 @@ import AddressScreen from "../screens/AddressScreen";
 import AddAddressScreen from "../screens/AddAddressScreen";
 import EditAddressScreen from "../screens/EditAddressScreen";
 import ProductScreen from "../screens/ProductScreen";
+import AccountDetailsScreen from "../screens/AccountDetailsScreen";
+import LoadingSpinner from "../components/LoadingSpinner/LoadingSpinner";
+import CreateReviewScreen from "../screens/CreateReviewScreen";
+import LastSeenProductsScreen from "../screens/LastSeenProductsScreen";
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 const AccountStack = () => {
+	const isAuth = useSelector(state => state.auth.isAuth);
+	const { isFetching: isFetchingTransactions, refetch: refetchTransactions } =
+		useGetAllTransactionsQuery(isAuth, { skip: !isAuth });
+
 	return (
 		<Stack.Navigator
 			screenOptions={({ navigation }) => ({
@@ -55,7 +67,23 @@ const AccountStack = () => {
 				component={MyOrdersScreen}
 				options={{
 					headerTitle: "My Orders",
-					headerTitleAlign: "center"
+					headerTitleAlign: "center",
+					headerRight: () => (
+						<IconButton
+							icon={
+								isFetchingTransactions ? (
+									<LoadingSpinner size="sm" color="primary.400" />
+								) : (
+									<Icon as={Ionicons} name="refresh" color="gray.700" size="lg" />
+								)
+							}
+							bg="white"
+							disabled={isFetchingTransactions}
+							onPress={() => refetchTransactions()}
+							size="sm"
+							borderColor="gray.100"
+						/>
+					)
 				}}
 			/>
 			<Stack.Screen
@@ -111,6 +139,30 @@ const AccountStack = () => {
 				component={ProductScreen}
 				options={{
 					headerTitle: "Details",
+					headerTitleAlign: "center"
+				}}
+			/>
+			<Stack.Screen
+				name="AccountDetails"
+				component={AccountDetailsScreen}
+				options={{
+					headerTitle: "Account Details",
+					headerTitleAlign: "center"
+				}}
+			/>
+			<Stack.Screen
+				name="AccountCreateReview"
+				component={CreateReviewScreen}
+				options={{
+					headerTitle: "Leave a Review",
+					headerTitleAlign: "center"
+				}}
+			/>
+			<Stack.Screen
+				name="AccountLastSeenProducts"
+				component={LastSeenProductsScreen}
+				options={{
+					headerTitle: "Last Seen",
 					headerTitleAlign: "center"
 				}}
 			/>
