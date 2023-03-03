@@ -102,7 +102,7 @@ const AccountMenuList = () => {
 												_text={{ fontSize: 10, color: "white" }}
 											>
 												{transactions.filter(item =>
-													item.order_status === "sent"
+													item.order_status === "success"
 														? item.order_status === menu.value && !item.is_reviewed
 														: item.order_status === menu.value
 												).length || 0}
@@ -151,8 +151,14 @@ const AccountMenuList = () => {
 				icon={MaterialCommunityIcons}
 				iconName="account-outline"
 				label="Account Details"
+				onPress={() => navigation.navigate("AccountDetails")}
 			/>
-			<AccountMenuListItem icon={AntDesign} iconName="eyeo" label="Seen Products" />
+			<AccountMenuListItem
+				icon={AntDesign}
+				iconName="eyeo"
+				label="Seen Products"
+				onPress={() => navigation.navigate("AccountLastSeenProducts")}
+			/>
 			<AccountMenuListItem
 				icon={MaterialIcons}
 				iconName="logout"

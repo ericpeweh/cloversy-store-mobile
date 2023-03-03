@@ -4,9 +4,13 @@ import { shallowEqual } from "react-redux";
 
 // Hooks
 import useSelector from "../../hooks/useSelector";
+import { useNavigation } from "@react-navigation/native";
 
 // Icons
 import { MaterialIcons } from "@expo/vector-icons";
+
+// Types
+import { RootStackNavigationProp } from "../../interfaces";
 
 // Images
 const NoImagePlaceholder = require("../../assets/images/no-image.png");
@@ -16,10 +20,8 @@ import { View, Text, HStack, Avatar, VStack, Icon, Badge } from "native-base";
 import IconButton from "../IconButton/IconButton";
 
 const AccountHeader = () => {
-	const { email, email_verified, full_name, profile_picture, birth_date, contact } = useSelector(
-		state => state.auth,
-		shallowEqual
-	);
+	const navigation = useNavigation<RootStackNavigationProp>();
+	const { full_name, profile_picture } = useSelector(state => state.auth, shallowEqual);
 
 	return (
 		<VStack>
@@ -52,6 +54,7 @@ const AccountHeader = () => {
 					borderColor="gray.100"
 					icon={<Icon as={MaterialIcons} name="edit" color="gray.700" size="md" mr={-0.5} />}
 					ml="auto"
+					onPress={() => navigation.navigate("AccountDetails")}
 				/>
 			</HStack>
 		</VStack>

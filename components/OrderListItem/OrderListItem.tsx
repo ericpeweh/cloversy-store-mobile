@@ -137,9 +137,9 @@ const OrderListItem = ({ orderData }: OrderListItemProps) => {
 								bg="secondary.300"
 								_text={{ color: "white" }}
 								_pressed={{ bg: "secondary.400" }}
-								onPress={() => {
-									// Navigate to review screen
-								}}
+								onPress={() =>
+									navigation.navigate("AccountCreateReview", { transactionId: orderData.id })
+								}
 							>
 								Leave a Review
 							</Button>
@@ -167,4 +167,4 @@ const OrderListItem = ({ orderData }: OrderListItemProps) => {
 	);
 };
 
-export default React.memo(OrderListItem);
+export default OrderListItem;

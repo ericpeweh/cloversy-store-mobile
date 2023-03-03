@@ -66,7 +66,6 @@ const AddressScreen = ({ navigation, route }: RootStackProps<"AccountAddress">) 
 		setIsDeleteAddressModalOpen(false);
 	};
 
-	console.log(isDeleteAddressLoading, addressToDelete);
 	return (
 		<ScrollView style={styles.addressScreenContainer}>
 			<ConfirmModal
@@ -113,11 +112,7 @@ const AddressScreen = ({ navigation, route }: RootStackProps<"AccountAddress">) 
 					px={3}
 					_text={{ fontWeight: "500", fontSize: "12px" }}
 					_pressed={{ bg: "primary.500" }}
-					onPress={() => {
-						console.log("Open account address screen");
-
-						navigation.navigate("AccountAddAddress");
-					}}
+					onPress={() => navigation.navigate("AccountAddAddress")}
 				>
 					New Address
 				</Button>

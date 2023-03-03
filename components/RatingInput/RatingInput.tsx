@@ -7,15 +7,17 @@ import { useTheme } from "native-base";
 // Components
 import { Rating, SwipeRatingProps } from "react-native-ratings";
 
-interface RatingInputProps extends SwipeRatingProps {}
+interface RatingInputProps extends SwipeRatingProps {
+	readonly?: boolean;
+}
 
-const RatingInput = ({ ...props }: RatingInputProps) => {
+const RatingInput = ({ readonly = false, ...props }: RatingInputProps) => {
 	const { colors } = useTheme();
 
 	return (
 		<Rating
 			type="custom"
-			readonly
+			readonly={readonly}
 			imageSize={18}
 			ratingBackgroundColor={colors.trueGray[100]}
 			{...props}

@@ -59,7 +59,8 @@
 					"customScheme": "cloversy-store-auth0"
 				}
 			],
-			"@react-native-firebase/app"
+			"@react-native-firebase/app",
+			"expo-image-picker"
 		]
 	}
 }
