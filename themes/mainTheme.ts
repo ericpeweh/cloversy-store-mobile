@@ -26,6 +26,24 @@ const mainThemeConfig = {
 		700: {
 			normal: "Roboto-Bold"
 		}
+	},
+	components: {
+		Input: {
+			defaultProps: {
+				_input: {
+					selectionColor: undefined,
+					cursorColor: undefined
+				}
+			}
+		},
+		TextArea: {
+			defaultProps: {
+				_input: {
+					selectionColor: undefined,
+					cursorColor: undefined
+				}
+			}
+		}
 	}
 };
 
