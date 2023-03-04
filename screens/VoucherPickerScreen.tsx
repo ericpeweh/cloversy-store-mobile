@@ -137,7 +137,7 @@ const VoucherPickerScreen = ({
 				)}
 				{!isGetVouchersLoading && vouchersError && (
 					<FallbackContainer size="md">
-						<AlertBox>{vouchersError?.data?.message}</AlertBox>
+						<AlertBox mb={3}>{vouchersError?.data?.message}</AlertBox>
 						<TryAgainButton onPress={refetchVouchers}>Try again</TryAgainButton>
 					</FallbackContainer>
 				)}

@@ -5,13 +5,15 @@ import React from "react";
 import { useGetCheckoutCartItemsQuery } from "../../api/cart.api";
 import useSelector from "../../hooks/useSelector";
 
+// Types
+import { CartItemDetails } from "../../interfaces";
+
 // Components
 import { Text, View } from "native-base";
 import FallbackContainer from "../FallbackContainer/FallbackContainer";
 import AlertBox from "../AlertBox/AlertBox";
 import TryAgainButton from "../TryAgainButton/TryAgainButton";
 import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
-import { CartItemDetails } from "../../interfaces";
 import OrderDetailsItem from "../OrderDetailsItem/OrderDetailsItem";
 
 const CheckoutDetails = () => {
@@ -33,7 +35,9 @@ const CheckoutDetails = () => {
 		<View mb={8}>
 			{!isGetCartItemsLoading && getCartItemsErrorData && (
 				<FallbackContainer size="md">
-					<AlertBox>{getCartItemsError?.data?.message}</AlertBox>
+					<AlertBox width="100%" mb={3}>
+						{getCartItemsError?.data?.message}
+					</AlertBox>
 					<TryAgainButton onPress={refetchCartItems}>Try again</TryAgainButton>
 				</FallbackContainer>
 			)}

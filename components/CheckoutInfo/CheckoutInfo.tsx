@@ -1,5 +1,5 @@
 // Dependencies
-import React, { useEffect, useMemo } from "react";
+import React, { useEffect } from "react";
 
 // Types
 import { CheckoutFormValues, RootStackNavigationProp } from "../../interfaces";
@@ -14,11 +14,10 @@ import useSelector from "../../hooks/useSelector";
 import { Ionicons } from "@expo/vector-icons";
 
 // Components
-import { Divider, HStack, Icon, Text, View, VStack } from "native-base";
+import { HStack, Icon, Text, VStack } from "native-base";
 import FallbackContainer from "../FallbackContainer/FallbackContainer";
 import Button from "../Button/Button";
 import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
-import ErrorText from "../ErrorText/ErrorText";
 import TryAgainButton from "../TryAgainButton/TryAgainButton";
 import AlertBox from "../AlertBox/AlertBox";
 
@@ -82,7 +81,9 @@ const CheckoutInfo = ({ setFormInitialValues }: CheckoutInfoProps) => {
 			)}
 			{!isGetAddressLoading && getAddressError && (
 				<FallbackContainer size="md">
-					<AlertBox>{addressError?.data?.message}</AlertBox>
+					<AlertBox width="100%" mb={3}>
+						{addressError?.data?.message}
+					</AlertBox>
 					<TryAgainButton onPress={refetchAddress}>Try again</TryAgainButton>
 				</FallbackContainer>
 			)}

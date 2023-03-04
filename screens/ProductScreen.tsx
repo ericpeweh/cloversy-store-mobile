@@ -31,11 +31,13 @@ import ReviewItem from "../components/ReviewItem/ReviewItem";
 import QuantityInput from "../components/QuantityInput/QuantityInput";
 import IconButton from "../components/IconButton/IconButton";
 import FallbackContainer from "../components/FallbackContainer/FallbackContainer";
-import ErrorText from "../components/ErrorText/ErrorText";
 import TryAgainButton from "../components/TryAgainButton/TryAgainButton";
 import LoadingSpinner from "../components/LoadingSpinner/LoadingSpinner";
 import ProductCard from "../components/ProductCard/ProductCard";
 import ImageViewer from "../components/ImageViewer/ImageViewer";
+import AlertBox from "../components/AlertBox/AlertBox";
+
+type ReviewsScreen = "HomeProductReview" | "ExploreProductReview" | "WishlistProductReview";
 
 const ProductScreen = ({
 	route,
@@ -132,7 +134,7 @@ const ProductScreen = ({
 
 	const openAllReviewsHandler = () => {
 		if (product) {
-			navigation.navigate(`${name}Review`, { productReviews: product.reviews });
+			navigation.navigate(`${name}Review` as ReviewsScreen, { productReviews: product.reviews });
 		}
 	};
 
@@ -154,7 +156,9 @@ const ProductScreen = ({
 			<ScrollView ref={productScrollRef}>
 				{!isGetProductLoading && !isGetProductFetching && productError && (
 					<FallbackContainer my={10} size="lg">
-						<ErrorText>{productError?.data?.message || "Error while fetching data"} </ErrorText>
+						<AlertBox mb={3}>
+							{productError?.data?.message || "Error while fetching data"}{" "}
+						</AlertBox>
 						<TryAgainButton isLoading={isGetProductLoading} onPress={refetchProduct}>
 							Try again
 						</TryAgainButton>

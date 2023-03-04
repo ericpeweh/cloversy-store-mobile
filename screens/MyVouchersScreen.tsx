@@ -1,7 +1,6 @@
 // Dependencies
 import React from "react";
 import { StyleSheet } from "react-native";
-import * as Clipboard from "expo-clipboard";
 
 // Types
 import { RootStackProps } from "../interfaces";
@@ -9,18 +8,17 @@ import { RootStackProps } from "../interfaces";
 // Hooks
 import useSelector from "../hooks/useSelector";
 import useHideHeaderTabbar from "../hooks/useHideHeaderTabbar";
+import { useGetVouchersQuery } from "../api/voucher.api";
 
 // Components
-import { FlatList, View, Text } from "native-base";
-import WishlistItem from "../components/WishlistItem/WishlistItem";
+import { FlatList, View } from "native-base";
 import FallbackContainer from "../components/FallbackContainer/FallbackContainer";
 import LoadingSpinner from "../components/LoadingSpinner/LoadingSpinner";
-import ErrorText from "../components/ErrorText/ErrorText";
 import TryAgainButton from "../components/TryAgainButton/TryAgainButton";
-import { useGetVouchersQuery } from "../api/voucher.api";
 import VoucherItem from "../components/VoucherItem/VoucherItem";
+import AlertBox from "../components/AlertBox/AlertBox";
 
-const MyVouchersScreen = ({ navigation, route }: RootStackProps<"AccountMyVouchers">) => {
+const MyVouchersScreen = ({ navigation }: RootStackProps<"AccountMyVouchers">) => {
 	const isAuth = useSelector(state => state.auth.isAuth);
 
 	const {
@@ -32,10 +30,6 @@ const MyVouchersScreen = ({ navigation, route }: RootStackProps<"AccountMyVouche
 	} = useGetVouchersQuery(isAuth, { skip: !isAuth });
 	const vouchersError: any = getVouchersError;
 	const noDataFound = vouchersData?.data.vouchers.length === 0;
-
-	const copyVoucherCodeHandler = async (voucherCode: string) => {
-		await Clipboard.setStringAsync(voucherCode);
-	};
 
 	// Hide parent header and tabbar on mount
 	useHideHeaderTabbar(navigation);
@@ -49,9 +43,9 @@ const MyVouchersScreen = ({ navigation, route }: RootStackProps<"AccountMyVouche
 			)}
 			{!isGetVouchersLoading && vouchersError && (
 				<FallbackContainer mb={4} mt={10}>
-					<ErrorText>
+					<AlertBox mb={3}>
 						{vouchersError?.data?.message || "Error while fetching voucher data"}{" "}
-					</ErrorText>
+					</AlertBox>
 					<TryAgainButton isLoading={isGetVouchersLoading} onPress={refetchVouchers}>
 						Try again
 					</TryAgainButton>
@@ -59,7 +53,9 @@ const MyVouchersScreen = ({ navigation, route }: RootStackProps<"AccountMyVouche
 			)}
 			{!isGetVouchersLoading && isGetVouchersSuccess && noDataFound && (
 				<FallbackContainer mt={10}>
-					<Text mb={2}>You have no voucher.</Text>
+					<AlertBox status="info" mb={2}>
+						You have no voucher.
+					</AlertBox>
 				</FallbackContainer>
 			)}
 			<FlatList

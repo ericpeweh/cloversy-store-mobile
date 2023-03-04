@@ -5,7 +5,7 @@ import { shallowEqual } from "react-redux";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 // Types
-import { ProductsSortValues, RootStackProps, Product } from "../interfaces";
+import { RootStackProps } from "../interfaces";
 
 // Icons
 import { FontAwesome } from "@expo/vector-icons";
@@ -21,7 +21,6 @@ import useDebounce from "../hooks/useDebounce";
 
 // Actions
 import {
-	changeSortByFilter,
 	pushToProducts,
 	resetProducts,
 	setCurrentPage,
@@ -37,9 +36,9 @@ import IconButton from "../components/IconButton/IconButton";
 import SearchBar from "../components/SearchBar/SearchBar";
 import ProductCard from "../components/ProductCard/ProductCard";
 import FallbackContainer from "../components/FallbackContainer/FallbackContainer";
-import ErrorText from "../components/ErrorText/ErrorText";
 import TryAgainButton from "../components/TryAgainButton/TryAgainButton";
 import LoadingSpinner from "../components/LoadingSpinner/LoadingSpinner";
+import AlertBox from "../components/AlertBox/AlertBox";
 
 const ExploreScreen = ({ navigation }: RootStackProps<"Explore">) => {
 	const dispatch = useDispatch();
@@ -200,10 +199,10 @@ const ExploreScreen = ({ navigation }: RootStackProps<"Explore">) => {
 								</Text>
 							)}
 							{!isGetProductsLoading && productsError && (
-								<FallbackContainer mb={4} key="errorFallback">
-									<ErrorText>
+								<FallbackContainer mb={4} mt={8} key="errorFallback">
+									<AlertBox mb={3}>
 										{productsError?.data?.message || "Error while fetching data"}{" "}
-									</ErrorText>
+									</AlertBox>
 									<TryAgainButton isLoading={isGetProductsLoading} onPress={refetchProducts}>
 										Try again
 									</TryAgainButton>
@@ -215,8 +214,8 @@ const ExploreScreen = ({ navigation }: RootStackProps<"Explore">) => {
 								</FallbackContainer>
 							)}
 							{!isGetProductsLoading && noDataFound && !isGetProductsFetching && (
-								<FallbackContainer mb={10} mt={10} key="noProductFallback" size="lg">
-									<ErrorText color="black">No products found.</ErrorText>
+								<FallbackContainer mb={10} mt={8} key="noProductFallback" size="lg">
+									<AlertBox status="info">No products found.</AlertBox>
 								</FallbackContainer>
 							)}
 							{!isSearchApplied && !isFilterApplied && <View height={3} key="spacer"></View>}

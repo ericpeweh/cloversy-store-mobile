@@ -68,12 +68,12 @@ const ShippingPickerScreen = ({
 			)}
 			{isGetShippingCostsLoading && (
 				<FallbackContainer size="md" mt={10}>
-					<LoadingSpinner size="sm" />
+					<LoadingSpinner />
 				</FallbackContainer>
 			)}
 			{!isGetShippingCostsLoading && getShippingCostsErrorData && (
-				<FallbackContainer size="md">
-					<AlertBox>{getShippingCostsError?.data?.message}</AlertBox>
+				<FallbackContainer size="md" mt={8}>
+					<AlertBox mb={3}>{getShippingCostsError?.data?.message}</AlertBox>
 					<TryAgainButton onPress={refetchShippingCosts}>Try again</TryAgainButton>
 				</FallbackContainer>
 			)}

@@ -89,7 +89,7 @@ const AddressScreen = ({ navigation, route }: RootStackProps<"AccountAddress">) 
 			)}
 			{!isGetAddressLoading && getAddressError && (
 				<FallbackContainer size="md">
-					<AlertBox>{addressError?.data?.message}</AlertBox>
+					<AlertBox mb={3}>{addressError?.data?.message}</AlertBox>
 					<TryAgainButton onPress={refetchAddress}>Try again</TryAgainButton>
 				</FallbackContainer>
 			)}

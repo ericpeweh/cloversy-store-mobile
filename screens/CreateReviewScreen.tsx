@@ -99,7 +99,7 @@ const CreateReviewScreen = ({ route }: RootStackProps<"AccountCreateReview">) =>
 			)}
 			{!isGetOrderLoading && getOrderError && (
 				<FallbackContainer mt={10}>
-					<AlertBox>{getOrderError?.data?.message || "Failed to fetch order data"}</AlertBox>
+					<AlertBox mb={3}>{getOrderError?.data?.message || "Failed to fetch order data"}</AlertBox>
 					<TryAgainButton onPress={refetchOrder}>Try again</TryAgainButton>
 				</FallbackContainer>
 			)}

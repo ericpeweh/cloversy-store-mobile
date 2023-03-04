@@ -1,5 +1,5 @@
 // Dependencies
-import React, { useLayoutEffect, useCallback, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { StyleSheet } from "react-native";
 
 // Types
@@ -12,14 +12,14 @@ import useCart from "../hooks/useCart";
 import useHideHeaderTabbar from "../hooks/useHideHeaderTabbar";
 
 // Components
-import { FlatList, Text, View } from "native-base";
+import { FlatList, View } from "native-base";
 import CartBottomTab from "../components/CartBottomTab/CartBottomTab";
 import FallbackContainer from "../components/FallbackContainer/FallbackContainer";
-import ErrorText from "../components/ErrorText/ErrorText";
 import TryAgainButton from "../components/TryAgainButton/TryAgainButton";
 import CartItem from "../components/CartItem/CartItem";
 import ConfirmModal from "../components/ConfirmModal/ConfirmModal";
 import LoadingSpinner from "../components/LoadingSpinner/LoadingSpinner";
+import AlertBox from "../components/AlertBox/AlertBox";
 
 const _renderCartItem = ({
 	item,
@@ -62,12 +62,7 @@ const CartScreen = ({ navigation }: RootStackProps<"HomeCart">) => {
 	const getCartItemsError: any = getCartItemsErrorData;
 	const noDataFound = cartItemsData?.data.cart.length === 0;
 
-	const {
-		deleteCartItemHandler,
-		isDeleteCartItemLoading,
-		deleteCartItemError,
-		isDeleteCartItemSuccess
-	} = useCart();
+	const { deleteCartItemHandler, isDeleteCartItemLoading, isDeleteCartItemSuccess } = useCart();
 
 	// Hide parent header and tabbar on mount
 	useHideHeaderTabbar(navigation);
@@ -107,7 +102,9 @@ const CartScreen = ({ navigation }: RootStackProps<"HomeCart">) => {
 			)}
 			{!isGetCartItemsLoading && getCartItemsErrorData && (
 				<FallbackContainer mb={4} mt={10}>
-					<ErrorText>{getCartItemsError?.data?.message || "Error while fetching data"} </ErrorText>
+					<AlertBox mb={3}>
+						{getCartItemsError?.data?.message || "Error while fetching data"}{" "}
+					</AlertBox>
 					<TryAgainButton isLoading={isGetCartItemsLoading} onPress={refetchCartItems}>
 						Try again
 					</TryAgainButton>
@@ -115,7 +112,9 @@ const CartScreen = ({ navigation }: RootStackProps<"HomeCart">) => {
 			)}
 			{!isGetCartItemsLoading && isGetCartItemsSuccess && noDataFound && (
 				<FallbackContainer mt={10}>
-					<Text mb={2}>Your shopping cart is empty!</Text>
+					<AlertBox mb={3} status="info">
+						Your shopping cart is empty!
+					</AlertBox>
 					<TryAgainButton onPress={() => navigation.navigate("Home")}>Shop now</TryAgainButton>
 				</FallbackContainer>
 			)}

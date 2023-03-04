@@ -25,9 +25,9 @@ import ProductCard from "../components/ProductCard/ProductCard";
 import Banner from "../components/Banner/Banner";
 import SearchBar from "../components/SearchBar/SearchBar";
 import FallbackContainer from "../components/FallbackContainer/FallbackContainer";
-import ErrorText from "../components/ErrorText/ErrorText";
 import TryAgainButton from "../components/TryAgainButton/TryAgainButton";
 import LoadingSpinner from "../components/LoadingSpinner/LoadingSpinner";
+import AlertBox from "../components/AlertBox/AlertBox";
 
 const HomeScreen = ({ navigation }: RootStackProps<"Home">) => {
 	const isAuth = useSelector(state => state.auth.isAuth);
@@ -90,7 +90,9 @@ const HomeScreen = ({ navigation }: RootStackProps<"Home">) => {
 					</View>
 					{!isGetProductsLoading && productsError && (
 						<FallbackContainer mb={4} key="errorFallback">
-							<ErrorText>{productsError?.data?.message || "Error while fetching data"} </ErrorText>
+							<AlertBox mb={3}>
+								{productsError?.data?.message || "Error while fetching data"}{" "}
+							</AlertBox>
 							<TryAgainButton isLoading={isGetProductsLoading} onPress={refetchProducts}>
 								Try again
 							</TryAgainButton>
@@ -103,7 +105,7 @@ const HomeScreen = ({ navigation }: RootStackProps<"Home">) => {
 					)}
 					{!isGetProductsLoading && noDataFound && (
 						<FallbackContainer mb={10} key="noProductFallback" size="md">
-							<ErrorText color="black">No products found.</ErrorText>
+							<AlertBox status="info">No products found.</AlertBox>
 						</FallbackContainer>
 					)}
 				</View>

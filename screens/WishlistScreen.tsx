@@ -4,22 +4,20 @@ import React from "react";
 // Types
 import { RootStackProps } from "../interfaces";
 
+// Hooks
+import useSelector from "../hooks/useSelector";
+import { useGetWishlistQuery } from "../api/wishlist.api";
+
 // Components
 import { FlatList, View } from "native-base";
 import WishlistItem from "../components/WishlistItem/WishlistItem";
-import { StyleSheet } from "react-native";
-import { useGetWishlistQuery } from "../api/wishlist.api";
-import useSelector from "../hooks/useSelector";
-import useWishlist from "../hooks/useWishlist";
 import FallbackContainer from "../components/FallbackContainer/FallbackContainer";
 import LoadingSpinner from "../components/LoadingSpinner/LoadingSpinner";
-import ErrorText from "../components/ErrorText/ErrorText";
 import TryAgainButton from "../components/TryAgainButton/TryAgainButton";
+import AlertBox from "../components/AlertBox/AlertBox";
 
 const WishlistScreen = ({}: RootStackProps<"Wishlist">) => {
 	const isAuth = useSelector(state => state.auth.isAuth);
-
-	const { emptyWishlistHandler, isEmptyWishlistLoading } = useWishlist();
 
 	const {
 		data: wishlistData,
@@ -44,15 +42,14 @@ const WishlistScreen = ({}: RootStackProps<"Wishlist">) => {
 						</FallbackContainer>
 					)}
 					{!isGetWishlistLoading && !isGetWishlistSuccess && getWishlistError && (
-						<FallbackContainer key="loadingSpinner">
-							<ErrorText>{getWishlistError.data?.message}</ErrorText>
+						<FallbackContainer key="loadingSpinner" mt={8}>
+							<AlertBox mb={3}>{getWishlistError?.data?.message}</AlertBox>
 							<TryAgainButton onPress={refetchWishlist}>Try again</TryAgainButton>
 						</FallbackContainer>
 					)}
-
 					{!isGetWishlistLoading && isGetWishlistSuccess && noDataFound && (
-						<FallbackContainer key="noProductFallback" size="lg">
-							<ErrorText color="black">You have no items in your wishlist.</ErrorText>
+						<FallbackContainer key="noProductFallback" size="lg" mt={8}>
+							<AlertBox status="info">You have no items in your wishlist.</AlertBox>
 						</FallbackContainer>
 					)}
 				</>
@@ -68,10 +65,3 @@ const WishlistScreen = ({}: RootStackProps<"Wishlist">) => {
 };
 
 export default WishlistScreen;
-
-const styles = StyleSheet.create({
-	wishlistScreenContainer: {
-		flex: 1,
-		backgroundColor: "#fff"
-	}
-});
