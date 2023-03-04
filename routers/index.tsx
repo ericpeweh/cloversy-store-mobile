@@ -1,8 +1,13 @@
 // Dependencies
-import { useState } from "react";
-import { LinkingOptions, NavigationContainer } from "@react-navigation/native";
+import { useRef, useState } from "react";
+import {
+	LinkingOptions,
+	NavigationContainer,
+	NavigationContainerRef
+} from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import * as Linking from "expo-linking";
+import analytics from "@react-native-firebase/analytics";
 
 // Icons
 import { AntDesign, Feather } from "@expo/vector-icons";
@@ -29,10 +34,14 @@ import HeaderLogo from "../components/HeaderLogo/HeaderLogo";
 import ConfirmModal from "../components/ConfirmModal/ConfirmModal";
 
 const Tabs = createBottomTabNavigator<RootTabsParamList>();
-
 const prefix = Linking.createURL("/");
+const productScreensName = ["HomeProduct", "ExploreProduct", "WishlistProduct", "AccountProduct"];
 
 const Router = () => {
+	const routeNameRef = useRef<string>();
+	const navigationRef =
+		useRef<NavigationContainerRef<RootStackParamList & RootTabsParamList>>(null);
+
 	const linking: LinkingOptions<RootStackParamList & RootTabsParamList> = {
 		prefixes: [prefix, "https://cloversy.id", "https://www.cloversy.id"],
 		config: {
@@ -62,7 +71,36 @@ const Router = () => {
 	};
 
 	return (
-		<NavigationContainer linking={linking}>
+		<NavigationContainer
+			ref={navigationRef}
+			linking={linking}
+			onReady={() => {
+				routeNameRef.current = navigationRef.current?.getCurrentRoute()?.name;
+			}}
+			onStateChange={async () => {
+				const previousRouteName = routeNameRef.current;
+				const currentRoute = navigationRef.current?.getCurrentRoute();
+				const currentRouteName = currentRoute?.name || "";
+				const currentRouteParams = currentRoute?.params as { productSlug?: string };
+
+				const isProductRoute = productScreensName.includes(currentRouteName);
+
+				if (previousRouteName !== currentRouteName) {
+					try {
+						await analytics().logScreenView({
+							screen_name: isProductRoute
+								? `${currentRouteName}/${currentRouteParams?.productSlug || "invalid-product"}`
+								: currentRouteName,
+							screen_class: currentRouteName
+						});
+					} catch (error) {
+						console.log("Analytics error: ", error);
+					}
+				}
+
+				routeNameRef.current = currentRouteName;
+			}}
+		>
 			<ConfirmModal
 				title="Clear wishlist"
 				description="All your products in wishlist will be deleted, this action can't be undone, are you sure?"
