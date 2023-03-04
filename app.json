@@ -23,8 +23,8 @@
 		},
 		"android": {
 			"adaptiveIcon": {
-				"foregroundImage": "./assets/adaptive-icon.png",
-				"backgroundColor": "#FFFFFF"
+				"foregroundImage": "./assets/icon.png",
+				"backgroundColor": "#ffffff"
 			},
 			"package": "id.cloversyid.cloversystoremobile",
 			"googleServicesFile": "./google-services.json",
@@ -60,7 +60,8 @@
 				}
 			],
 			"@react-native-firebase/app",
-			"expo-image-picker"
+			"expo-image-picker",
+			"expo-notifications"
 		]
 	}
 }
