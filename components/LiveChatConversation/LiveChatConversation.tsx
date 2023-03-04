@@ -27,6 +27,7 @@ interface LiveChatConversationProps {
 	isFetching: boolean;
 	isLoadingMoreMessage: boolean;
 	onResetMessageAtBottom: () => void;
+	onOffsetYChange: (offsetY: number) => void;
 }
 
 const LiveChatConversation = forwardRef<FlatListType, LiveChatConversationProps>((props, ref) => {
@@ -38,7 +39,8 @@ const LiveChatConversation = forwardRef<FlatListType, LiveChatConversationProps>
 		isLoadingMoreMessage,
 		messages,
 		currentCursor,
-		onResetMessageAtBottom
+		onResetMessageAtBottom,
+		onOffsetYChange
 	} = props;
 
 	const userEmail = useSelector(state => state.auth.email);
@@ -49,6 +51,15 @@ const LiveChatConversation = forwardRef<FlatListType, LiveChatConversationProps>
 		// // Reset bottom chat number if scroll reach almost the end
 		if (Math.abs(contentOffset.y) / contentSize.height < 0.06) {
 			onResetMessageAtBottom();
+			onOffsetYChange(contentOffset.y);
+		}
+	};
+
+	const conversationScrollEndHandler = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
+		const { contentOffset } = event.nativeEvent;
+
+		if (contentOffset.y) {
+			onOffsetYChange(contentOffset.y);
 		}
 	};
 
@@ -144,7 +155,8 @@ const LiveChatConversation = forwardRef<FlatListType, LiveChatConversationProps>
 				contentContainerStyle={{
 					flexGrow: 1,
 					justifyContent: "flex-start",
-					padding: 16
+					padding: 16,
+					paddingBottom: 0
 				}}
 				ListFooterComponent={
 					currentCursor !== -1 && ((hasMore && isLoadingMoreMessage) || isFetching) ? (
@@ -156,12 +168,12 @@ const LiveChatConversation = forwardRef<FlatListType, LiveChatConversationProps>
 					)
 				}
 				onEndReached={() => onLoadMore()}
-				onEndReachedThreshold={0.5}
 				inverted={true}
 				data={modifiedMessages || []}
 				keyExtractor={keyExtractor}
 				renderItem={renderChatItem}
 				onScroll={throttleEvent(conversationScrollHandler, 2000)}
+				onMomentumScrollEnd={throttleEvent(conversationScrollEndHandler, 500)}
 			/>
 		</>
 	);

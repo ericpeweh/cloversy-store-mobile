@@ -1,21 +1,21 @@
 // Dependencies
-import React, { useCallback, useRef, useState } from "react";
+import React, { useCallback, useState } from "react";
 
 // Utils
 import { shadowProps } from "../../themes/helpers";
+import throttleEvent from "../../utils/throttleEvent";
 
 // Types
 import { Socket } from "socket.io-client";
-import { FlatList } from "react-native";
 
 // Icons
 import { Ionicons } from "@expo/vector-icons";
 
 // Components
-import { HStack, Icon, Input } from "native-base";
+import { FlatList } from "react-native";
+import { Center, HStack, Icon, Input } from "native-base";
 import IconButton from "../IconButton/IconButton";
-import { IInputComponentType } from "native-base/lib/typescript/components/primitives/Input/types";
-import throttleEvent from "../../utils/throttleEvent";
+import Button from "../Button/Button";
 
 interface ChattingActionsProps {
 	socket: Socket;
@@ -34,17 +34,15 @@ const LiveChatActions = ({
 	messageAtBottom,
 	onResetMessageAtBottom
 }: ChattingActionsProps) => {
-	const messageInputRef = useRef<any>(null);
 	const [messageInput, setMessageInput] = useState("");
 
 	const scrollToBottomHandler = () => {
 		if (scrollToBottomRef.current) {
-			scrollToBottomRef.current?.scrollToEnd();
+			scrollToBottomRef.current?.scrollToOffset({ offset: 0, animated: false });
 		}
 	};
 
 	const sendMessageHandler = () => {
-		// e.preventDefault();
 		if (messageInput === "" || conversationId === -1) return;
 
 		socket.emit("newMessage", {
@@ -55,7 +53,6 @@ const LiveChatActions = ({
 		stopTypingHandler();
 
 		setMessageInput("");
-		messageInputRef.current?.focus();
 	};
 
 	const stopTypingHandler = () => {
@@ -85,28 +82,53 @@ const LiveChatActions = ({
 			alignItems="center"
 			justifyContent="space-between"
 			style={{ ...shadowProps.xs }}
-			px={3}
+			position="relative"
 		>
-			<Input
-				ref={messageInputRef}
-				flex={1}
-				placeholder="Type message"
-				borderRadius="10px"
-				fontSize="14px"
-				_invalid={{ borderColor: "error.500" }}
-				_focus={{ bgColor: "white" }}
-				focusOutlineColor="primary.400"
-				_input={{ height: "38px", bg: "white", px: 3 }}
-			/>
-			<IconButton
-				onPress={() => {
-					// Send message
-				}}
-				size="sm"
-				ml={2}
-				borderColor="gray.100"
-				icon={<Icon as={Ionicons} name="send" color="gray.400" size="md" />}
-			/>
+			{messageAtBottom > 0 && (
+				<Center position="absolute" bottom="65px" width="100%">
+					<Button
+						bg="secondary.300"
+						_pressed={{ bg: "secondary.400" }}
+						_text={{ fontSize: "12px" }}
+						endIcon={<Icon as={Ionicons} name="information-circle" />}
+						onPress={() => {
+							scrollToBottomHandler();
+							onResetMessageAtBottom();
+						}}
+					>
+						{`${messageAtBottom} New ${messageAtBottom > 1 ? "Messages" : "Message"}`}
+					</Button>
+				</Center>
+			)}
+			<HStack px={3} alignItems="center">
+				<Input
+					flex={1}
+					placeholder="Type message"
+					borderRadius="10px"
+					fontSize="14px"
+					_invalid={{ borderColor: "error.500" }}
+					_focus={{ bgColor: "white" }}
+					focusOutlineColor="primary.400"
+					_input={{ height: "38px", bg: "white", px: 3 }}
+					value={messageInput}
+					onChangeText={value => setMessageInput(value)}
+					onKeyPress={throttledMessageTypingHandler}
+				/>
+				<IconButton
+					onPress={() => sendMessageHandler()}
+					size="sm"
+					ml={2}
+					borderColor="gray.100"
+					icon={
+						<Icon
+							as={Ionicons}
+							name="send"
+							color={messageInput && conversationId !== -1 ? "primary.400" : "gray.400"}
+							size="md"
+						/>
+					}
+				/>
+			</HStack>
 		</HStack>
 	);
 };

@@ -1,5 +1,5 @@
 // Dependencies
-import React, { MutableRefObject, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import { StyleSheet } from "react-native";
 import { shallowEqual } from "react-redux";
 
@@ -44,6 +44,7 @@ const LiveChatScreen = ({ navigation }: RootStackProps<"AccountLiveChat">) => {
 	const { isAuth, token, email: authEmail } = useSelector(state => state.auth, shallowEqual);
 	const [isLoadingMoreMessage, setIsLoadingMoreMessage] = useState(false);
 	const [connectError, setConnectError] = useState(false);
+	const [scrollOffsetY, setScrollOffsetY] = useState(-1);
 
 	// Scroll to bottom feature
 	const scrollToBottomRef = useRef<FlatListType>(null);
@@ -121,7 +122,13 @@ const LiveChatScreen = ({ navigation }: RootStackProps<"AccountLiveChat">) => {
 				dispatch(addNewMessage(newMessage));
 
 				// Increase message at bottom count if user at the current conversation tab
-				if (newMessage.conversation_id === conversationId && newMessage.email !== authEmail) {
+				console.log(scrollOffsetY);
+
+				if (
+					scrollOffsetY > 500 &&
+					newMessage.conversation_id === conversationId &&
+					newMessage.email !== authEmail
+				) {
 					setMessageAtBottom(prev => prev + 1);
 				}
 			});
@@ -153,7 +160,7 @@ const LiveChatScreen = ({ navigation }: RootStackProps<"AccountLiveChat">) => {
 			socketClient.socket.off("activeUsers");
 			socketClient.socket.off("userTypingResponse");
 		};
-	}, [isAuth, token, dispatch, conversationId, authEmail]);
+	}, [isAuth, token, dispatch, conversationId, authEmail, scrollOffsetY]);
 
 	const resetMessageAtBottomHandler = () => {
 		setMessageAtBottom(0);
@@ -176,6 +183,7 @@ const LiveChatScreen = ({ navigation }: RootStackProps<"AccountLiveChat">) => {
 				isLoadingMoreMessage={isLoadingMoreMessage}
 				ref={scrollToBottomRef}
 				onResetMessageAtBottom={resetMessageAtBottomHandler}
+				onOffsetYChange={offset => setScrollOffsetY(offset)}
 			/>
 			<LiveChatActions
 				conversationId={conversationId}

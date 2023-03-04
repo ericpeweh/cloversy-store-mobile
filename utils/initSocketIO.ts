@@ -1,6 +1,6 @@
 import { io } from "socket.io-client";
 
-const BASE_URL = "http://192.168.100.63:5000";
+const BASE_URL = "http://192.168.43.159:5000";
 
 const initSocketIO = () => {
 	const socket = io(BASE_URL, {
