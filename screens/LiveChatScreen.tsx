@@ -122,8 +122,6 @@ const LiveChatScreen = ({ navigation }: RootStackProps<"AccountLiveChat">) => {
 				dispatch(addNewMessage(newMessage));
 
 				// Increase message at bottom count if user at the current conversation tab
-				console.log(scrollOffsetY);
-
 				if (
 					scrollOffsetY > 500 &&
 					newMessage.conversation_id === conversationId &&

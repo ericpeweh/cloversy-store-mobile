@@ -36,7 +36,12 @@ const LoginScreen = () => {
 					<Text textAlign="center" mb={2} fontSize={13}>
 						You must be authenticated to continue
 					</Text>
-					<Button alignSelf="stretch" onPress={loginHandler} isLoading={autStatus === "loading"}>
+					<Button
+						alignSelf="stretch"
+						onPress={loginHandler}
+						isLoading={autStatus === "loading"}
+						py={2}
+					>
 						<Text fontWeight="700" fontSize={16} color="white">
 							{error ? "Continue" : "Sign In / Up"}
 						</Text>

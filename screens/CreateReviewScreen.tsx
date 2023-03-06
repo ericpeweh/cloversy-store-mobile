@@ -10,6 +10,7 @@ import { CreateReviewItem, RootStackProps, TransactionItem } from "../interfaces
 // Hooks
 import useSelector from "../hooks/useSelector";
 import { useCreateReviewsMutation, useGetTransactionDetailsQuery } from "../api/transaction.api";
+import useHideHeaderTabbar from "../hooks/useHideHeaderTabbar";
 
 // Icons
 import { AntDesign } from "@expo/vector-icons";
@@ -36,7 +37,7 @@ const ReviewSchema = Yup.object().shape({
 	)
 });
 
-const CreateReviewScreen = ({ route }: RootStackProps<"AccountCreateReview">) => {
+const CreateReviewScreen = ({ route, navigation }: RootStackProps<"AccountCreateReview">) => {
 	const isAuth = useSelector(state => state.auth.isAuth);
 	const { transactionId } = route.params;
 
@@ -89,6 +90,9 @@ const CreateReviewScreen = ({ route }: RootStackProps<"AccountCreateReview">) =>
 				}
 			}, []);
 		}, [orderData?.item_details]) || [];
+
+	// Hide parent header and tabbar on mount
+	useHideHeaderTabbar(navigation);
 
 	return (
 		<ScrollView style={styles.createReviewScreenContainer}>
