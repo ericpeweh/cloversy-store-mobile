@@ -1,6 +1,6 @@
+// Dependencies
 import { io } from "socket.io-client";
-
-const BASE_URL = "http://192.168.43.159:5000";
+import { BASE_URL } from "../api";
 
 const initSocketIO = () => {
 	const socket = io(BASE_URL, {
