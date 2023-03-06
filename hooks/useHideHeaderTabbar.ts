@@ -16,19 +16,28 @@ const useHideHeaderTabbar = (
 	// Hide parent header and tabbar on mount
 	useLayoutEffect(
 		useCallback(() => {
-			navigation?.getParent()?.setOptions({
-				headerShown: false,
-				tabBarStyle: { display: "none" }
-			});
+			const hideParentNavAndTabbar = () => {
+				navigation?.getParent()?.setOptions({
+					headerShown: false,
+					tabBarStyle: { display: "none" }
+				});
+			};
 
-			// Cleanup function (revert header & tabbar style changes)
-			return () => {
+			const showParentNavAndTabbar = () =>
 				navigation?.getParent()?.setOptions({
 					headerShown: true,
 					tabBarStyle: { display: "flex", height: 56, paddingTop: 5, paddingBottom: 7 }
 				});
+
+			navigation.addListener("focus", hideParentNavAndTabbar);
+			navigation.addListener("beforeRemove", showParentNavAndTabbar);
+
+			// Cleanup function (revert header & tabbar style changes)
+			return () => {
+				navigation.removeListener("focus", hideParentNavAndTabbar);
+				navigation.removeListener("beforeRemove", showParentNavAndTabbar);
 			};
-		}, []),
+		}, [navigation]),
 		[isFocused]
 	);
 };

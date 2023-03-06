@@ -8,6 +8,7 @@ import {
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import * as Linking from "expo-linking";
 import analytics from "@react-native-firebase/analytics";
+import * as Notifications from "expo-notifications";
 
 // Icons
 import { AntDesign, Feather } from "@expo/vector-icons";
@@ -48,11 +49,52 @@ const Router = () => {
 			screens: {
 				HomeTab: {
 					screens: {
+						Home: "home",
 						HomeProduct: "products/:productSlug",
 						HomePayment: "orders/payment"
 					}
+				},
+				AccountTab: {
+					screens: {
+						AccountLiveChat: "account/livechat",
+						AccountCreateReview: "orders/:transactionId/review",
+						AccountOrderDetails: "orders/:transactionId/details"
+					}
 				}
 			}
+		},
+		getInitialURL: async (): Promise<string> => {
+			// Check if app opened from a deep link
+			const url = await Linking.getInitialURL();
+
+			if (url !== null) {
+				return url;
+			}
+
+			// Get deeplinkUrl from push notifications
+			const response = await Notifications.getLastNotificationResponseAsync();
+			const deeplinkUrl = response?.notification.request.content.data?.deeplinkUrl;
+
+			return (deeplinkUrl as string) || "";
+		},
+		subscribe: listener => {
+			const onReceiveURL = ({ url }: { url: string }) => listener(url);
+
+			// Listen to incoming links from deep linking
+			const urlListener = Linking.addEventListener("url", onReceiveURL);
+
+			// Listen to push notifications
+			const subscription = Notifications.addNotificationResponseReceivedListener(response => {
+				const deeplinkUrl = response.notification.request.content.data?.deeplinkUrl;
+
+				listener((deeplinkUrl as string) || "home");
+			});
+
+			return () => {
+				// Cleanup all event listeners
+				urlListener.remove();
+				subscription.remove();
+			};
 		}
 	};
 
