@@ -67,7 +67,7 @@ const useDataInit = () => {
 						})
 					);
 				} catch (error) {
-					console.log(error);
+					console.log("Data init error: ", error);
 				}
 			};
 			getToken();

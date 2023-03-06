@@ -131,7 +131,7 @@ const PaymentScreen = ({ route, navigation }: RootStackProps<"HomePayment" | "Ac
 				appStoreLocale: ""
 			});
 		} catch (error) {
-			console.log(error);
+			console.log("Gojek deeplink error: ", error);
 		}
 	};
 

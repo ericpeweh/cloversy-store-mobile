@@ -122,7 +122,7 @@ const ProductScreen = ({
 				await Share.open(options);
 			}
 		} catch (error) {
-			console.log(error);
+			console.log("Share product error: ", error);
 		}
 	};
 
