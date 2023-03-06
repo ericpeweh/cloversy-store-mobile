@@ -1,7 +1,7 @@
 {
 	"expo": {
 		"scheme": "id.cloversyid.cloversystoremobile",
-		"name": "cloversy-store-mobile",
+		"name": "Cloversy Store",
 		"slug": "cloversy-store-mobile",
 		"version": "1.0.0",
 		"orientation": "portrait",
@@ -61,7 +61,12 @@
 			],
 			"@react-native-firebase/app",
 			"expo-image-picker",
-			"expo-notifications"
+			[
+				"expo-notifications",
+				{
+					"icon": "./assets/notification-icon.png"
+				}
+			]
 		]
 	}
 }
