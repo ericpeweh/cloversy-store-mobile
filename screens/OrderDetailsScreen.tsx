@@ -108,7 +108,9 @@ const OrderDetailsScreen = ({ route, navigation }: RootStackProps<"AccountOrderD
 			)}
 			{getOrderError && (
 				<FallbackContainer mt={10}>
-					<AlertBox mb={3}>{getOrderError?.data?.message || "Failed to fetch order data"}</AlertBox>
+					<AlertBox mb={3}>
+						{getOrderError?.data?.message || "Error occured while fetching order details."}
+					</AlertBox>
 					<TryAgainButton onPress={refetchOrder}>Try again</TryAgainButton>
 				</FallbackContainer>
 			)}

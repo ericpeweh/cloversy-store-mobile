@@ -52,7 +52,7 @@ const OrdersList = ({ orderStatus }: OrdersListProps) => {
 			{!isGetTransactionsLoading && getTransactionsError && (
 				<FallbackContainer p={4} pt={6} bg="white">
 					<AlertBox width="100%" mb={3}>
-						{getTransactionsError?.data?.message || "Error while fetching voucher data"}{" "}
+						{getTransactionsError?.data?.message || "Error while fetching voucher data"}
 					</AlertBox>
 					<TryAgainButton isLoading={isGetTransactionsLoading} onPress={refetchTransactions}>
 						Try again

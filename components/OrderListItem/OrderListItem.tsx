@@ -158,8 +158,8 @@ const OrderListItem = ({ orderData }: OrderListItemProps) => {
 					</>
 				)}
 				{cancelTransactionError && (
-					<AlertBox status="error" width="100%">
-						{cancelTransactionError?.data.message}
+					<AlertBox status="error" width="100%" mt={2}>
+						{cancelTransactionError?.data?.message || "Error occured while cancelling transaction."}
 					</AlertBox>
 				)}
 			</VStack>

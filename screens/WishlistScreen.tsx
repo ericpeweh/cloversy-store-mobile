@@ -43,7 +43,9 @@ const WishlistScreen = ({}: RootStackProps<"Wishlist">) => {
 					)}
 					{!isGetWishlistLoading && !isGetWishlistSuccess && getWishlistError && (
 						<FallbackContainer key="loadingSpinner" mt={8}>
-							<AlertBox mb={3}>{getWishlistError?.data?.message}</AlertBox>
+							<AlertBox mb={3}>
+								{getWishlistError?.data?.message || "Error occured while fetching wishlist data."}
+							</AlertBox>
 							<TryAgainButton onPress={refetchWishlist}>Try again</TryAgainButton>
 						</FallbackContainer>
 					)}

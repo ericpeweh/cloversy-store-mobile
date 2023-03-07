@@ -263,12 +263,14 @@ const AccountDetailsScreen = ({ navigation }: RootStackProps<"AccountDetails">) 
 				</HStack>
 				{updateProfilePictureError && (
 					<AlertBox width="100%" mt={3}>
-						{updateProfilePictureError.data.message}{" "}
+						{updateProfilePictureError?.data?.message ||
+							"Error occured while updating profile picture."}
 					</AlertBox>
 				)}
 				{deleteProfilePictureError && (
 					<AlertBox width="100%" mt={3}>
-						{deleteProfilePictureError.data.message}{" "}
+						{deleteProfilePictureError?.data?.message ||
+							"Error occured while deleting profile picture."}
 					</AlertBox>
 				)}
 			</VStack>
@@ -337,7 +339,8 @@ const AccountDetailsScreen = ({ navigation }: RootStackProps<"AccountDetails">) 
 							/>
 							{updateAccountDetailsError && (
 								<AlertBox status="error" width="100%" mt={3}>
-									{updateAccountDetailsError.data.message}
+									{updateAccountDetailsError?.data?.message ||
+										"Error occured while updating account details."}
 								</AlertBox>
 							)}
 							<Button

@@ -44,7 +44,8 @@ const LastSeenProductsScreen = ({ navigation }: RootStackProps<"AccountLastSeenP
 			{!isGetLastSeenProductsLoading && getLastSeenProductsError && (
 				<FallbackContainer mb={4} key="errorFallback">
 					<AlertBox mb={3}>
-						{getLastSeenProductsError?.data?.message || "Error while fetching last seen products"}{" "}
+						{getLastSeenProductsError?.data?.message ||
+							"Error occured while fetching last seen products"}
 					</AlertBox>
 					<TryAgainButton
 						isLoading={isGetLastSeenProductsLoading}

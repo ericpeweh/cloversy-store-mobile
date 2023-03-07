@@ -61,7 +61,9 @@ const AddressPickerScreen = ({
 			)}
 			{!isGetAddressLoading && getAddressError && (
 				<FallbackContainer size="md">
-					<AlertBox mb={3}>{addressError?.data?.message}</AlertBox>
+					<AlertBox mb={3}>
+						{addressError?.data?.message || "Error occured while fetching address data."}
+					</AlertBox>
 					<TryAgainButton onPress={refetchAddress}>Try again</TryAgainButton>
 				</FallbackContainer>
 			)}

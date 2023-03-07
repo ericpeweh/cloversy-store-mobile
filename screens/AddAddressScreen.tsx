@@ -182,7 +182,8 @@ const AddAddressScreen = ({
 									/>
 									{provincesError && (
 										<Text color="error.500" fontSize="12px">
-											{getProvincesError?.data?.message}{" "}
+											{getProvincesError?.data?.message ||
+												"Error occured while fetching provinces data."}
 											<Text underline color="text.primary" onPress={refetchProvinces}>
 												Try again
 											</Text>
@@ -213,7 +214,8 @@ const AddAddressScreen = ({
 										/>
 										{citiesError && (
 											<Text color="error.500" fontSize="12px">
-												{getCitiesError?.data?.message}{" "}
+												{getCitiesError?.data?.message ||
+													"Error occured while fetching cities data."}
 												<Text underline color="text.primary" onPress={refetchCities}>
 													Try again
 												</Text>
@@ -243,7 +245,8 @@ const AddAddressScreen = ({
 										/>
 										{subdistrictError && (
 											<Text color="error.500" fontSize="12px">
-												{getSubdistrictsError?.data?.message}{" "}
+												{getSubdistrictsError?.data?.message ||
+													"Error occured while fetching subdistricts data."}
 												<Text underline color="text.primary" onPress={refetchSubdistricts}>
 													Try again
 												</Text>
@@ -279,7 +282,10 @@ const AddAddressScreen = ({
 								</CheckboxInput>
 								{createAddressError && (
 									<FallbackContainer size="md">
-										<AlertBox width="100%">{createAddressError?.data?.message}</AlertBox>
+										<AlertBox width="100%">
+											{createAddressError?.data?.message ||
+												"Error occured while creating new address."}
+										</AlertBox>
 									</FallbackContainer>
 								)}
 							</VStack>

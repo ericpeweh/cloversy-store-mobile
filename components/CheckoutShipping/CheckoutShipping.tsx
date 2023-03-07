@@ -91,7 +91,7 @@ const CheckoutShipping = ({ setFormInitialValues }: CheckoutShippingProps) => {
 			{!isGetShippingCostsLoading && getShippingCostsError && (
 				<FallbackContainer size="md">
 					<AlertBox mb={3} width="100%">
-						{getShippingCostsError?.data?.message}
+						{getShippingCostsError?.data?.message || "Error occured while fetching shipping costs."}
 					</AlertBox>
 					<TryAgainButton onPress={refetchShippingCosts}>Try again</TryAgainButton>
 				</FallbackContainer>

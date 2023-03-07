@@ -73,7 +73,9 @@ const ShippingPickerScreen = ({
 			)}
 			{!isGetShippingCostsLoading && getShippingCostsErrorData && (
 				<FallbackContainer size="md" mt={8}>
-					<AlertBox mb={3}>{getShippingCostsError?.data?.message}</AlertBox>
+					<AlertBox mb={3}>
+						{getShippingCostsError?.data?.message || "Error occured while fetching shipping costs."}
+					</AlertBox>
 					<TryAgainButton onPress={refetchShippingCosts}>Try again</TryAgainButton>
 				</FallbackContainer>
 			)}

@@ -44,7 +44,7 @@ const MyVouchersScreen = ({ navigation }: RootStackProps<"AccountMyVouchers">) =
 			{!isGetVouchersLoading && vouchersError && (
 				<FallbackContainer mb={4} mt={10}>
 					<AlertBox mb={3}>
-						{vouchersError?.data?.message || "Error while fetching voucher data"}{" "}
+						{vouchersError?.data?.message || "Error occured while fetching vouchers data"}
 					</AlertBox>
 					<TryAgainButton isLoading={isGetVouchersLoading} onPress={refetchVouchers}>
 						Try again

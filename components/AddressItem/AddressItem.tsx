@@ -111,7 +111,7 @@ const AddressItem = ({ item, isDeleteAddressLoading, onPressDelete }: AddressIte
 				</HStack>
 				{setAsDefaultError && (
 					<AlertBox width="100%" mt={4}>
-						{setAsDefaultError?.data?.message}
+						{setAsDefaultError?.data?.message || "Error occured setting address as default."}
 					</AlertBox>
 				)}
 			</View>

@@ -91,7 +91,7 @@ const HomeScreen = ({ navigation }: RootStackProps<"Home">) => {
 					{!isGetProductsLoading && productsError && (
 						<FallbackContainer mb={4} key="errorFallback">
 							<AlertBox mb={3}>
-								{productsError?.data?.message || "Error while fetching data"}{" "}
+								{productsError?.data?.message || "Error occured while fetching products data."}
 							</AlertBox>
 							<TryAgainButton isLoading={isGetProductsLoading} onPress={refetchProducts}>
 								Try again

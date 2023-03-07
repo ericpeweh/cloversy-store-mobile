@@ -213,7 +213,7 @@ const CheckoutScreen = ({ navigation, route }: RootStackProps<"HomeCheckout">) =
 							<CheckoutDetails />
 							{checkoutError && (
 								<AlertBox width="100%" mb={3}>
-									{checkoutError?.data?.message || "Failed to checkout."}
+									{checkoutError?.data?.message || "Error occured while trying to checkout."}
 								</AlertBox>
 							)}
 							<Button

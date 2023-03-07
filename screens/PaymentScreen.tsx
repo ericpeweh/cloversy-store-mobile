@@ -144,7 +144,9 @@ const PaymentScreen = ({ route, navigation }: RootStackProps<"HomePayment" | "Ac
 			)}
 			{getOrderError && (
 				<FallbackContainer mt={10}>
-					<AlertBox mb={3}>{getOrderError?.data?.message || "Failed to fetch order data"}</AlertBox>
+					<AlertBox mb={3}>
+						{getOrderError?.data?.message || "Error occured while fetching order data."}
+					</AlertBox>
 					<TryAgainButton onPress={refetchOrder}>Try again</TryAgainButton>
 				</FallbackContainer>
 			)}

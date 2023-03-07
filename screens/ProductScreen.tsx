@@ -157,7 +157,7 @@ const ProductScreen = ({
 				{!isGetProductLoading && !isGetProductFetching && productError && (
 					<FallbackContainer my={10} size="lg">
 						<AlertBox mb={3}>
-							{productError?.data?.message || "Error while fetching data"}{" "}
+							{productError?.data?.message || "Error occured while fetching product details."}
 						</AlertBox>
 						<TryAgainButton isLoading={isGetProductLoading} onPress={refetchProduct}>
 							Try again

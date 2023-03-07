@@ -122,7 +122,11 @@ const VoucherPickerScreen = ({
 						APPLY
 					</Button>
 				</HStack>
-				{voucherError && <AlertBox width="100%">{voucherError.data.message}</AlertBox>}
+				{voucherError && (
+					<AlertBox width="100%">
+						{voucherError?.data?.message || "Error occured while applying voucher code."}
+					</AlertBox>
+				)}
 			</VStack>
 			<ScrollView>
 				{!isGetVouchersLoading && isGetVouchersSuccess && noVouchersDataFound && (
@@ -137,7 +141,9 @@ const VoucherPickerScreen = ({
 				)}
 				{!isGetVouchersLoading && vouchersError && (
 					<FallbackContainer size="md">
-						<AlertBox mb={3}>{vouchersError?.data?.message}</AlertBox>
+						<AlertBox mb={3}>
+							{vouchersError?.data?.message || "Error occured while fetching vouchers data."}
+						</AlertBox>
 						<TryAgainButton onPress={refetchVouchers}>Try again</TryAgainButton>
 					</FallbackContainer>
 				)}

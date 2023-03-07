@@ -82,7 +82,7 @@ const CheckoutInfo = ({ setFormInitialValues }: CheckoutInfoProps) => {
 			{!isGetAddressLoading && getAddressError && (
 				<FallbackContainer size="md">
 					<AlertBox width="100%" mb={3}>
-						{addressError?.data?.message}
+						{addressError?.data?.message || "Error occured while fetching address data."}
 					</AlertBox>
 					<TryAgainButton onPress={refetchAddress}>Try again</TryAgainButton>
 				</FallbackContainer>

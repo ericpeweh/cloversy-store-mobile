@@ -36,7 +36,7 @@ const CheckoutDetails = () => {
 			{!isGetCartItemsLoading && getCartItemsErrorData && (
 				<FallbackContainer size="md">
 					<AlertBox width="100%" mb={3}>
-						{getCartItemsError?.data?.message}
+						{getCartItemsError?.data?.message || "Error occured while fetching cart items data."}
 					</AlertBox>
 					<TryAgainButton onPress={refetchCartItems}>Try again</TryAgainButton>
 				</FallbackContainer>

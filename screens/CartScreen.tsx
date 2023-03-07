@@ -103,7 +103,7 @@ const CartScreen = ({ navigation }: RootStackProps<"HomeCart">) => {
 			{!isGetCartItemsLoading && getCartItemsErrorData && (
 				<FallbackContainer mb={4} mt={10}>
 					<AlertBox mb={3}>
-						{getCartItemsError?.data?.message || "Error while fetching data"}{" "}
+						{getCartItemsError?.data?.message || "Error occured while fetching cart items data"}
 					</AlertBox>
 					<TryAgainButton isLoading={isGetCartItemsLoading} onPress={refetchCartItems}>
 						Try again

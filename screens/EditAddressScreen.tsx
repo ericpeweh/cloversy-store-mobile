@@ -179,7 +179,8 @@ const EditAddressScreen = ({ navigation, route }: RootStackProps<"AccountEditAdd
 									/>
 									{provincesError && (
 										<Text color="error.500" fontSize="12px">
-											{getProvincesError?.data?.message}{" "}
+											{getProvincesError?.data?.message ||
+												"Error occured while fetching provinces data."}
 											<Text underline color="text.primary" onPress={refetchProvinces}>
 												Try again
 											</Text>
@@ -210,7 +211,8 @@ const EditAddressScreen = ({ navigation, route }: RootStackProps<"AccountEditAdd
 										/>
 										{citiesError && (
 											<Text color="error.500" fontSize="12px">
-												{getCitiesError?.data?.message}{" "}
+												{getCitiesError?.data?.message ||
+													"Error occured while fetching cities data."}
 												<Text underline color="text.primary" onPress={refetchCities}>
 													Try again
 												</Text>
@@ -240,7 +242,8 @@ const EditAddressScreen = ({ navigation, route }: RootStackProps<"AccountEditAdd
 										/>
 										{subdistrictError && (
 											<Text color="error.500" fontSize="12px">
-												{getSubdistrictsError?.data?.message}{" "}
+												{getSubdistrictsError?.data?.message ||
+													"Error occured while fetching subdistricts data."}
 												<Text underline color="text.primary" onPress={refetchSubdistricts}>
 													Try again
 												</Text>
@@ -276,7 +279,9 @@ const EditAddressScreen = ({ navigation, route }: RootStackProps<"AccountEditAdd
 								</CheckboxInput>
 								{updateAddressError && (
 									<FallbackContainer size="md">
-										<AlertBox width="100%">{updateAddressError?.data?.message}</AlertBox>
+										<AlertBox width="100%">
+											{updateAddressError?.data?.message || "Error occured while updating address."}
+										</AlertBox>
 									</FallbackContainer>
 								)}
 							</VStack>
