@@ -1,6 +1,3 @@
-// Dependencies
-import React from "react";
-
 // Types
 import { ImageSourcePropType, TouchableWithoutFeedback } from "react-native";
 import { IBoxProps, Text } from "native-base";
@@ -8,12 +5,15 @@ import { IBoxProps, Text } from "native-base";
 // Components
 import { Image, View, Box } from "native-base";
 import Button from "../Button/Button";
+import { useNavigation } from "@react-navigation/native";
+import { RootStackNavigationProp } from "../../interfaces";
 
 interface BannerProps extends IBoxProps {
 	imageSrc: ImageSourcePropType;
 	title: string;
 	buttonText?: string;
 	height?: number;
+	productSlug: string;
 }
 
 const Banner = ({
@@ -21,9 +21,19 @@ const Banner = ({
 	title,
 	height = 220,
 	buttonText = "Shop now",
+	productSlug,
 	children,
 	...props
 }: BannerProps) => {
+	const navigation = useNavigation<RootStackNavigationProp>();
+
+	const bannerActionPressHandler = () => {
+		navigation.navigate("HomeProduct", {
+			productSlug: productSlug,
+			runHeaderFn: true
+		});
+	};
+
 	return (
 		<TouchableWithoutFeedback>
 			<Box style={{ position: "relative" }} {...props}>
@@ -39,7 +49,7 @@ const Banner = ({
 						py={2}
 						style={{ borderWidth: 1 }}
 						width="120px"
-						onPress={() => alert("OK")}
+						onPress={bannerActionPressHandler}
 					>
 						<Text color="white" fontWeight="700" fontSize="14px">
 							{buttonText}

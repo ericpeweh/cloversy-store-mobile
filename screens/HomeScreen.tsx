@@ -14,9 +14,9 @@ import useSelector from "../hooks/useSelector";
 import { setSearchQuery } from "../store/slices/productsSlice";
 
 // Images
-const Banner1Image = require("../assets/images/1.jpg");
-const Banner2Image = require("../assets/images/2.jpg");
-const Banner3Image = require("../assets/images/3.jpg");
+const Banner1Image = require("../assets/images/carousel-1.webp");
+const Banner2Image = require("../assets/images/carousel-2.webp");
+const Banner3Image = require("../assets/images/carousel-3.webp");
 
 // Components
 import { FlatList, Text, View } from "native-base";
@@ -72,6 +72,7 @@ const HomeScreen = ({ navigation }: RootStackProps<"Home">) => {
 						zIndex={10}
 						buttonText="Details"
 						key="banner1"
+						productSlug="nike-af1-low-homesick-special-edition"
 					/>
 					<View position="relative" key="searchBar">
 						<View paddingX={4} paddingY={2} position="relative" zIndex={100} marginTop="-32px">
@@ -81,8 +82,19 @@ const HomeScreen = ({ navigation }: RootStackProps<"Home">) => {
 					<View style={styles.contentContainer} key="brandCardList">
 						<BrandCardList />
 					</View>
-					<Banner imageSrc={Banner2Image} title="Challenges Ventela V1" key="banner2" />
-					<Banner imageSrc={Banner3Image} title="Yeezy Simplest" mt={3} key="banner3" />
+					<Banner
+						imageSrc={Banner2Image}
+						title="Super Mario Series"
+						key="banner2"
+						productSlug="ventela-basic-super-mario-bros-series"
+					/>
+					<Banner
+						imageSrc={Banner3Image}
+						title="Lukisan Alam"
+						mt={3}
+						key="banner3"
+						productSlug="ventela-basic-lukisan-alam"
+					/>
 					<View mt={4} width="100%" style={styles.contentContainer} key="bestSellerTitle">
 						<Text fontWeight="500" fontSize={16}>
 							Best Sellers
