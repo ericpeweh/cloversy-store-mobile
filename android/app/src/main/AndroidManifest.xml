@@ -29,8 +29,8 @@
         <category android:name="android.intent.category.DEFAULT"/>
         <category android:name="android.intent.category.BROWSABLE"/>
         <data android:scheme="id.cloversyid.cloversystoremobile"/>
-        <data android:scheme="exp+cloversy-store-mobile"/>
         <data android:scheme="id.cloversyid.cloversystoremobile"/>
+        <data android:scheme="exp+cloversy-store-mobile"/>
       </intent-filter>
       <intent-filter android:autoVerify="true" data-generated="true">
         <action android:name="android.intent.action.VIEW"/>
