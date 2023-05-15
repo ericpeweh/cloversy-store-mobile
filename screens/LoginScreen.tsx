@@ -4,9 +4,6 @@ import React from "react";
 // Hooks
 import { useAuth0 } from "react-native-auth0";
 
-// Configs
-import { AUTH0_AUDIENCE } from "@env";
-
 // Images
 const LoginImage = require("../assets/images/login.png");
 
@@ -22,7 +19,7 @@ const LoginScreen = () => {
 	const { authorize, error, isLoading } = useAuth0();
 
 	const loginHandler = async () => {
-		await authorize({ audience: AUTH0_AUDIENCE }, { customScheme: "cloversy-store-auth0" });
+		await authorize({ audience: "cloversy-store-api" }, { customScheme: "cloversy-store-auth0" });
 	};
 
 	return (

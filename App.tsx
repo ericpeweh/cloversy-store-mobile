@@ -5,7 +5,6 @@ import { Auth0Provider } from "react-native-auth0";
 import { Provider as ReduxProvider } from "react-redux";
 
 // Configs
-import { AUTH0_DOMAIN, AUTH0_CLIENTID } from "@env";
 import reduxStore from "./store";
 
 // Hooks
@@ -33,7 +32,7 @@ const App = () => {
 	}
 
 	return (
-		<Auth0Provider domain={AUTH0_DOMAIN} clientId={AUTH0_CLIENTID}>
+		<Auth0Provider domain="cloversyid.jp.auth0.com" clientId="DNcAH2TH3pUe0KVTxRdjY3ElAGD6zzZX">
 			<NativeBaseProvider theme={mainTheme}>
 				<ReduxProvider store={reduxStore}>
 					<StatusBar style="dark" backgroundColor="#fff" />
