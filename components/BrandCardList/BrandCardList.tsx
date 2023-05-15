@@ -20,12 +20,12 @@ import { Box, HStack, Image, ScrollView, Text, View } from "native-base";
 
 const brandCardData = [
 	{ label: "Nike AF1", image: require("../../assets/images/nike-af1-logo.png"), brandId: 1 },
-	{ label: "Nike AJ", image: require("../../assets/images/nike-aj-logo.png"), brandId: 1 },
-	{ label: "Vans", image: require("../../assets/images/vans-logo.png"), brandId: 2 },
-	{ label: "Converse", image: require("../../assets/images/converse-logo.png"), brandId: 4 },
-	{ label: "Yeezy", image: require("../../assets/images/yeezy-logo.png"), brandId: 4 },
-	{ label: "Patrobas", image: require("../../assets/images/ventela-logo.png"), brandId: 4 },
-	{ label: "Ventela", image: require("../../assets/images/patrobas-logo.png"), brandId: 4 }
+	{ label: "Nike AJ", image: require("../../assets/images/nike-aj-logo.png"), brandId: 2 },
+	{ label: "Vans", image: require("../../assets/images/vans-logo.png"), brandId: 6 },
+	{ label: "Converse", image: require("../../assets/images/converse-logo.png"), brandId: 7 },
+	{ label: "Yeezy", image: require("../../assets/images/yeezy-logo.png"), brandId: 3 },
+	{ label: "Patrobas", image: require("../../assets/images/patrobas-logo.png"), brandId: 4 },
+	{ label: "Ventela", image: require("../../assets/images/ventela-logo.png"), brandId: 5 }
 ];
 
 const BrandCardList = () => {
