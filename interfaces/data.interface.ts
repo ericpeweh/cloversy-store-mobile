@@ -26,7 +26,7 @@ export interface ShippingCost {
 	value: number;
 	etd: string;
 	note: string;
-	courier: string;
+	courier: "jne" | "jnt" | "sicepat";
 	service: string;
 	description: string;
 }

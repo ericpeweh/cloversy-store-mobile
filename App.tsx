@@ -1,7 +1,7 @@
 // Dependencies
 import { StatusBar } from "expo-status-bar";
 import { NativeBaseProvider } from "native-base";
-import { useAuth0, Auth0Provider } from "react-native-auth0";
+import { Auth0Provider } from "react-native-auth0";
 import { Provider as ReduxProvider } from "react-redux";
 
 // Configs
@@ -33,7 +33,7 @@ const App = () => {
 	}
 
 	return (
-		<Auth0Provider domain={AUTH0_DOMAIN} clientId={AUTH0_CLIENTID} >
+		<Auth0Provider domain={AUTH0_DOMAIN} clientId={AUTH0_CLIENTID}>
 			<NativeBaseProvider theme={mainTheme}>
 				<ReduxProvider store={reduxStore}>
 					<StatusBar style="dark" backgroundColor="#fff" />

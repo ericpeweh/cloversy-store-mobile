@@ -10,6 +10,12 @@ export interface CartItem {
 
 export type CartItemDetails = CartItem & Omit<Product, "id">;
 
+export interface EditNotesFormValues {
+	customer_note: string;
+	send_as_gift: boolean;
+	gift_note: string;
+}
+
 export interface CheckoutFormValues {
 	voucher_code: string;
 	voucher_discount: number;

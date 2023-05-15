@@ -9,6 +9,7 @@ const mainThemeConfig = {
 			500: "#477841"
 		},
 		secondary: {
+			300: "#3b3b3b",
 			400: "#282828"
 		}
 	},
@@ -24,6 +25,24 @@ const mainThemeConfig = {
 		},
 		700: {
 			normal: "Roboto-Bold"
+		}
+	},
+	components: {
+		Input: {
+			defaultProps: {
+				_input: {
+					selectionColor: undefined,
+					cursorColor: undefined
+				}
+			}
+		},
+		TextArea: {
+			defaultProps: {
+				_input: {
+					selectionColor: undefined,
+					cursorColor: undefined
+				}
+			}
 		}
 	}
 };

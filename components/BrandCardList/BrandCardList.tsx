@@ -4,6 +4,16 @@ import React from "react";
 // Styles
 import BrandCardListStyles from "./BrandCardList.styles";
 
+// Types
+import { RootStackNavigationProp } from "../../interfaces";
+
+// Actions
+import { changeBrandFilter } from "../../store/slices/productsSlice";
+
+// Hooks
+import useDispatch from "../../hooks/useDispatch";
+import { useNavigation } from "@react-navigation/native";
+
 // Components
 import { TouchableWithoutFeedback } from "react-native";
 import { Box, HStack, Image, ScrollView, Text, View } from "native-base";
@@ -19,9 +29,17 @@ const brandCardData = [
 ];
 
 const BrandCardList = () => {
+	const navigation = useNavigation<RootStackNavigationProp>();
+	const dispatch = useDispatch();
+
+	const onBrandButtonClickHandler = (brandId: number) => {
+		dispatch(changeBrandFilter(brandId));
+		navigation.navigate("ExploreTab");
+	};
+
 	return (
 		<View mt={4}>
-			<Text fontWeight="500" fontSize={15} mb={3}>
+			<Text fontWeight="500" fontSize={16} mb={3}>
 				Popular Brands
 			</Text>
 			<ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
@@ -29,10 +47,7 @@ const BrandCardList = () => {
 					{brandCardData.map(data => (
 						<TouchableWithoutFeedback
 							key={data.label}
-							onPress={() => {
-								console.log("Pressed brand");
-								alert("Pressed");
-							}}
+							onPress={() => onBrandButtonClickHandler(data.brandId)}
 						>
 							<Box style={BrandCardListStyles.brandCard}>
 								<Image

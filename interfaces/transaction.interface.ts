@@ -94,7 +94,7 @@ export interface TransactionListItem {
 export interface ClientPaymentDetailsItem {
 	payment_method: PaymentMethod;
 	payment_status: PaymentStatus;
-	expire_time: string;
+	expiry_time: string;
 	bill_key?: string;
 	biller_code?: string;
 	va_number?: string;

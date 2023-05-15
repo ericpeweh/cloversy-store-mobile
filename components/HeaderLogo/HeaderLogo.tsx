@@ -8,15 +8,7 @@ import { Image } from "native-base";
 const LogoLong = require("../../assets/images/logo-long.png");
 
 const HeaderLogo = () => {
-	return (
-		<Image
-			source={LogoLong}
-			alt="Cloversy Logo"
-			height={42}
-			resizeMethod="scale"
-			resizeMode="contain"
-		/>
-	);
+	return <Image source={LogoLong} alt="Cloversy Logo" width="100px" resizeMode="contain" />;
 };
 
 export default HeaderLogo;

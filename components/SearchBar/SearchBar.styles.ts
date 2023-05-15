@@ -1,16 +1,11 @@
 // Dependencies
 import { StyleSheet } from "react-native";
+import { shadowProps } from "../../themes/helpers";
 
 const SearcBarStyles = StyleSheet.create({
 	searchBarContainer: {
-		shadowColor: "#000",
-		shadowOffset: {
-			width: 0,
-			height: 1
-		},
-		shadowOpacity: 0.22,
-		shadowRadius: 2.22,
-		elevation: 3,
+		...shadowProps.xs,
+		flex: 1,
 		borderRadius: 10,
 		backgroundColor: "#fff"
 	}

@@ -1,6 +1,7 @@
 {
 	"expo": {
-		"name": "cloversy-store-mobile",
+		"scheme": "id.cloversyid.cloversystoremobile",
+		"name": "Cloversy Store",
 		"slug": "cloversy-store-mobile",
 		"version": "1.0.0",
 		"orientation": "portrait",
@@ -21,25 +22,26 @@
 			"bundleIdentifier": "id.cloversyid.cloversystoremobile"
 		},
 		"android": {
+			"adaptiveIcon": {
+				"foregroundImage": "./assets/adaptive-icon.png",
+				"backgroundColor": "#ffffff"
+			},
+			"package": "id.cloversyid.cloversystoremobile",
+			"googleServicesFile": "./google-services.json",
 			"intentFilters": [
 				{
 					"action": "VIEW",
 					"autoVerify": true,
 					"data": [
 						{
-							"scheme": "id.cloversyid.cloversystoremobile",
-							"pathPrefix": "/android/id.cloversyid.cloversystoremobile/callback"
+							"scheme": "https",
+							"host": "*.cloversy.id",
+							"pathPrefix": "/products"
 						}
 					],
-					"category": ["BROWSEABLE", "DEFAULT"]
+					"category": ["BROWSABLE", "DEFAULT"]
 				}
-			],
-			"adaptiveIcon": {
-				"foregroundImage": "./assets/adaptive-icon.png",
-				"backgroundColor": "#FFFFFF"
-			},
-			"package": "id.cloversyid.cloversystoremobile",
-			"googleServicesFile": "./google-services.json"
+			]
 		},
 		"web": {
 			"favicon": "./assets/favicon.png"
@@ -53,10 +55,18 @@
 			[
 				"react-native-auth0",
 				{
-					"domain": "dev-yinr7e34g2h7igf4.us.auth0.com"
+					"domain": "cloversyid.jp.auth0.com",
+					"customScheme": "cloversy-store-auth0"
 				}
 			],
-			"@react-native-firebase/app"
+			"@react-native-firebase/app",
+			"expo-image-picker",
+			[
+				"expo-notifications",
+				{
+					"icon": "./assets/notification-icon.png"
+				}
+			]
 		]
 	}
 }

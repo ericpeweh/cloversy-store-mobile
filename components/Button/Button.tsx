@@ -15,6 +15,7 @@ const Button = ({ children, ...props }: ButtonProps) => {
 			borderRadius="10px"
 			_hover={{ backgroundColor: "grey.600" }}
 			_pressed={{ backgroundColor: "grey.600" }}
+			py={1.5}
 			{...props}
 		>
 			{children}

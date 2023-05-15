@@ -19,10 +19,10 @@ import useSelector from "../hooks/useSelector";
 
 const LoginScreen = () => {
 	const autStatus = useSelector(state => state.auth.status);
-	const { authorize } = useAuth0();
+	const { authorize, error, isLoading } = useAuth0();
 
 	const loginHandler = async () => {
-		await authorize({ audience: AUTH0_AUDIENCE });
+		await authorize({ audience: AUTH0_AUDIENCE }, { customScheme: "cloversy-store-auth0" });
 	};
 
 	return (
@@ -36,9 +36,14 @@ const LoginScreen = () => {
 					<Text textAlign="center" mb={2} fontSize={13}>
 						You must be authenticated to continue
 					</Text>
-					<Button alignSelf="stretch" onPress={loginHandler} isLoading={autStatus === "loading"}>
+					<Button
+						alignSelf="stretch"
+						onPress={loginHandler}
+						isLoading={autStatus === "loading"}
+						py={2}
+					>
 						<Text fontWeight="700" fontSize={16} color="white">
-							Sign In / Up
+							{error ? "Continue" : "Sign In / Up"}
 						</Text>
 					</Button>
 				</View>
