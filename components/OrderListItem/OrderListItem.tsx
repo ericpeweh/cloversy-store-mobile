@@ -123,7 +123,7 @@ const OrderListItem = ({ orderData }: OrderListItemProps) => {
 							_text={{ color: "white" }}
 							_pressed={{ bg: "secondary.400" }}
 							onPress={() => {
-								// Navigate to chatting screen
+								navigation.navigate("AccountLiveChat");
 							}}
 						>
 							Contact Admin
