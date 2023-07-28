@@ -14,15 +14,21 @@
 			"distribution": "internal",
 			"ios": {
 				"resourceClass": "m1-medium"
-			}
+			},
+			"channel": "dev"
 		},
 		"production": {
 			"ios": {
 				"resourceClass": "m1-medium"
-			}
+			},
+			"channel": "main"
 		}
 	},
 	"submit": {
-		"production": {}
+		"production": {
+			"android": {
+				"serviceAccountKeyPath": "./FILES/pc-api-5522301573544485891-708-e2799e8c6f13.json"
+			}
+		}
 	}
 }
