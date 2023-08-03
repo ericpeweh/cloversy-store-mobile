@@ -55,7 +55,7 @@ const HomeScreen = ({ navigation }: RootStackProps<"Home">) => {
 		event.currentTarget.setNativeProps({ text: "" });
 
 		// Navigate user to explore screen
-		navigation.navigate("Explore");
+		navigation.navigate("ExploreTab");
 	};
 
 	return (

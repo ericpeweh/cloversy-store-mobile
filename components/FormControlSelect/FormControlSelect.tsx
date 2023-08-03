@@ -38,9 +38,9 @@ const FormControlSelect = ({
 				accessibilityLabel={label}
 				selectedValue={selectedValue + ""}
 				onValueChange={newValue => {
-					const label = options.find(option => option.value === +newValue)?.label;
+					const label = options.find(option => option.value === +newValue)?.label || "";
 
-					if (label) {
+					if (label || typeof newValue === "string") {
 						onValueChange(newValue, label);
 					}
 				}}
