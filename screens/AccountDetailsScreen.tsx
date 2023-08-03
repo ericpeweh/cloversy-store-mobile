@@ -354,7 +354,7 @@ const AccountDetailsScreen = ({ navigation }: RootStackProps<"AccountDetails">) 
 					)}
 				</Formik>
 			</VStack>
-			<VStack mt={6}>
+			<VStack mt={6} mb={8}>
 				<Text fontWeight="500" fontSize="15px" mb={3}>
 					Account Security
 				</Text>

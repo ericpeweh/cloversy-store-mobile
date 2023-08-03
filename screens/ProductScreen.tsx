@@ -65,7 +65,7 @@ const ProductScreen = ({
 	const productError: any = getProductError;
 
 	const [shoesSize, setShoesSize] = useState(
-		product && product.sizes?.length > 0 ? product.sizes[0] : "36"
+		product && product.sizes?.length > 0 ? product.sizes[0] : ""
 	);
 	const [quantity, setQuantity] = useState(1);
 
@@ -75,6 +75,9 @@ const ProductScreen = ({
 	useEffect(() => {
 		if (isAuth && product) {
 			trackProductSeen(product.id);
+
+			// Set default shoes size
+			setShoesSize(product.sizes[0]);
 
 			// Set show full description based on product desc text length
 			if (product.description.length > 400) {

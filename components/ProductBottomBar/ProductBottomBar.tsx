@@ -104,7 +104,7 @@ const ProductBottomBar = ({ productData, shoesSize, quantity }: ProductBottomBar
 				alignItems="center"
 				justifyContent="center"
 				onPress={addProductToCartHandler}
-				disabled={isAddToCartLoading}
+				disabled={isAddToCartLoading || Boolean(shoesSize) === false}
 			>
 				{({ isHovered, isPressed }) =>
 					isAddToCartLoading ? (
@@ -116,7 +116,13 @@ const ProductBottomBar = ({ productData, shoesSize, quantity }: ProductBottomBar
 							width="100%"
 							justifyContent="center"
 							alignItems="center"
-							bg={isHovered || isPressed ? "white:alpha.10" : "primary.400"}
+							bg={
+								Boolean(shoesSize) === false
+									? "#a9caa4"
+									: isHovered || isPressed
+									? "white:alpha.10"
+									: "primary.400"
+							}
 						>
 							<Text
 								color="white"

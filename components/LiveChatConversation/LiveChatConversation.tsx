@@ -156,7 +156,7 @@ const LiveChatConversation = forwardRef<FlatListType, LiveChatConversationProps>
 					flexGrow: 1,
 					justifyContent: "flex-start",
 					padding: 16,
-					paddingBottom: 0
+					paddingTop: 8 // inverted
 				}}
 				ListFooterComponent={
 					currentCursor !== -1 && ((hasMore && isLoadingMoreMessage) || isFetching) ? (

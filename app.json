@@ -1,86 +1,79 @@
 {
-  "expo": {
-    "scheme": "id.cloversyid.cloversystoremobile",
-    "name": "Cloversy Store",
-    "slug": "cloversy-store-mobile",
-    "version": "1.0.0",
-    "orientation": "portrait",
-    "jsEngine": "hermes",
-    "icon": "./assets/icon.png",
-    "userInterfaceStyle": "light",
-    "splash": {
-      "image": "./assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
-    },
-    "updates": {
-      "fallbackToCacheTimeout": 0,
-      "url": "https://u.expo.dev/6cb1a73c-4fce-41ec-88cd-722fe9d521d9"
-    },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
-    "ios": {
-      "supportsTablet": true,
-      "bundleIdentifier": "id.cloversyid.cloversystoremobile",
-      "runtimeVersion": {
-        "policy": "appVersion"
-      }
-    },
-    "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
-      },
-      "package": "id.cloversyid.cloversystoremobile",
-      "versionCode": 1,
-      "googleServicesFile": "./google-services.json",
-      "intentFilters": [
-        {
-          "action": "VIEW",
-          "autoVerify": true,
-          "data": [
-            {
-              "scheme": "https",
-              "host": "*.cloversy.id",
-              "pathPrefix": "/products"
-            }
-          ],
-          "category": [
-            "BROWSABLE",
-            "DEFAULT"
-          ]
-        }
-      ],
-      "permissions": [
-        "android.permission.RECORD_AUDIO"
-      ],
-      "runtimeVersion": "1.0.0"
-    },
-    "web": {
-      "favicon": "./assets/favicon.png"
-    },
-    "extra": {
-      "eas": {
-        "projectId": "6cb1a73c-4fce-41ec-88cd-722fe9d521d9"
-      }
-    },
-    "plugins": [
-      [
-        "react-native-auth0",
-        {
-          "domain": "cloversyid.jp.auth0.com",
-          "customScheme": "cloversy-store-auth0"
-        }
-      ],
-      "@react-native-firebase/app",
-      "expo-image-picker",
-      [
-        "expo-notifications",
-        {
-          "icon": "./assets/notification-icon.png"
-        }
-      ]
-    ]
-  }
+	"expo": {
+		"scheme": "id.cloversyid.cloversystoremobile",
+		"name": "Cloversy Store",
+		"slug": "cloversy-store-mobile",
+		"version": "1.0.1",
+		"orientation": "portrait",
+		"jsEngine": "hermes",
+		"icon": "./assets/icon.png",
+		"userInterfaceStyle": "light",
+		"splash": {
+			"image": "./assets/splash.png",
+			"resizeMode": "contain",
+			"backgroundColor": "#ffffff"
+		},
+		"updates": {
+			"fallbackToCacheTimeout": 0,
+			"url": "https://u.expo.dev/6cb1a73c-4fce-41ec-88cd-722fe9d521d9"
+		},
+		"assetBundlePatterns": ["**/*"],
+		"ios": {
+			"supportsTablet": true,
+			"bundleIdentifier": "id.cloversyid.cloversystoremobile",
+			"runtimeVersion": {
+				"policy": "appVersion"
+			}
+		},
+		"android": {
+			"adaptiveIcon": {
+				"foregroundImage": "./assets/adaptive-icon.png",
+				"backgroundColor": "#ffffff"
+			},
+			"package": "id.cloversyid.cloversystoremobile",
+			"versionCode": 2,
+			"googleServicesFile": "./google-services.json",
+			"intentFilters": [
+				{
+					"action": "VIEW",
+					"autoVerify": true,
+					"data": [
+						{
+							"scheme": "https",
+							"host": "*.cloversy.id",
+							"pathPrefix": "/products"
+						}
+					],
+					"category": ["BROWSABLE", "DEFAULT"]
+				}
+			],
+			"permissions": ["android.permission.RECORD_AUDIO"],
+			"runtimeVersion": "1.0.0"
+		},
+		"web": {
+			"favicon": "./assets/favicon.png"
+		},
+		"extra": {
+			"eas": {
+				"projectId": "6cb1a73c-4fce-41ec-88cd-722fe9d521d9"
+			}
+		},
+		"plugins": [
+			[
+				"react-native-auth0",
+				{
+					"domain": "cloversyid.jp.auth0.com",
+					"customScheme": "cloversy-store-auth0"
+				}
+			],
+			"@react-native-firebase/app",
+			"expo-image-picker",
+			[
+				"expo-notifications",
+				{
+					"icon": "./assets/notification-icon.png"
+				}
+			]
+		]
+	}
 }

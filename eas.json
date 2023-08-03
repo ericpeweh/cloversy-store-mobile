@@ -15,13 +15,13 @@
 			"ios": {
 				"resourceClass": "m1-medium"
 			},
-			"channel": "dev"
+			"channel": "preview"
 		},
 		"production": {
 			"ios": {
 				"resourceClass": "m1-medium"
 			},
-			"channel": "main"
+			"channel": "production"
 		}
 	},
 	"submit": {

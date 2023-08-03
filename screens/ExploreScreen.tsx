@@ -69,6 +69,7 @@ const ExploreScreen = ({ navigation }: RootStackProps<"Explore">) => {
 		{ q: searchQueryDebounced, page, brandFilter, sortBy, priceFilter },
 		{ skip: !isAuth }
 	);
+
 	const productsError: any = getProductsError;
 	const noDataFound = productsData?.data.products.length === 0;
 

@@ -11,7 +11,7 @@ const AlertBox = ({ children, status = "error", ...props }: AlertBoxProps) => {
 		<Alert status={status} px={4} py={3} width="90%" borderRadius="10px" {...props}>
 			<HStack space={2} alignSelf="flex-start">
 				<Alert.Icon mt="0.5" />
-				<Text fontSize="13px" color="black" mr={2}>
+				<Text fontSize="13px" color="black" mr={4}>
 					{children}
 				</Text>
 			</HStack>
